@@ -30,6 +30,7 @@ import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
 import com.juntai.wisdom.im.contact.newfriends.NewFriendsApplyActivity;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.NotificationTool;
+import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.orhanobut.hawk.Hawk;
 import com.rabtman.wsmanager.WsManager;
 import com.rabtman.wsmanager.listener.WsStatusListener;
@@ -193,6 +194,7 @@ public class MyWsManager {
             for (ContactBean contactBean : contactBeans) {
                 contactIds.add(contactBean.getId());
             }
+            contactIds.add(UserInfoManager.getUserId());
             return contactIds.contains(messageBodyBean.getFromUserId());
         }
 

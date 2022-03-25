@@ -476,7 +476,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
         switch (chatType) {
             case 0:
                 if (1 == messageBody.getChatType()) {
-                    if (messageBody.getFromUserId() == privateContactId) {
+                    if (messageBody.getFromUserId() == privateContactId||messageBody.getToUserId()==privateContactId) {
                         //如果是正在聊天的对象发过来的 就不需要notification
                         NotificationTool.SHOW_NOTIFICATION = false;
                         messageBody.setRead(true);

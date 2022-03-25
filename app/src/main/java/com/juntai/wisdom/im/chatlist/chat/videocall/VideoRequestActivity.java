@@ -221,7 +221,6 @@ public class VideoRequestActivity extends SoundManagerActivity<ChatPresent> impl
         audioConstraints.mandatory.add(new MediaConstraints.KeyValuePair("googHighpassFilter", "true"));
         audioConstraints.mandatory.add(new MediaConstraints.KeyValuePair("googNoiseSuppression", "true"));
         AudioSource audioSource = mPeerConnectionFactory.createAudioSource(audioConstraints);
-
         mAudioTrack = mPeerConnectionFactory.createAudioTrack(AUDIO_TRACK_ID, audioSource);
         mAudioTrack.setEnabled(true);
     }

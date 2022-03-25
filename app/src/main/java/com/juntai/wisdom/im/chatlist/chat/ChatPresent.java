@@ -482,9 +482,6 @@ public class ChatPresent extends BaseAppPresent<IModel, MainContract.IBaseView> 
         final VideoEncoderFactory encoderFactory;
         final VideoDecoderFactory decoderFactory;
 //使用外置麦克风
-        JavaAudioDeviceModule.Builder admBuilder = JavaAudioDeviceModule.builder(context);
-
-        admBuilder.setAudioSource(MediaRecorder.AudioSource.MIC);
         encoderFactory = new DefaultVideoEncoderFactory(
                 mRootEglBase.getEglBaseContext(),
                 false /* enableIntelVp8Encoder */,
@@ -496,7 +493,6 @@ public class ChatPresent extends BaseAppPresent<IModel, MainContract.IBaseView> 
                 .createInitializationOptions());
 
         PeerConnectionFactory.Builder builder = PeerConnectionFactory.builder()
-                .setAudioDeviceModule(admBuilder.createAudioDeviceModule())
                 .setVideoEncoderFactory(encoderFactory)
                 .setVideoDecoderFactory(decoderFactory);
         builder.setOptions(null);

@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:2013781812913044834",
-      "lastPropertyId": "49:2427055224524562028",
+      "lastPropertyId": "50:3824231346909759317",
       "name": "MessageBodyBean",
       "properties": [
         {
@@ -238,6 +238,11 @@
           "id": "49:2427055224524562028",
           "name": "isDraft",
           "type": 1
+        },
+        {
+          "id": "50:3824231346909759317",
+          "name": "videoCover",
+          "type": 9
         }
       ],
       "relations": []
