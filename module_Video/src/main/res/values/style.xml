@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MediaStyleTheme" parent="BaseAppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+</resources>

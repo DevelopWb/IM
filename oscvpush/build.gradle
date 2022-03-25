@@ -1,0 +1,85 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+def configs = rootProject.ext.android
+android {
+    compileSdkVersion configs.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion configs.minSdkVersion
+        targetSdkVersion configs.targetSdkVersion
+        versionCode configs.versionCode
+        versionName configs.versionName
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    // push kit
+    api 'com.huawei.hms:push:5.1.1.301'
+    api files('libs/MiPush_SDK_Client_4_8_0.jar')
+    implementation   files("libs/vivo_pushSDK_v3.0.0.3_483.aar")
+//    compile(name: 'com.heytap.msp', ext: 'aar')
+}
+
+// publish
+group='com.github.hackycy'
+
+// 并且如果有用到lib依赖库，需要在Item/Library Module 的build.gradle中引用的库时加入如下代码。
+//repositories {
+//    flatDir {
+//        dirs 'libs' //this way we can find the .aar file in libs folder
+//    }
+//}
+
+//以下为配置library注释在打包jar后保留
+// 打包源码jar
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//
+//task javadoc(type: Javadoc) {
+//    failOnError false
+//    source = android.sourceSets.main.java.sourceFiles
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//    classpath += configurations.compile
+//}
+
+// 打包文档jar
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+//
+//artifacts {
+//    archives sourcesJar
+//    archives javadocJar
+//}
+//
+//javadoc {
+//    options {
+//        //如果你的项目里面有中文注释的话，必须将格式设置为UTF-8，不然会出现乱码
+//        encoding "UTF-8"
+//        charSet 'UTF-8'
+//        author true
+//        version true
+//    }
+//}

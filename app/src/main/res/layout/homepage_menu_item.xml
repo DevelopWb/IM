@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/homepage_menu_ll"
+    android:layout_width="130dp"
+    android:background="@drawable/sp_filled_gray_lighter"
+    android:layout_margin="10dp"
+    android:layout_height="130dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/homepage_menu_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="消防巡检"
+        android:textSize="24dp"></TextView>
+</LinearLayout>

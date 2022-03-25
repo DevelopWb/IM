@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_business_small_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="问题及建议"
+        android:textColor="@color/text_title"
+        android:textSize="16dp"></TextView>
+
+    <EditText
+        android:id="@+id/content_value_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="80dp"
+        android:maxHeight="150dp"
+        android:gravity="left"
+        android:background="@color/gray_light"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="15dp"
+        android:hint="请填写10个字以上的问题描述以便我们提供更好的帮助"
+        android:imeOptions="actionDone"
+        android:textSize="14dp"></EditText>
+
+
+    <fragment
+        android:id="@+id/photo_fg"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        class="com.juntai.wisdom.im.base.selectPics.SelectPhotosFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/mobile_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/text_title"
+        android:textSize="16dp"
+        android:paddingBottom="10dp"
+        android:text="联系电话" />
+
+    <EditText
+        android:id="@+id/mobile_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:inputType="phone"
+        android:paddingBottom="10dp"
+        android:background="@color/gray_light"
+        android:hint="选填，便于我们与你联系"
+        android:imeOptions="actionDone"
+        android:textSize="14dp"></EditText>
+    
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/commit_tv"
+        android:text="提交"
+        style="@style/bt_style"></TextView>
+    
+</LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/gray_lighter"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.juntai.wisdom.im.entrance.main.MainActivity"
+    android:id="@+id/main_layout">
+    <com.juntai.wisdom.im.base.customview.CustomViewPager
+        android:id="@+id/main_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/main_tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="10dp"
+        app:tabGravity="fill"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"
+        app:tabBackground="@color/white"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@color/gray_ripple"/>
+    <!--app:tabBackground="@drawable/bg_main_tab"-->
+    <!--app:tabSelectedTextColor="@color/white"-->
+</LinearLayout>

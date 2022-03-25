@@ -1,0 +1,61 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from:"config.gradle"
+
+ext {
+    var = 'key0'
+    var1 = var
+    var2 = var1
+}
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://jcenter.bintray.com/' }
+        maven { url "https://jitpack.io" }
+        maven {url 'http://developer.huawei.com/repo/'}
+        maven {url 'http://maven.aliyun.com/nexus/content/repositories/releases/'}
+// 1.添加MobSDK Maven地址
+        maven {
+            url "https://mvn.mob.com/android"
+        }
+
+    }
+    ext.objectboxVersion = '3.0.1'
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.2'
+        // tinkersupport插件, 其中lastest.release指拉取最新版本，也可以指定明确版本号，例如1.0.4
+//        classpath "com.tencent.bugly:tinker-support:1.2.0"
+        //mob
+        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
+
+        classpath 'com.huawei.agconnect:agcp:1.4.1.300'
+        // lib publish
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
+
+        classpath 'com.aliyun.ams:emas-services:1.0.1'
+
+    }
+}
+android.useDeprecatedNdk=true
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://jcenter.bintray.com/' }
+        maven { url "https://jitpack.io" }
+        maven {url 'http://developer.huawei.com/repo/'}
+        maven {url 'http://maven.aliyun.com/nexus/content/repositories/releases/'}
+        maven {
+            url "https://mvn.mob.com/android"
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

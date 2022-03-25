@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">超视距</string>
+    <string name="agreement_user_xieyi">《用户协议》</string>
+    <string name="agreement_secret_xieyi">《隐私协议》</string>
+    <string name="secret_xieyi_url">https://www.kb167.com/yinsi/csj-yinsi.html</string>
+    <string name="user_xieyi_url">https://www.kb167.com/yinsi/csj-user.html</string>
+    <string name="protocal_notice1">我已阅读并同意《隐私协议》</string>
+    <string name="protocal_notice2">和《用户协议》</string>
+    <string name="warn_mofify_name">好名字可以让你的朋友更容易记住你</string>
+    <string name="warn_mofify_account">超视距号是账号的唯一凭证,一年只能修改一次。</string>
+    <string name="message_recommend">超视距是一款非常好用的聊天软件，推荐你也来玩。马上来APP就可以找到我。下载地址>>https://kb167.cn/chaoshiju/</string>
+
+    <string name="please_to_talk">按住 说话</string>
+    <string name="shot">拍摄</string>
+    <string name="location">位置</string>
+    <string name="red_pack">红包</string>
+    <string name="album">相册</string>
+</resources>

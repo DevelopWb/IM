@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/white"></android.support.v7.widget.RecyclerView>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/bg_white_only_bottom_gray_shape_1px">
+
+            <ImageView
+                android:id="@+id/qr_code_iv"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/app_icon"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="二维码点击放大\n长按保存"
+                android:textColor="@color/orange"
+                app:layout_constraintBottom_toBottomOf="@+id/qr_code_iv"
+                app:layout_constraintLeft_toRightOf="@+id/qr_code_iv"
+                app:layout_constraintTop_toTopOf="@+id/qr_code_iv"></TextView>
+
+            <TextView
+                android:id="@+id/navigation_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/sp_filled_accent"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="5dp"
+                android:text="导航"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/qr_code_iv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/qr_code_iv" />
+
+            <TextView
+                android:id="@+id/see_more_info_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="点击查看更多信息>>"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintLeft_toLeftOf="@+id/qr_code_iv"
+                app:layout_constraintTop_toBottomOf="@+id/qr_code_iv"></TextView>
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inspection_record_cl"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/sp_filled_gray_lighter"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/cover_pic_iv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/default_user_head_icon"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/item_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="治安巡检记录"
+                android:textColor="@color/colorAccent"
+                android:textSize="18dp"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintLeft_toRightOf="@+id/cover_pic_iv"
+                app:layout_constraintRight_toLeftOf="@+id/item_right"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/colorAccent"
+                android:text="点击进入>>"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintLeft_toLeftOf="@+id/item_title_tv"
+                app:layout_constraintRight_toRightOf="@+id/item_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/item_title_tv" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/start_inspect_tv"
+        style="@style/bt_style"
+        android:layout_marginBottom="20dp"
+        android:text="开始巡检"></TextView>
+</LinearLayout>

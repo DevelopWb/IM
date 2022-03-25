@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <com.king.zxing.ViewfinderView
+        android:fitsSystemWindows="true"
+        android:id="@+id/viewfinderView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:frameColor="#60000000"
+        app:cornerColor="@color/white"
+        app:labelText="将二维码/条形码放入框中"
+        app:labelTextLocation="bottom"
+        app:laserStyle="line"
+        app:scannerLineHeight="3dp"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="60dp">
+
+        <ImageView
+            android:id="@+id/zxing_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/scan_choose_pic"
+            android:padding="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/ivTorch"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/ivTorch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/zxfl_torch_selector"
+            android:padding="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintLeft_toRightOf="@+id/zxing_pic"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/zxing_back_btn"/>
+
+        <ImageView
+            android:id="@+id/zxing_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/scan_close"
+            android:padding="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/ivTorch"/>
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

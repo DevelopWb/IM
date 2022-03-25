@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@mipmap/unselect_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/chatAdapterSelectIvStyle"></ImageView>
+
+    <ImageView
+        android:id="@+id/receiver_pic_iv"
+        style="@style/chat_head_iv_style"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintLeft_toRightOf="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    <TextView
+        android:id="@+id/receiver_nick_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="昵称"
+        android:textSize="10dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+        app:layout_constraintTop_toTopOf="@+id/receiver_pic_iv"></TextView>
+
+    <EditText
+        android:id="@+id/receiver_content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@mipmap/receiver_chat_bg"
+        android:gravity="center_vertical|left"
+        android:minHeight="30dp"
+        android:paddingLeft="15dp"
+        android:editable="false"
+        android:textIsSelectable="true"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:text="dfssdf"
+        android:textColor="@android:color/black"
+        android:textSize="16dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+        app:layout_constraintTop_toBottomOf="@+id/receiver_nick_name_tv"></EditText>
+
+    <ImageView
+        android:id="@+id/sender_pic_iv"
+        style="@style/chat_head_iv_style"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    <TextView
+        android:id="@+id/sender_nick_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:text="昵称"
+        android:textSize="10dp"
+        android:visibility="gone"
+        app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
+        app:layout_constraintTop_toTopOf="@+id/sender_pic_iv"></TextView>
+
+    <EditText
+        android:id="@+id/sender_content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/sender_chat_bg"
+        android:gravity="center_vertical|left"
+        android:minHeight="30dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="8dp"
+        android:editable="false"
+        android:textIsSelectable="true"
+        android:paddingRight="12dp"
+        android:paddingBottom="8dp"
+        android:text="测试对齐方式测试对齐方式测试对齐方式测试对齐方式测试对齐方式测试对齐方式"
+        android:textColor="@android:color/black"
+        android:textSize="16dp"
+        app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
+        app:layout_constraintTop_toBottomOf="@+id/sender_nick_name_tv"></EditText>
+
+    <android.support.constraint.Group
+        android:id="@+id/receiver_g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="receiver_pic_iv,receiver_content_tv"></android.support.constraint.Group>
+
+    <android.support.constraint.Group
+        android:id="@+id/sender_g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="sender_pic_iv,sender_content_tv"></android.support.constraint.Group>
+
+
+</android.support.constraint.ConstraintLayout>

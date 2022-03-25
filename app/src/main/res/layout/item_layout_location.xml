@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingTop="3dp"
+    android:id="@+id/location_ll"
+    android:gravity="center_vertical"
+    android:paddingRight="15dp"
+    android:paddingBottom="3dp"
+    android:layout_height="wrap_content">
+    <TextView
+        style="@style/item_title_style"
+        android:textSize="16dp"
+        android:text="定位："
+        android:textColor="@color/black"
+        android:gravity="center_vertical"/>
+    <TextView
+        android:id="@+id/location_tv"
+        android:gravity="left"
+        style="@style/item_content_text_style_right"
+        android:layout_marginRight="10dp"
+        android:text="dfadfasdf"/>
+    <ImageView
+        android:layout_width="15dp"
+        android:src="@mipmap/location_icon"
+        android:layout_height="15dp"></ImageView>
+</LinearLayout>

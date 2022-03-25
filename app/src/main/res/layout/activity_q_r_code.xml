@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_white_10dp"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/bg_white_only_bottom_gray_shape_1px"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/contactor_icon_iv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/default_user_head_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/contactor_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="昵称"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/contactor_addr_tv"
+                app:layout_constraintLeft_toRightOf="@+id/contactor_icon_iv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/sex_tag_iv"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="5dp"
+                android:src="@mipmap/sex_tag_boy"
+                app:layout_constraintBottom_toBottomOf="@+id/contactor_name_tv"
+                app:layout_constraintLeft_toRightOf="@+id/contactor_name_tv"
+                app:layout_constraintTop_toTopOf="@+id/contactor_name_tv"></ImageView>
+
+
+            <TextView
+                android:id="@+id/contactor_addr_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="账号："
+                android:textColor="#000000"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/contactor_name_tv"
+                app:layout_constraintTop_toBottomOf="@+id/contactor_name_tv" />
+        </android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/qrcode_iv"
+            android:layout_width="match_parent"
+            android:padding="25dp"
+            android:adjustViewBounds="true"
+            android:layout_height="wrap_content"></ImageView>
+        <TextView
+            android:id="@+id/warn_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="扫一扫上面的二维码图案,加我好友"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            ></TextView>
+    </LinearLayout>
+</LinearLayout>

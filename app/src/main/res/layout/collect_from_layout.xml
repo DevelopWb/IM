@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_marginLeft="15dp"
+    android:background="@drawable/bg_white_only_bottom_gray_shape_1px"
+    android:paddingRight="15dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/collect_from_tv"
+        android:layout_width="wrap_content"
+        android:textSize="12dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/collect_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:textSize="12dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>

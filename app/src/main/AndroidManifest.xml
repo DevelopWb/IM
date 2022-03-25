@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.juntai.disabled.federation">
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 华为小红点权限 -->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE " />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name="com.juntai.wisdom.im.MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/app_icon"
+        android:label="@string/app_name"
+        android:maxAspectRatio="2.4"
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/app_icon"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name="com.juntai.wisdom.im.chatlist.chat.displayFile.FileDetailActivity"></activity>
+        <activity android:name="com.juntai.wisdom.im.mine.myCollect.CollectionDetailActivity" />
+        <activity android:name="com.juntai.wisdom.im.mine.myCollect.SearchCollectActivity" />
+        <activity android:name="com.juntai.wisdom.im.mine.myCollect.MyCollectActivity" />
+
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.chat.chatRecord.ChatRecordDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.chat.forwardMsg.ForwardMsgActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.SuggestionActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.search.SearchActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.chat.forwardMsg.SearchGroupAndContactActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.searchContact.SearchContactActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.searchchat.SearchGroupChatActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.searchchat.SearchPrivateMsgRecordActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.addFriend.MobileContactsActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.group.JoinGroupByUuidActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.groupchat.ModifyNickNameOfGroupActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.groupchat.ModifyGroupNameActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.groupchat.GroupQrcodeActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.group.GroupListActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.juntai.wisdom.im.groupchat"
+                    android:path="/push"
+                    android:scheme="pushscheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.chat.PrivateChatActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.juntai.wisdom.im.privatechat"
+                    android:path="/push"
+                    android:scheme="pushscheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.groupchat.joinGroup.SelectGroupChatPeopleActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.chat.selectFile.SelectFileActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.secret.BlockFriendsActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.secret.SecrecyActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.chat.chatInfo.FriendInfoSetActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.chat.chatInfo.ChatInfoActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.groupchat.GroupInfoActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.ModifyRemarkNameActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.SelectContactActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.myinfo.selectAddr.SetAddrActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.myinfo.SetSexActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.myinfo.QRCodeCardActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.myinfo.ModifyAccountActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.myinfo.ModifyNickNameActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.entrance.ForgetPwdActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.newfriends.NewFriendsApplyActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.chat.videocall.VideoRequestActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.juntai.wisdom.im.videocall"
+                    android:path="/push"
+                    android:scheme="pushscheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.juntai.wisdom.im.base.displayPicVideo.PicVideoDisplayActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.ApplyAddFriendActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.base.selectPics.HeadCropActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.addFriend.AddFriendActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.contact.ContactorInfoActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.ModifyPwdActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.chatlist.QRScanActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.mine.myinfo.MyInformationActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.juntai.wisdom.im.entrance.regist.RegistActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.juntai.wisdom.im.entrance.LoginActivity"
+            android:launchMode="singleTop" />
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt" >
+        </service>
+        <provider
+            android:name="com.juntai.wisdom.im.utils.MyFileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:name,android:authorities,android:exported,android:grantUriPermissions">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"
+                tools:replace="android:name,android:resource" />
+        </provider> <!-- 阿里推送 -->
+        <meta-data
+            android:name="com.alibaba.app.appkey"
+            android:value="333625246" /> <!-- 请填写你自己的- appKey -->
+        <meta-data
+            android:name="com.alibaba.app.appsecret"
+            android:value="e1a57800697b428790fc54ddb637cc49" /> <!-- 请填写你自己的appSecret -->
+        <service
+            android:name="com.juntai.wisdom.im.utils.aliPush.MyMessageIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" /> <!-- 百度地图 -->
+        <!-- Ma - debug-Release-key : A2hxzsrCO3VOXGXBzVjP3zKKYBsNhi1A -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="4ryeN6PKVrZdWeNglqjg24WyROXhD4jx" /> <!-- 百度地图 -->
+        <!--  -->
+        <service android:name="com.juntai.disabled.bdmap.service.LocateAndUpload" /> <!--  -->
+        <activity
+            android:name="com.juntai.wisdom.im.entrance.StartActivity"
+            android:theme="@style/AppTheme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.juntai.wisdom.im.entrance.main.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" /> <!-- 关于 -->
+        <activity
+            android:name="com.juntai.wisdom.im.mine.AboutActivity"
+            android:launchMode="singleTop" /> <!-- 个人信息 -->
+        <activity
+            android:name="com.juntai.wisdom.im.mine.UserAgreementActivity"
+            android:launchMode="singleTop" />
+        <activity android:name="com.juntai.wisdom.im.base.BaseAppActivity" /> <!-- vivo appid和appkey    不能在lib中注册 -->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="799103f7f302428baa622042b50754ab" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="105509462" />
+    </application>
+
+</manifest>

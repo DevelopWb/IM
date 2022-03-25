@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingBottom="30dp">
+    <TextView
+        android:id="@+id/save_draft_tv"
+        style="@style/bt_style"
+        android:layout_weight="1"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="20dp"
+        android:text="保存草稿"
+        ></TextView>
+    <TextView
+        android:id="@+id/commit_form_tv"
+        style="@style/bt_style"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="40dp"
+        android:text="提交审核"
+        ></TextView>
+
+</LinearLayout>

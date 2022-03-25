@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp">
+    <ImageView
+        android:id="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@mipmap/unselect_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/chatAdapterSelectIvStyle"></ImageView>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/receiver_video_cl"
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/select_status_iv"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/receiver_pic_iv"
+            style="@style/chat_head_iv_style"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+        <TextView
+            android:id="@+id/receiver_nick_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="昵称"
+            android:textSize="10dp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+            app:layout_constraintTop_toTopOf="@+id/receiver_pic_iv"></TextView>
+        <TextView
+            android:id="@+id/receiver_videocall_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="60dp"
+            android:background="@mipmap/receiver_chat_bg"
+            android:drawableLeft="@mipmap/receiver_video_icon"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text="聊天时长 00:24"
+            android:textColor="@android:color/black"
+            android:textSize="14dp"
+            app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+            app:layout_constraintTop_toTopOf="@+id/receiver_pic_iv"></TextView>
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/sender_video_call_cl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/sender_pic_iv"
+            style="@style/chat_head_iv_style"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+        <TextView
+            android:id="@+id/sender_videocall_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/sender_chat_bg"
+            android:drawableRight="@mipmap/sender_video_icon"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:text="聊天时长 00:24"
+            android:textColor="@android:color/black"
+            android:textSize="14dp"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
+            app:layout_constraintTop_toTopOf="@+id/sender_pic_iv"></TextView>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.constraint.ConstraintLayout>

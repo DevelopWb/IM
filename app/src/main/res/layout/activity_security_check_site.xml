@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/search_content_sv"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/sp_filled_gray_lighter"
+        android:paddingLeft="-10dp"
+        app:defaultQueryHint="请输入关键字"
+        app:iconifiedByDefault="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/back_textview"
+        app:layout_constraintRight_toLeftOf="@+id/search_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryBackground="@null"
+        app:searchIcon="@mipmap/search_icon"
+        app:showDividers="none"
+        app:submitBackground="@null" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        layout="@layout/recycleview_layout"></include>
+</LinearLayout>

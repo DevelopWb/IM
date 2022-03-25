@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp">
+
+
+    <ImageView
+        android:id="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@mipmap/unselect_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/chatAdapterSelectIvStyle"></ImageView>
+
+    <ImageView
+        android:id="@+id/receiver_pic_iv"
+        style="@style/chat_head_iv_style"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintLeft_toRightOf="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+    <TextView
+        android:id="@+id/receiver_nick_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="昵称"
+        android:textSize="10dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+        app:layout_constraintTop_toTopOf="@+id/receiver_pic_iv"></TextView>
+    <ImageView
+        android:id="@+id/receiver_pic_video_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/receiver_nick_name_tv"
+        android:src="@mipmap/splash_bg"
+        android:adjustViewBounds="true"
+        app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+        ></ImageView>
+
+
+
+    <ImageView
+        android:id="@+id/sender_pic_iv"
+        style="@style/chat_head_iv_style"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+    <TextView
+        android:id="@+id/sender_nick_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:text="昵称"
+        android:textSize="10dp"
+        android:visibility="gone"
+        app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
+        app:layout_constraintTop_toTopOf="@+id/sender_pic_iv"
+        ></TextView>
+    <ImageView
+        android:id="@+id/sender_pic_video_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintTop_toBottomOf="@+id/sender_nick_name_tv"
+        app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
+        app:layout_goneMarginRight="15dp"></ImageView>
+    <ImageView
+        android:id="@+id/receiver_play_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:src="@mipmap/play_button"
+        app:layout_constraintBottom_toBottomOf="@+id/receiver_pic_video_iv"
+        app:layout_constraintLeft_toLeftOf="@+id/receiver_pic_video_iv"
+        app:layout_constraintRight_toRightOf="@+id/receiver_pic_video_iv"
+        app:layout_constraintTop_toTopOf="@+id/receiver_pic_video_iv"></ImageView>
+
+
+<!--    <com.juntai.wisdom.im.base.customview.WaveProgress-->
+<!--        android:id="@+id/receiver_progress"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        app:darkWaveAnimTime="1000"-->
+<!--        app:darkWaveColor="@color/dark"-->
+<!--        app:lightWaveAnimTime="2000"-->
+<!--        app:circleWidth="1dp"-->
+<!--        app:lightWaveColor="@color/light"-->
+<!--        app:lightWaveDirect="R2L"-->
+<!--        app:lockWave="false"-->
+<!--        app:valueSize="14sp"-->
+<!--        app:waveHeight="5dp"-->
+<!--        app:waveNum="1"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/receiver_content_iv"-->
+<!--        app:layout_constraintLeft_toLeftOf="@+id/receiver_content_iv"-->
+<!--        app:layout_constraintRight_toRightOf="@+id/receiver_content_iv"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/receiver_content_iv"/>-->
+
+
+
+    <TextView
+        android:id="@+id/receiver_video_duration_tv"
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="@+id/receiver_pic_video_iv"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/receiver_pic_video_iv"
+        android:layout_height="wrap_content"></TextView>
+
+    <ImageView
+        android:id="@+id/sender_play_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/play_button"
+        app:layout_constraintBottom_toBottomOf="@+id/sender_pic_video_iv"
+        app:layout_constraintLeft_toLeftOf="@+id/sender_pic_video_iv"
+        app:layout_constraintRight_toRightOf="@+id/sender_pic_video_iv"
+        app:layout_constraintTop_toTopOf="@+id/sender_pic_video_iv"></ImageView>
+
+    <com.juntai.wisdom.im.base.customview.WaveProgress
+        android:id="@+id/sender_progress"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center_horizontal"
+        app:darkWaveAnimTime="1000"
+        app:darkWaveColor="@color/dark"
+        app:lightWaveAnimTime="2000"
+        app:circleWidth="1dp"
+        app:circleColor="@color/white"
+        app:lightWaveColor="@color/light"
+        app:lightWaveDirect="R2L"
+        app:lockWave="false"
+        app:valueSize="12sp"
+        app:waveHeight="3dp"
+        app:waveNum="1"
+        app:layout_constraintBottom_toBottomOf="@+id/sender_pic_video_iv"
+        app:layout_constraintLeft_toLeftOf="@+id/sender_pic_video_iv"
+        app:layout_constraintRight_toRightOf="@+id/sender_pic_video_iv"
+        app:layout_constraintTop_toTopOf="@+id/sender_pic_video_iv"/>
+    <TextView
+        android:id="@+id/sender_video_duration_tv"
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="@+id/sender_pic_video_iv"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/sender_pic_video_iv"
+        android:layout_height="wrap_content"></TextView>
+    <android.support.constraint.Group
+        android:id="@+id/receiver_g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:constraint_referenced_ids="receiver_pic_iv,receiver_pic_video_iv"></android.support.constraint.Group>
+
+    <android.support.constraint.Group
+        android:id="@+id/sender_g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="sender_pic_iv,sender_pic_video_iv"></android.support.constraint.Group>
+
+
+</android.support.constraint.ConstraintLayout>

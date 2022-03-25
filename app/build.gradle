@@ -1,0 +1,118 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.huawei.agconnect'
+apply plugin: 'io.objectbox' // after applying Android plugin
+apply plugin: 'com.aliyun.ams.emas-services'
+
+def currentModule = rootProject.ext.currentModule
+if (1 == currentModule) {
+    apply from: 'mob_share.gradle'
+}
+def isDebug = rootProject.ext.isDebug
+def configs = rootProject.ext.android
+android {
+    compileSdkVersion configs.compileSdkVersion
+    defaultConfig {
+        applicationId "com.juntai.wisdom.im"
+        minSdkVersion configs.minSdkVersion
+        targetSdkVersion configs.targetSdkVersion
+        versionCode configs.versionCode
+        versionName configs.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "armeabi"////,"arm64-v8a","x86_64"
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "超视距-" + variant.versionCode + "-" + variant.versionName + ".apk"
+        }
+    }
+    signingConfigs {
+        release {
+            //设置release的签名信息
+            //c204528aaa01367971e36f2b06a2dc25
+            storeFile file('juntaikey.jks')
+            storePassword "bugaosuni5156"
+            keyAlias "juntaikey"
+            keyPassword "bugaosuni5156"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            //是否优化zip
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+//            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    //过期api
+    lintOptions {
+        abortOnError false
+    }
+    dexOptions {//解决编译内存不足问题
+        javaMaxHeapSize "4096M"
+    }
+    packagingOptions {//解决so文件重复问题，使用第一个
+        pickFirst "**/libsqlite.so"
+    }
+
+}
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    //noinspection GradleCompatible
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation project(':module_Base')
+    implementation project(':module_Map')
+    implementation project(':banner')
+    implementation project(':EmojiLib')
+    implementation project(':chathelp')
+    implementation project(':module_Video')
+    implementation project(':indexlib')
+    implementation project((':oscvpush'))
+    implementation 'com.oginotihiro:cropview:1.0.0'
+    implementation 'com.rabtman.wsmanager:wsmanager:1.0.2'
+    /**
+     * 角标
+     */
+    implementation "me.leolin:ShortcutBadger:1.1.22@aar"
+    implementation project(':jjdxm-ijkplayer')
+    implementation 'org.webrtc:google-webrtc:1.0.26131'
+/**
+ * 文件下载
+ */
+    implementation 'org.wlf:FileDownloader:0.3.2'
+
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '28.0.0'
+            }
+        }
+    }
+}

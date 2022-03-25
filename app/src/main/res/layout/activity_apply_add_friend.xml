@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:text="发送添加朋友申请" />
+
+    <EditText
+        android:id="@+id/apply_content_tv"
+        style="@style/login_edit_tv_style"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="14dp"
+        android:gravity="top|left"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:text="设置备注" />
+
+    <EditText
+        android:id="@+id/remark_tv"
+        style="@style/login_edit_tv_style"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="14dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp" />
+
+    <TextView
+        android:id="@+id/send_apply_tv"
+        style="@style/bt_style"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="150dp"
+        android:text="发送" />
+</LinearLayout>

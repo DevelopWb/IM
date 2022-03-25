@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp">
+
+    <ImageView
+        android:id="@+id/select_pic_icon_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/add_icons"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/delete_pushed_news_iv"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
+        android:src="@mipmap/icon_delete"
+        android:visibility="visible"
+        android:background="@drawable/bg_btn_red_round"
+        app:layout_constraintRight_toRightOf="@+id/select_pic_icon_iv"
+        app:layout_constraintTop_toTopOf="@+id/select_pic_icon_iv" />
+    <ImageView
+        android:id="@+id/item_video_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/play_button"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+</android.support.constraint.ConstraintLayout>

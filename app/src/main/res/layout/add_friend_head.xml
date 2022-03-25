@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_account_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="@drawable/bg_white_only_bottom_gray_shape_1px"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/my_account_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="25dp"
+        android:drawableRight="@mipmap/qr_code_tag_blue"
+        android:drawablePadding="5dp"
+        android:text="我的超视距号"></TextView>
+
+
+</LinearLayout>

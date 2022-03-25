@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+      >
+
+        <ImageView
+            android:id="@+id/collect_file_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/my_hint_head"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/collect_file_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="dfadsfa"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/collect_file_size_tv"
+            app:layout_constraintLeft_toRightOf="@+id/collect_file_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/collect_file_size_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="个人名片"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="@+id/collect_file_name_tv"
+            app:layout_constraintRight_toRightOf="@+id/collect_file_name_tv"
+            app:layout_constraintTop_toBottomOf="@+id/collect_file_name_tv" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <include layout="@layout/collect_from_layout" />
+</LinearLayout>

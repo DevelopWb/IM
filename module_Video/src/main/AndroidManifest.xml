@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.juntai.disabled.video">
+
+    <application>
+        <activity android:name="com.juntai.disabled.video.player.DronePlayer"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <!-- 短视频录制 -->
+        <activity android:name="com.mabeijianxi.smallvideorecord2.MediaRecorderActivity"
+            android:theme="@style/MediaStyleTheme"
+            android:launchMode="singleTop"/>
+        <activity android:name="com.juntai.disabled.video.record.VideoPreviewActivity"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name="com.juntai.disabled.video.player.PlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name="com.juntai.disabled.video.player.VideoNetPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity android:name="com.juntai.disabled.video.img.PicDisplayActivity"
+            android:launchMode="singleTop"/>
+
+        <activity android:name="com.juntai.disabled.video.record.SendSmallVideoActivity2"
+            android:launchMode="singleTop"/>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,96 @@
+// 第三方库，App的版本号的管理和组件模式的切换配置
+ext {
+    isDebug = false //false:作为Lib集成存在， true:作为application组件存在
+    currentModule = 1
+    android = [
+            compileSdkVersion: 28,
+            minSdkVersion    : 24,
+            targetSdkVersion : 28,
+            //添加场所上传
+            versionCode      : 124,
+            versionName      : "1.2.4",
+    ]
+    libsVersion = [
+            // App dependencies version
+            supportVersion = "28.0.0",
+            glideVersion = "4.9.0",
+            retrofitVersion = "2.5.0",
+            okhttpVersion = "3.8.0",
+            smartRefresh = "1.0.5.1",//刷新库
+            leakcanaryVersion = "2.7",
+            rxlifecycleVersion = "2.2.1",
+            stethoVersion = "1.5.0",
+            hawkVersion = "2.0.1",
+            immersionbarVersion = "2.3.2-beta01",
+    ]
+    dependencies = [
+            //android 官方库
+            "appcompat-v7"                 : "com.android.support:appcompat-v7:$rootProject.supportVersion",
+            "support-v4"                   : "com.android.support:support-v4:$rootProject.supportVersion",
+            "design"                       : "com.android.support:design:$rootProject.supportVersion",
+            "annotations"                  : "com.android.support:support-annotations:$rootProject.supportVersion",
+            "gson"                         : "com.google.code.gson:gson:2.6.2",
+//            "fastjson"                     :'com.alibaba:fastjson:1.2.67',
+            //路由通讯
+            "arouter-api"                  : "com.alibaba:arouter-api:1.4.1",
+            "arouter-compiler"             : "com.alibaba:arouter-compiler:1.2.2",
+            // OkHttp
+            "okhttp"                       : "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion",
+            "logging-interceptor"          : "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion",
+            //retrofit
+            "retrofit"                     : "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion",
+            "converter-gson"               : "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion",
+            "converter-scalars"            : "com.squareup.retrofit2:converter-scalars:$rootProject.retrofitVersion",
+            "retrofit-adapters"            : "com.squareup.retrofit2:retrofit-adapters:$rootProject.retrofitVersion",
+            "adapter-rxjava2"              : "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion",
+            "converter-wire"               : "com.squareup.retrofit2:converter-wire:$rootProject.retrofitVersion",
+            "wire-runtime"                 : "com.squareup.wire:wire-runtime:2.3.0-RC1",
+            //RxJava
+            "rxjava"                       : "io.reactivex.rxjava2:rxjava",
+            "rxandroid"                    : "io.reactivex.rxjava2:rxandroid:2.1.0",
+            //glide
+            "glide"                        : "com.github.bumptech.glide:glide:$rootProject.glideVersion",
+            "compiler"                     : "com.github.bumptech.glide:compiler:$rootProject.glideVersion",
+            //
+            "rxlifecycle"                  : "com.trello.rxlifecycle2:rxlifecycle:$rootProject.rxlifecycleVersion",
+            "rxlifecycle-android"          : "com.trello.rxlifecycle2:rxlifecycle-android:$rootProject.rxlifecycleVersion",
+            "rxlifecycle-components"       : "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.rxlifecycleVersion",
+            //tool
+            "eventbus"                     : "org.greenrobot:eventbus:3.2.0",
+            //日志工具
+            "logger"                       : "com.orhanobut:logger:2.2.0",
+            "multidex"                     : "com.android.support:multidex:1.0.3",
+
+            "leakcanary-android"           : "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanaryVersion",
+            //其他第三发-刷新-状态栏-适配器-标签-轮播
+            "SmartRefreshLayout"           : "com.scwang.smartrefresh:SmartRefreshLayout:$rootProject.smartRefresh",
+            "SmartRefreshHeader"           : "com.scwang.smartrefresh:SmartRefreshHeader:$rootProject.smartRefresh",
+            //万能适配器
+            "BaseRecyclerViewAdapterHelper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30",
+            //图片压缩
+            "Luban"                        : "top.zibin:Luban:1.1.8",
+            //调试工具
+            "stetho"                       : "com.facebook.stetho:stetho:$rootProject.stethoVersion",
+            "stetho-okhttp3"               : "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion",
+            //动态权限
+            "rxpermissions"                : "com.github.tbruyelle:rxpermissions:0.10.2",
+            //https://github.com/GrenderG/Toasty
+            "Toasty"                       : "com.github.GrenderG:Toasty:1.4.1",
+            //app检查更新
+            "versionchecklib"              : "com.allenliu.versionchecklib:library:2.1.9",
+            //热更新
+            "crashreport_upgrade"          : "com.tencent.bugly:crashreport_upgrade:latest.release",
+            "tinker-android"               : "com.tencent.tinker:tinker-android-lib:1.9.14.3",
+            "nativecrashreport"            : "com.tencent.bugly:nativecrashreport:latest.release",//其中latest.release指代最新版本号，也可以指定明确的版本号
+            //便捷数据库
+            "hawk"                         : "com.orhanobut:hawk:$rootProject.hawkVersion",
+            ////状态栏
+            "immersionbar"                 : "com.gyf.immersionbar:immersionbar:$rootProject.immersionbarVersion",
+
+            //条件选择器
+            "picker_view"                  : 'com.contrarywind:Android-PickerView:4.1.8',
+            //图片视频选择
+            "matisse"                      : 'com.zhihu.android:matisse:0.5.2-beta4',
+            "update"                       : 'com.github.AlexLiuSheng:CheckVersionLib:2.3.3.1_appcompat',
+    ]
+}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/app_activity_bg">
+
+
+    <ImageView
+        android:id="@+id/app_name_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/login_app_icon"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/login_ll"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"></ImageView>
+
+
+    <LinearLayout
+        android:id="@+id/login_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+
+            <EditText
+                android:id="@+id/regist_phone_et"
+                style="@style/login_edit_tv_style"
+                android:layout_width="match_parent"
+                android:hint="请输入你的账号"
+                android:maxLength="11"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <EditText
+                android:id="@+id/password_et"
+                style="@style/login_edit_tv_style"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:hint="请输入你的密码"
+                android:inputType="textPassword"
+                android:maxLength="16"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/regist_phone_et" />
+
+            <ImageView
+                android:id="@+id/hide_show_iv"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:padding="10dp"
+                android:src="@mipmap/hide_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/password_et"
+                app:layout_constraintRight_toRightOf="@+id/password_et"
+                app:layout_constraintTop_toTopOf="@+id/password_et"></ImageView>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/login_tv"
+                style="@style/bt_bg_style"
+                android:text="登录"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/forget_pwd_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="忘记密码"
+                android:textColor="@color/colorAccent"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toStartOf="@+id/regist_tv"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login_tv"></TextView>
+
+            <TextView
+                android:id="@+id/regist_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="注册"
+                android:textColor="@color/colorAccent"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/forget_pwd_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/forget_pwd_tv"
+                app:layout_constraintTop_toTopOf="@+id/forget_pwd_tv"></TextView>
+        </android.support.constraint.ConstraintLayout>
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,105 @@
+apply plugin: 'com.android.library'
+
+def configs = rootProject.ext.android
+def librarys = rootProject.ext.dependencies
+android {
+    compileSdkVersion configs.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion configs.minSdkVersion
+        targetSdkVersion configs.targetSdkVersion
+        versionCode configs.versionCode
+        versionName configs.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+
+        debug {
+                consumerProguardFiles 'proguard-rules.pro'
+        }
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api librarys["appcompat-v7"]
+    api librarys["design"]
+    testImplementation 'junit:junit:4.12'
+    //noinspection GradleCompatible
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+    //转换器，请求结果转换成Model
+    //okhttp
+    api librarys["okhttp"]
+    api librarys["logging-interceptor"]
+    //Gson 库
+    api librarys["gson"]
+    //路由
+    //api librarys["arouter-api"]
+    //annotationProcessor librarys["arouter-compiler"]
+    //
+    api librarys["rxjava"]
+    api librarys["rxandroid"]
+    //retrofit2
+    api librarys["retrofit"]
+    api librarys["converter-gson"]
+    api librarys["retrofit-adapters"]
+    api librarys["converter-wire"]
+    api librarys["adapter-rxjava2"]
+    api librarys["converter-scalars"]        //ConverterFactory的String依赖包
+    api librarys["wire-runtime"]
+    //
+    api librarys["BaseRecyclerViewAdapterHelper"]
+    //Glide
+    api librarys["glide"]
+    annotationProcessor librarys["compiler"]
+    //压缩
+    api librarys["Luban"]
+    //下拉刷新
+    api librarys["SmartRefreshLayout"]
+    api librarys["SmartRefreshHeader"]       //没有使用特殊Header，可以不加这行
+    // RxLifecycle
+    api librarys["rxlifecycle"]
+    api librarys["rxlifecycle-android"]
+    api librarys["rxlifecycle-components"]
+
+    api librarys["multidex"]
+    //leakcanary
+    debugImplementation librarys["leakcanary-android"]
+
+    api librarys["logger"]
+    api librarys["rxpermissions"]
+    api librarys["Toasty"]
+    api 'com.android.support:cardview-v7:25.3.1'
+    api librarys["hawk"]
+//    api librarys["tinker-android"]
+//    api librarys["nativecrashreport"]
+//    api librarys["crashreport_upgrade"]
+    api librarys["immersionbar"]
+    api librarys["picker_view"]
+    api librarys["matisse"]
+    api librarys["eventbus"]
+    api project(':zXingLiteLib')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    api librarys["update"]
+
+}

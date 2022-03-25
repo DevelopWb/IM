@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/update_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="版本更新"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/update_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:background="@color/white"
+        android:paddingBottom="20dp"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/versionchecklib_version_dialog_commit"
+            style="@style/bt_bg_style"
+            android:layout_marginLeft="20dp"
+            android:text="立即升级"
+            android:letterSpacing="0"
+            android:layout_height="30dp"
+            android:textSize="14dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/versionchecklib_version_dialog_cancel"
+            style="@style/bt_bg_style"
+            android:text="残忍拒绝"
+            android:letterSpacing="0"
+            android:textSize="14dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

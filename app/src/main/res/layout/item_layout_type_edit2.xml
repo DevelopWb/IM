@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingTop="3dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="3dp">
+
+    <TextView
+        android:id="@+id/key_tv"
+        android:textSize="16dp"
+        android:textColor="@color/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></TextView>
+
+    <EditText
+        android:id="@+id/value_et"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_white_only_bottom_gray_shape_1px"
+        android:imeOptions="actionDone"
+        android:padding="5dp"
+        android:textSize="14dp"></EditText>
+
+</LinearLayout>

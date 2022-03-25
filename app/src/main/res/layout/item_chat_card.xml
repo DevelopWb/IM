@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp">
+
+
+    <ImageView
+        android:id="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@mipmap/unselect_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/chatAdapterSelectIvStyle"></ImageView>
+
+    <ImageView
+        android:id="@+id/receiver_pic_iv"
+        style="@style/chat_head_iv_style"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintLeft_toRightOf="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+    <TextView
+        android:id="@+id/receiver_nick_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="昵称"
+        android:textSize="10dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+        app:layout_constraintTop_toTopOf="@+id/receiver_pic_iv"></TextView>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/receiver_card_cl"
+        android:layout_width="220dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/receiver_chat_bg"
+        app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/receiver_nick_name_tv"
+       >
+
+        <ImageView
+            android:id="@+id/receiver_head_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/my_hint_head"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/receiver_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:lines="1"
+            android:text="dfadsfa"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/receiver_head_iv"
+            app:layout_constraintLeft_toRightOf="@+id/receiver_head_iv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/receiver_head_iv" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/bg_white_only_top_gray_shape_1px"
+            android:text="个人名片"
+            app:layout_constraintTop_toBottomOf="@+id/receiver_head_iv"></TextView>
+    </android.support.constraint.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/sender_pic_iv"
+        style="@style/chat_head_iv_style"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+    <TextView
+        android:id="@+id/sender_nick_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:text="昵称"
+        android:textSize="10dp"
+        android:visibility="gone"
+        app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
+        app:layout_constraintTop_toTopOf="@+id/sender_pic_iv"
+        ></TextView>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/sender_card_cl"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+
+        android:background="@mipmap/chat_sender_white_bg"
+        android:orientation="vertical"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintTop_toBottomOf="@+id/sender_nick_name_tv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
+       >
+
+        <ImageView
+            android:id="@+id/sender_head_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/my_hint_head"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/sender_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:lines="1"
+            android:text="dfadsfa"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/sender_head_iv"
+            app:layout_constraintLeft_toRightOf="@+id/sender_head_iv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sender_head_iv" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/bg_white_only_top_gray_shape_1px"
+            android:text="个人名片"
+            app:layout_constraintTop_toBottomOf="@+id/sender_head_iv"></TextView>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.Group
+        android:id="@+id/receiver_g"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="receiver_pic_iv,receiver_card_cl"></android.support.constraint.Group>
+
+    <android.support.constraint.Group
+        android:id="@+id/sender_g"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="sender_pic_iv,sender_card_cl"></android.support.constraint.Group>
+
+
+</android.support.constraint.ConstraintLayout>

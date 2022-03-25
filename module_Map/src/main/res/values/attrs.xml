@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels. -->
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference" />
+        <attr name="metaButtonBarButtonStyle" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="LineChartView">
+        <attr name="axesColor" format="color"/> <!--坐标轴颜色-->
+        <attr name="axesWidth" format="dimension"/><!--坐标轴宽度-->
+        <attr name="textColor" format="color"/> <!--x轴字体颜色-->
+        <attr name="textSize" format="dimension"/> <!--字体大小-->
+        <attr name="lineColor" format="color"/> <!--折线颜色-->
+        <attr name="bgColor" format="color"/> <!--背景色-->
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <View
+        android:id="@+id/all_info_divider"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/gray_light"
+        />
+    <TextView
+        android:id="@+id/item_title_name_tv"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:gravity="center|left"
+        android:background="@drawable/bg_white_only_bottom_gray_shape_1px"
+        android:layout_height="40dp" />
+</LinearLayout>

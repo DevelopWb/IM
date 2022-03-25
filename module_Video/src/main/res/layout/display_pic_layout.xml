@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+
+
+
+    <com.juntai.disabled.video.img.PhotoView
+        android:id="@+id/photo_display_pv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.juntai.disabled.video.img.PhotoView>
+
+
+
+    <ImageView
+        android:id="@+id/display_pic_action_more_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/display_more_action"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/display_pic_action_download_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/display_download_action"
+        app:layout_constraintBottom_toBottomOf="@+id/display_pic_action_more_iv"
+        app:layout_constraintRight_toLeftOf="@+id/display_pic_action_more_iv"
+        app:layout_constraintTop_toTopOf="@+id/display_pic_action_more_iv">
+
+    </ImageView>
+</android.support.constraint.ConstraintLayout>

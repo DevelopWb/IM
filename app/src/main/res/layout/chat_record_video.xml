@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/sp_filled_gray_lighter">
+
+    <ImageView
+        android:id="@+id/chat_record_video_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/my_hint_head"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/sender_play_iv"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@mipmap/play_button"
+        app:layout_constraintBottom_toBottomOf="@+id/chat_record_video_iv"
+        app:layout_constraintLeft_toLeftOf="@+id/chat_record_video_iv"
+        app:layout_constraintRight_toRightOf="@+id/chat_record_video_iv"
+        app:layout_constraintTop_toTopOf="@+id/chat_record_video_iv"></ImageView>
+
+    <TextView
+        android:id="@+id/chat_record_video_name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="15dp"
+        android:text="视频"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        app:layout_constraintLeft_toRightOf="@+id/chat_record_video_iv"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/chat_record_video_iv" />
+
+    <TextView
+        android:id="@+id/chat_record_video_size_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/chat_record_video_iv"
+        app:layout_constraintLeft_toLeftOf="@+id/chat_record_video_name_tv"
+        app:layout_constraintRight_toRightOf="@+id/chat_record_video_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/chat_record_video_name_tv"></TextView>
+
+
+</android.support.constraint.ConstraintLayout>

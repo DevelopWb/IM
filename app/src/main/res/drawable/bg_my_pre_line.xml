@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" >
+        <shape>
+            <solid android:color="@color/background2"></solid>
+        </shape>
+    </item>
+    <item>
+        <layer-list>
+            <item android:left="40dp">
+                <color android:color="@color/background2"/>
+            </item>
+            <!--<item-->
+                <!--android:left="40dp"-->
+                <!--android:right="10dp"-->
+                <!--android:height="1dp"-->
+                <!--android:gravity="bottom">-->
+                <!--<color android:color="@color/red"/>-->
+            <!--</item>-->
+            <item android:bottom="1dp">
+                <shape>
+                    <solid android:color="@color/white"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

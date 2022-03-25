@@ -1,0 +1,113 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseAppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!--登录 edittexttheme-->
+    <!--避免第一次进来白屏或黑屏-->
+    <style name="AppTheme.Splash">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@mipmap/splash_bg</item>
+    </style>
+
+
+    <!--我的text-->
+
+
+    <!--mainactivity - tab 文本-->
+    <style name="tab_textview">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textColor">@color/text_main_tab</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+
+    <style name="login_edit_tv_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:background">@drawable/stroke_gray_square_bg</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+
+    <style name="item_title_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:textColor">@color/text_title</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+    <style name="item_content_text_style_right">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <!--    选中图片、视频占位-->
+
+
+    <declare-styleable name="TagFlowLayout">
+        <!--最大选择数量-->
+        <attr name="max_select" format="integer" />
+        <!--最大可显示行数-->
+        <attr name="limit_line_count" format="integer" />
+        <!--是否设置多行隐藏-->
+        <attr name="is_limit" format="boolean" />
+        <attr name="tag_gravity">
+            <enum name="left" value="-1" />
+            <enum name="center" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!-- ActionSheet进出动画 -->
+
+
+    <style name="bt_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginLeft">40dp</item>
+        <item name="android:layout_marginRight">40dp</item>
+        <item name="android:background">@drawable/bt_accent_clicked</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="chat_head_iv_style">
+        <item name="android:src">@mipmap/ic_launcher</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="chatAdapterSelectIvStyle">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+</resources>

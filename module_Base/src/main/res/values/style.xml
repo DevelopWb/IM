@@ -1,0 +1,63 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="toolbarStyle">@style/toolbarstyle</item>
+    </style>
+    <style name="toolbarstyle" parent="Widget.AppCompat.Toolbar">
+        <!--左边边距-->
+        <item name="contentInsetStart">0dp</item>
+    </style>
+
+    <style name="CusDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <!--<item name="android:windowEnterAnimation">@anim/dialog_show</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/dialog_hide</item>-->
+        <!--<item name="android:windowShowAnimation"></item>-->
+        <!--<item name="android:windowHideAnimation"></item>-->
+    </style>
+
+    <style name="dialogWindowAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_show</item>
+        <item name="android:windowExitAnimation">@anim/dialog_hide</item>
+    </style>
+    <!-- 自定义Dialog -->
+    <style name="MNCustomDialog" parent="@android:style/Theme.Dialog">
+        <!-- 无边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <!--无遮罩效果-->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+
+    <style name="BaseDialog" parent="android:Theme.Light">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+
+    <style name="bt_bg_style">
+        <item name="android:background">@drawable/app_bt_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:letterSpacing" tools:ignore="NewApi">0.2</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+
+</resources>

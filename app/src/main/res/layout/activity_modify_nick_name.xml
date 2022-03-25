@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <EditText
+        android:id="@+id/nick_name_et"
+        android:layout_width="match_parent"
+        android:paddingTop="20dp"
+        android:textSize="14dp"
+        android:paddingBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_only_bottom_gray_shape_1px"></EditText>
+
+    <TextView
+        android:id="@+id/warn_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:textSize="12dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        ></TextView>
+</LinearLayout>

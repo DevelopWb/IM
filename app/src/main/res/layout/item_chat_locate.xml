@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp">
+
+
+    <ImageView
+        android:id="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@mipmap/unselect_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/chatAdapterSelectIvStyle"></ImageView>
+
+    <ImageView
+        android:id="@+id/receiver_pic_iv"
+        style="@style/chat_head_iv_style"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintLeft_toRightOf="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+    <TextView
+        android:id="@+id/receiver_nick_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="昵称"
+        android:textSize="10dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+        app:layout_constraintTop_toTopOf="@+id/receiver_pic_iv"></TextView>
+    <LinearLayout
+        android:id="@+id/receiver_locate_ll"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@mipmap/receiver_chat_bg"
+        android:orientation="vertical"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/receiver_nick_name_tv">
+        <TextView
+            android:id="@+id/receiver_locate_addr_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/black"
+            android:paddingRight="8dp"
+            android:text="地址"
+            android:textSize="14sp"></TextView>
+
+        <TextView
+            android:id="@+id/receiver_locate_addr_des_tv"
+            android:layout_width="match_parent"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="5dp"
+            android:layout_height="wrap_content"
+            android:text="地址"
+            android:textSize="10sp"></TextView>
+
+        <ImageView
+            android:id="@+id/receiver_map_shot_iv"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            ></ImageView>
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/sender_pic_iv"
+        style="@style/chat_head_iv_style"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+    <TextView
+        android:id="@+id/sender_nick_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:text="昵称"
+        android:textSize="10dp"
+        android:visibility="gone"
+        app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
+        app:layout_constraintTop_toTopOf="@+id/sender_pic_iv"
+        ></TextView>
+    <LinearLayout
+        android:id="@+id/sender_locate_ll"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+
+        android:background="@mipmap/chat_sender_white_bg"
+        android:orientation="vertical"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sender_nick_name_tv"
+        app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
+        >
+
+        <TextView
+            android:id="@+id/sender_locate_addr_name_tv"
+            android:layout_width="match_parent"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:text="地址"
+            android:textSize="14sp"></TextView>
+
+        <TextView
+            android:id="@+id/sender_locate_addr_des_tv"
+            android:layout_width="match_parent"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="5dp"
+            android:layout_height="wrap_content"
+            android:text="地址"
+            android:textSize="10sp"></TextView>
+
+        <ImageView
+            android:id="@+id/sender_map_shot_iv"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"></ImageView>
+
+    </LinearLayout>
+
+    <android.support.constraint.Group
+        android:id="@+id/receiver_g"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="receiver_pic_iv,receiver_locate_ll"></android.support.constraint.Group>
+
+    <android.support.constraint.Group
+        android:id="@+id/sender_g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="sender_pic_iv,sender_locate_ll"></android.support.constraint.Group>
+
+
+</android.support.constraint.ConstraintLayout>
