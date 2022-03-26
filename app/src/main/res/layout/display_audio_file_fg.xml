@@ -20,7 +20,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:background="@drawable/audio_animation_left_list" />
+            android:src="@drawable/audio_animation_left_list" />
 
     </RelativeLayout>
 

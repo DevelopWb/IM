@@ -96,7 +96,7 @@ dependencies {
 //    api librarys["crashreport_upgrade"]
     api librarys["immersionbar"]
     api librarys["picker_view"]
-    api librarys["matisse"]
+//    api librarys["matisse"]
     api librarys["eventbus"]
     api project(':zXingLiteLib')
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

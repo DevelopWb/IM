@@ -89,6 +89,7 @@ dependencies {
     implementation project(':EmojiLib')
     implementation project(':chathelp')
     implementation project(':module_Video')
+    implementation project(':zhihu_matisse')
     implementation project(':indexlib')
     implementation project((':oscvpush'))
     implementation 'com.oginotihiro:cropview:1.0.0'

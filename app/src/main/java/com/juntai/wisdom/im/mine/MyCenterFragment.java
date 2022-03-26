@@ -153,14 +153,7 @@ public class MyCenterFragment extends BaseAppFragment<MyCenterPresent> implement
     protected void initData() {
         mPresenter.initList();
         mHeadImage.setImageResource(R.mipmap.default_user_head_icon);
-        if (UserInfoManager.isLogin()) {
-            mLoginOut.setVisibility(View.VISIBLE);
-            mPresenter.getUserInfo(((MainActivity) getActivity()).getBaseBuilder()
-                    .add("toUserId", String.valueOf(UserInfoManager.getUserId()))
-                    .build(), MyCenterContract.USER_DATA_TAG);
-        } else {
-            mLoginOut.setVisibility(View.GONE);
-        }
+
     }
 
     @Override
@@ -171,7 +164,14 @@ public class MyCenterFragment extends BaseAppFragment<MyCenterPresent> implement
     @Override
     public void onResume() {
         super.onResume();
-
+        if (UserInfoManager.isLogin()) {
+            mLoginOut.setVisibility(View.VISIBLE);
+            mPresenter.getUserInfo(((MainActivity) getActivity()).getBaseBuilder()
+                    .add("toUserId", String.valueOf(UserInfoManager.getUserId()))
+                    .build(), MyCenterContract.USER_DATA_TAG);
+        } else {
+            mLoginOut.setVisibility(View.GONE);
+        }
     }
 
 

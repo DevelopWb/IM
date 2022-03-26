@@ -90,7 +90,7 @@ ext {
             //条件选择器
             "picker_view"                  : 'com.contrarywind:Android-PickerView:4.1.8',
             //图片视频选择
-            "matisse"                      : 'com.zhihu.android:matisse:0.5.2-beta4',
+//            "matisse"                      : 'com.zhihu.android:matisse:0.5.2-beta4',
             "update"                       : 'com.github.AlexLiuSheng:CheckVersionLib:2.3.3.1_appcompat',
     ]
 }

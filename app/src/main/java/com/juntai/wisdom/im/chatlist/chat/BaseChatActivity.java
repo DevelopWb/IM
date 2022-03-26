@@ -99,7 +99,8 @@ import java.util.List;
  * @description 描述  1对1聊天
  * @date 2020/11/10 16:44
  */
-public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> implements View.OnClickListener, MainContract.IBaseView, EmojiFragment.OnEmojiClickListener, BaseAppActivity.OnFileUploadStatus {
+public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> implements View.OnClickListener,
+        MainContract.IBaseView, EmojiFragment.OnEmojiClickListener, BaseAppActivity.OnFileUploadStatus {
     private BaseBottomDialog baseBottomDialog;
     private BaseBottomDialog.OnItemClick onItemClick;
 
@@ -233,14 +234,16 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 }
 
                 privateContactId = privateContactBean.getId();
-                if (Hawk.contains(HawkProperty.getDraftKey(privateContactId,true))) {
-                    MessageBodyBean  messageBodyBean = Hawk.get(HawkProperty.getDraftKey(privateContactId,true));
+                if (Hawk.contains(HawkProperty.getDraftKey(privateContactId, true))) {
+                    MessageBodyBean messageBodyBean = Hawk.get(HawkProperty.getDraftKey(privateContactId, true));
                     mContentEt.setText(messageBodyBean.getContent());
                     mContentEt.setSelection(messageBodyBean.getContent().length());
                 }
 
                 if (privateContactBean != null) {
-                    setTitleName(TextUtils.isEmpty(HawkProperty.getGlobleMap().get(privateContactId)) ? privateContactBean.getRemarksNickname() : HawkProperty.getGlobleMap().get(privateContactId));
+                    setTitleName(TextUtils.isEmpty(HawkProperty.getGlobleMap().get(privateContactId)) ?
+                            privateContactBean.getRemarksNickname() :
+                            HawkProperty.getGlobleMap().get(privateContactId));
                     //获取历史数据
                     List<MessageBodyBean> arrays = mPresenter.findPrivateChatRecordList(privateContactId);
                     if (arrays != null && arrays.size() > 0) {
@@ -279,12 +282,13 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 } else {
                     groupId = intent.getIntExtra(BASE_ID, 0);
                 }
-                if (Hawk.contains(HawkProperty.getDraftKey(groupId,false))) {
-                    MessageBodyBean  messageBodyBean = Hawk.get(HawkProperty.getDraftKey(groupId,false));
+                if (Hawk.contains(HawkProperty.getDraftKey(groupId, false))) {
+                    MessageBodyBean messageBodyBean = Hawk.get(HawkProperty.getDraftKey(groupId, false));
                     mContentEt.setText(messageBodyBean.getContent());
                     mContentEt.setSelection(messageBodyBean.getContent().length());
                 }
-                mPresenter.getGroupInfo(getBaseBuilder().add("groupId", String.valueOf(groupId)).build(), AppHttpPath.GET_GROUP_INFO);
+                mPresenter.getGroupInfo(getBaseBuilder().add("groupId", String.valueOf(groupId)).build(),
+                        AppHttpPath.GET_GROUP_INFO);
 
 
                 break;
@@ -313,12 +317,14 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             public void onClick(View v) {
                 switch (chatType) {
                     case 0:
-                        startActivityForResult(new Intent(mContext, ChatInfoActivity.class).putExtra(BASE_PARCELABLE, privateContactBean), ChatInfoActivity.CHAT_INFO_REQUEST);
+                        startActivityForResult(new Intent(mContext, ChatInfoActivity.class).putExtra(BASE_PARCELABLE,
+                                privateContactBean), ChatInfoActivity.CHAT_INFO_REQUEST);
                         break;
                     case 1:
                         // : 2022-01-13 群聊 右标题点击事件
 
-                        startActivityForResult(new Intent(mContext, GroupInfoActivity.class).putExtra(BASE_PARCELABLE, groupBean), GroupInfoActivity.GROUP_INFO_REQUEST);
+                        startActivityForResult(new Intent(mContext, GroupInfoActivity.class).putExtra(BASE_PARCELABLE
+                                , groupBean), GroupInfoActivity.GROUP_INFO_REQUEST);
 
                         break;
                     case 2:
@@ -330,23 +336,23 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             }
         });
         mRecyclerview = (RecyclerView) findViewById(R.id.recyclerview);
-       mRecyclerview.setOnTouchListener(new View.OnTouchListener() {
-           @Override
-           public boolean onTouch(View v, MotionEvent event) {
-               int action = event.getAction();
-               if (MotionEvent.ACTION_MOVE==action) {
-                   hideBottomAndKeyboard();
-                   if (mEmotionKeyboard != null) {
-                       if (mEmotionKeyboard.isSoftInputShown()) {
-                           mEmotionKeyboard.hideSoftInput();
-                       }
-                   }
-                   mIvEmo.setImageResource(R.mipmap.ic_cheat_emo);
+        mRecyclerview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                if (MotionEvent.ACTION_MOVE == action) {
+                    hideBottomAndKeyboard();
+                    if (mEmotionKeyboard != null) {
+                        if (mEmotionKeyboard.isSoftInputShown()) {
+                            mEmotionKeyboard.hideSoftInput();
+                        }
+                    }
+                    mIvEmo.setImageResource(R.mipmap.ic_cheat_emo);
 
-               }
-               return false;
-           }
-       });
+                }
+                return false;
+            }
+        });
         initBottomEditMsg();
         chatAdapter = new ChatAdapter(null);
         LinearLayoutManager managere = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -476,12 +482,13 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
         switch (chatType) {
             case 0:
                 if (1 == messageBody.getChatType()) {
-                    if (messageBody.getFromUserId() == privateContactId||messageBody.getToUserId()==privateContactId) {
+                    if (messageBody.getFromUserId() == privateContactId || messageBody.getToUserId() == privateContactId) {
                         //如果是正在聊天的对象发过来的 就不需要notification
                         NotificationTool.SHOW_NOTIFICATION = false;
                         messageBody.setRead(true);
                         HawkProperty.setRedPoint(mContext, -1);
-                        addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBody.getFromUserId()), messageBody);
+                        addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBody.getFromUserId()),
+                                messageBody);
                         initAdapterDataFromMsgTypes(messageBody);
                         mRecyclerview.scrollToPosition(chatAdapter.getData().size() - 1);
                     } else {
@@ -546,7 +553,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                 releaseDialog();
                                 // : 2021-11-23 视频通话
-                                MessageBodyBean videoMsg = SendMsgUtil.getPrivateMsg(0 == position ? 4 : 5, privateContactId, privateContactBean.getUuid(), privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), "");
+                                MessageBodyBean videoMsg = SendMsgUtil.getPrivateMsg(0 == position ? 4 : 5,
+                                        privateContactId, privateContactBean.getUuid(),
+                                        privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), "");
                                 //跳转到等待接听界面
                                 Intent intent =
                                         new Intent(mContext, VideoRequestActivity.class)
@@ -585,7 +594,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                         break;
                     case ChatPresent.MORE_ACTION_CARD:
                         // : 2021-12-05 发送名片
-                        startActivityForResult(new Intent(mContext, SelectContactActivity.class), SelectContactActivity.REQUEST_CONTACT);
+                        startActivityForResult(new Intent(mContext, SelectContactActivity.class),
+                                SelectContactActivity.REQUEST_CONTACT);
 
 
                         break;
@@ -661,7 +671,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             case R.id.sender_videocall_content_tv:
                                 //视频通话
                                 if (messageBodyBean.getFromUserId() != UserInfoManager.getUserId()) {
-                                    messageBodyBean = SendMsgUtil.getPrivateMsg(messageBodyBean.getMsgType(), messageBodyBean.getFromUserId(), messageBodyBean.getFromAccount(), messageBodyBean.getFromNickname(), messageBodyBean.getFromHead(), "");
+                                    messageBodyBean = SendMsgUtil.getPrivateMsg(messageBodyBean.getMsgType(),
+                                            messageBodyBean.getFromUserId(), messageBodyBean.getFromAccount(),
+                                            messageBodyBean.getFromNickname(), messageBodyBean.getFromHead(), "");
                                 }
 
                                 Intent intent =
@@ -678,7 +690,10 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             case R.id.sender_locate_ll:
                             case R.id.receiver_locate_ll:
                                 //位置信息
-                                LocateShowActivity.startLocateActivity(mContext, Double.parseDouble(messageBodyBean.getLat()), Double.parseDouble(messageBodyBean.getLng()), messageBodyBean.getAddrName(), messageBodyBean.getAddrDes());
+                                LocateShowActivity.startLocateActivity(mContext,
+                                        Double.parseDouble(messageBodyBean.getLat()),
+                                        Double.parseDouble(messageBodyBean.getLng()), messageBodyBean.getAddrName(),
+                                        messageBodyBean.getAddrDes());
 
                                 break;
                             case R.id.receiver_card_cl:
@@ -690,7 +705,16 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             case R.id.receiver_file_cl:
                             case R.id.sender_file_cl:
                                 //文件
-                                startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE, messageBodyBean));
+                                if (UserInfoManager.getUserId() == messageBodyBean.getFromUserId()) {
+                                    //本人发的
+                                    if (TextUtils.isEmpty(messageBodyBean.getLocalCatchPath())) {
+                                        //本地缓存没有 这时候应该是web端发的同步消息
+                                        messageBodyBean.setFromUserId(0);
+                                    }
+                                }
+                                startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE
+                                        , messageBodyBean));
+
                                 break;
                             case R.id.receiver_chatrecord_cl:
                             case R.id.sender_chatrecord_cl:
@@ -699,10 +723,12 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                 break;
 
                             case R.id.audio_bg_rl:
-                                ImageView ivAudio = (ImageView) adapter.getViewByPosition(mRecyclerview, position, R.id.ivAudio);
+                                ImageView ivAudio = (ImageView) adapter.getViewByPosition(mRecyclerview, position,
+                                        R.id.ivAudio);
                                 AudioPlayManager.getInstance().stopPlay();
                                 String audioUri = UrlFormatUtil.getImageOriginalUrl(messageBodyBean.getContent());
-                                AudioPlayManager.getInstance().startPlay(mContext, Uri.parse(audioUri), new IAudioPlayListener() {
+                                AudioPlayManager.getInstance().startPlay(mContext, Uri.parse(audioUri),
+                                        new IAudioPlayListener() {
                                     @Override
                                     public void onStart(Uri var1) {
                                         if (ivAudio != null && ivAudio.getBackground() instanceof AnimationDrawable) {
@@ -778,11 +804,12 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                         View popView = LayoutInflater.from(mContext).inflate(R.layout.home_pop, null);
                         LinearLayout topLl = popView.findViewById(R.id.pop_bg_ll);
                         topLl.setBackgroundResource(R.mipmap.edit_msg_bg);
-                        PopupWindow editPopupWindow = new PopupWindow(popView, DisplayUtil.dp2px(mContext, 180), DisplayUtil.dp2px(mContext, 50));
+                        PopupWindow editPopupWindow = new PopupWindow(popView, DisplayUtil.dp2px(mContext, 180),
+                                DisplayUtil.dp2px(mContext, 50));
                         editPopupWindow.setOutsideTouchable(true);
                         RecyclerView recyclerView = popView.findViewById(R.id.home_pop_rv);
                         EditChatMsgAdapter editChatMsgAdapter = new EditChatMsgAdapter(R.layout.edit_chat_msg_item);
-                        List<HomePageMenuBean>  arrays = mPresenter.getEditChatMsgMenus(operateingMsgBean);
+                        List<HomePageMenuBean> arrays = mPresenter.getEditChatMsgMenus(operateingMsgBean);
                         GridLayoutManager manager = new GridLayoutManager(mContext, arrays.size());
                         recyclerView.setLayoutManager(manager);
                         recyclerView.setAdapter(editChatMsgAdapter);
@@ -791,54 +818,69 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
 
                         switch (view.getId()) {
                             case R.id.sender_content_tv:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.sender_content_tv);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.sender_content_tv);
                                 break;
                             case R.id.receiver_content_tv:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.receiver_content_tv);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.receiver_content_tv);
                                 break;
                             case R.id.sender_videocall_content_tv:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.sender_videocall_content_tv);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.sender_videocall_content_tv);
                                 break;
                             case R.id.receiver_videocall_content_tv:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.receiver_videocall_content_tv);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.receiver_videocall_content_tv);
                                 break;
                             case R.id.sender_pic_video_iv:
                                 //图片视频
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.sender_pic_video_iv);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.sender_pic_video_iv);
                                 break;
                             case R.id.receiver_pic_video_iv:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.receiver_pic_video_iv);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.receiver_pic_video_iv);
                                 break;
                             case R.id.sender_locate_ll:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.sender_locate_ll);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.sender_locate_ll);
                                 break;
                             case R.id.receiver_locate_ll:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.receiver_locate_ll);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.receiver_locate_ll);
                                 break;
                             case R.id.receiver_card_cl:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.receiver_card_cl);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.receiver_card_cl);
 
                                 break;
                             case R.id.sender_card_cl:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.sender_card_cl);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.sender_card_cl);
 
                                 break;
                             case R.id.receiver_file_cl:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.receiver_file_cl);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.receiver_file_cl);
                                 break;
                             case R.id.sender_file_cl:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.sender_file_cl);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.sender_file_cl);
                                 break;
                             case R.id.receiver_chatrecord_cl:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.receiver_chatrecord_cl);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.receiver_chatrecord_cl);
 
                                 break;
                             case R.id.sender_chatrecord_cl:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.sender_chatrecord_cl);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.sender_chatrecord_cl);
 
                                 break;
                             case R.id.audio_bg_rl:
-                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition, R.id.audio_bg_rl);
+                                currentView = msgAdapter.getViewByPosition(mRecyclerview, msgPosition,
+                                        R.id.audio_bg_rl);
                                 break;
                             default:
                                 currentView = view;
@@ -847,7 +889,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                         int[] location = new int[2];
                         currentView.getLocationOnScreen(location);
                         //显示在正上方
-                        editPopupWindow.showAtLocation(currentView, Gravity.NO_GRAVITY, location[0] + currentView.getWidth() / 2 - editPopupWindow.getWidth() / 2, location[1] - editPopupWindow.getHeight());
+                        editPopupWindow.showAtLocation(currentView, Gravity.NO_GRAVITY,
+                                location[0] + currentView.getWidth() / 2 - editPopupWindow.getWidth() / 2,
+                                location[1] - editPopupWindow.getHeight());
                         editChatMsgAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -868,17 +912,20 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                         // : 2022-02-12 收藏消息  如果是文件 必须下载到本地之后才能收藏
                                         switch (operateingMsgBean.getMsgType()) {
                                             case 1:
-                                                mPresenter.collectFile(mContext,operateingMsgBean,FileCacheUtils.getAppImagePath(false));
+                                                mPresenter.collectFile(mContext, operateingMsgBean,
+                                                        FileCacheUtils.getAppImagePath(false));
 
                                                 break;
                                             case 2:
-                                                mPresenter.collectFile(mContext,operateingMsgBean,FileCacheUtils.getAppVideoPath(false));
+                                                mPresenter.collectFile(mContext, operateingMsgBean,
+                                                        FileCacheUtils.getAppVideoPath(false));
 
                                                 break;
                                             case 3:
                                                 break;
                                             case 8:
-                                                mPresenter.collectFile(mContext,operateingMsgBean,FileCacheUtils.getAppFilePath(false));
+                                                mPresenter.collectFile(mContext, operateingMsgBean,
+                                                        FileCacheUtils.getAppFilePath(false));
 
                                                 break;
                                             default:
@@ -919,7 +966,6 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
 
         });
     }
-
 
 
     /**
@@ -1059,12 +1105,12 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             return;
                         }
                         sendNormalMsg(privateContactBean, getTextViewValue(mContentEt));
-                        Hawk.delete(HawkProperty.getDraftKey(privateContactId,true));
+                        Hawk.delete(HawkProperty.getDraftKey(privateContactId, true));
                         break;
                     case 1:
                         // : 2022-01-13 群聊 发送群消息
                         sendGroupNormalMsg(getTextViewValue(mContentEt));
-                        Hawk.delete(HawkProperty.getDraftKey(groupId,false));
+                        Hawk.delete(HawkProperty.getDraftKey(groupId, false));
                         break;
                     case 2:
                         // TODO: 2022-01-13 密聊 发送私密消息
@@ -1083,7 +1129,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
      * 发送普通信息
      */
     private void sendNormalMsg(ContactBean toContactBean, String content) {
-        MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(0, toContactBean.getId(), toContactBean.getUuid(), toContactBean.getRemarksNickname(), toContactBean.getHeadPortrait(), content);
+        MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(0, toContactBean.getId(), toContactBean.getUuid(),
+                toContactBean.getRemarksNickname(), toContactBean.getHeadPortrait(), content);
         mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         if (toContactBean.getId() == privateContactBean.getId()) {
             addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBody.getFromUserId()), messageBody);
@@ -1097,7 +1144,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
      * 发送群聊普通信息
      */
     private void sendGroupNormalMsg(String content) {
-        MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(0, groupId, detailBean.getGroupCreateUserId(), groupBean.getUserNickname(), content);
+        MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(0, groupId, detailBean.getGroupCreateUserId(),
+                groupBean.getUserNickname(), content);
         mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), messageBody);
         chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_TEXT_MSG, messageBody));
@@ -1131,31 +1179,39 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             case SelectFileActivity.REQUEST_SELECT_FILES:
                 //选择文件
                 if (data != null) {
-                    ArrayList<String> filePaths = data.getStringArrayListExtra(SelectFileActivity.REQUEST_SELECT_FILES_STR);
-                    ArrayList<FileSelectBean> files = data.getParcelableArrayListExtra(SelectFileActivity.REQUEST_SELECT_FILES_BEANS);
+                    ArrayList<String> filePaths =
+                            data.getStringArrayListExtra(SelectFileActivity.REQUEST_SELECT_FILES_STR);
+                    ArrayList<FileSelectBean> files =
+                            data.getParcelableArrayListExtra(SelectFileActivity.REQUEST_SELECT_FILES_BEANS);
                     if (filePaths != null) {
                         for (int i = 0; i < filePaths.size(); i++) {
                             FileSelectBean fileSelectBean = files.get(i);
                             switch (chatType) {
                                 case 0:
-                                    MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(8, privateContactId, privateContactBean.getUuid(), privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), filePaths.get(i));
+                                    MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(8, privateContactId,
+                                            privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
+                                            privateContactBean.getHeadPortrait(), filePaths.get(i));
                                     messageBody.setFileSize(FileCacheUtils.formetFileSize(fileSelectBean.getFileSize()));
                                     messageBody.setFileName(fileSelectBean.getFileName());
                                     messageBody.setLocalCatchPath(fileSelectBean.getFilePath());
-                                    mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+                                    mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(),
+                                            AppHttpPath.SEND_MSG);
                                     addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBody.getFromUserId()), messageBody);
                                     chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE, messageBody));
                                     ObjectBox.addMessage(messageBody);
                                     break;
                                 case 1:
                                     // : 2022-01-13 群聊 发送文件信息
-                                    MessageBodyBean groupMessageBody = SendMsgUtil.getGroupMsg(8, groupId, groupBean.getUserNickname(), filePaths.get(i));
+                                    MessageBodyBean groupMessageBody = SendMsgUtil.getGroupMsg(8, groupId,
+                                            groupBean.getUserNickname(), filePaths.get(i));
                                     groupMessageBody.setFileSize(FileCacheUtils.formetFileSize(fileSelectBean.getFileSize()));
                                     groupMessageBody.setFileName(fileSelectBean.getFileName());
                                     groupMessageBody.setLocalCatchPath(fileSelectBean.getFilePath());
-                                    mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(groupMessageBody).build(), AppHttpPath.SEND_MSG);
+                                    mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(groupMessageBody).build(),
+                                            AppHttpPath.SEND_MSG);
                                     addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), groupMessageBody);
-                                    chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE, groupMessageBody));
+                                    chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE,
+                                            groupMessageBody));
                                     ObjectBox.addMessage(groupMessageBody);
                                     break;
                                 case 2:
@@ -1188,11 +1244,13 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
 
                     switch (chatType) {
                         case 0:
-                            ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(privateContactBean.getHeadPortrait()), mReceiverHeadIv);
+                            ImageLoadUtil.loadSquareImage(mContext,
+                                    UrlFormatUtil.getImageThumUrl(privateContactBean.getHeadPortrait()), mReceiverHeadIv);
                             mReceiverNameTv.setText(privateContactBean.getRemarksNickname());
                             break;
                         case 1:
-                            ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(groupBean.getGroupPicture()), mReceiverHeadIv);
+                            ImageLoadUtil.loadSquareImage(mContext,
+                                    UrlFormatUtil.getImageThumUrl(groupBean.getGroupPicture()), mReceiverHeadIv);
                             mReceiverNameTv.setText(groupBean.getGroupName());
                             break;
                         default:
@@ -1216,24 +1274,29 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             switch (chatType) {
                                 case 0:
                                     // : 2021-12-07 发送名片
-                                    MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(7, privateContactId, privateContactBean.getUuid(), privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), "名片");
+                                    MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(7, privateContactId,
+                                            privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
+                                            privateContactBean.getHeadPortrait(), "名片");
                                     messageBody.setOtherUserId(cardContactBean.getId());
                                     messageBody.setOtherAccount(cardContactBean.getAccountNumber());
                                     messageBody.setOtherHead(cardContactBean.getHeadPortrait());
                                     messageBody.setOtherNickname(cardContactBean.getNickname());
-                                    mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+                                    mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(),
+                                            AppHttpPath.SEND_MSG);
                                     addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBody.getFromUserId()), messageBody);
                                     chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_CARD, messageBody));
                                     ObjectBox.addMessage(messageBody);
                                     break;
                                 case 1:
                                     // : 2022-01-13 群聊 发送名片
-                                    MessageBodyBean fileMsgBody = SendMsgUtil.getGroupMsg(7, groupId, groupBean.getUserNickname(), "名片");
+                                    MessageBodyBean fileMsgBody = SendMsgUtil.getGroupMsg(7, groupId,
+                                            groupBean.getUserNickname(), "名片");
                                     fileMsgBody.setOtherUserId(cardContactBean.getId());
                                     fileMsgBody.setOtherAccount(cardContactBean.getAccountNumber());
                                     fileMsgBody.setOtherHead(cardContactBean.getHeadPortrait());
                                     fileMsgBody.setOtherNickname(cardContactBean.getNickname());
-                                    mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(fileMsgBody).build(), AppHttpPath.SEND_MSG);
+                                    mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(fileMsgBody).build(),
+                                            AppHttpPath.SEND_MSG);
                                     addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), fileMsgBody);
                                     chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_CARD, fileMsgBody));
                                     ObjectBox.addMessage(fileMsgBody);
@@ -1279,24 +1342,30 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     addrDes = data.getStringExtra(LocateSelectionActivity.ADDRDES);
                     switch (chatType) {
                         case 0:
-                            MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateLocateMsg(privateContactId, privateContactBean.getUuid(), privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(),
+                            MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateLocateMsg(privateContactId,
+                                    privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
+                                    privateContactBean.getHeadPortrait(),
                                     "", addrName, addrDes, String.valueOf(lat), String.valueOf(lng));
-                            addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()), messageBodyBean);
+                            addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()),
+                                    messageBodyBean);
                             chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_LOCATE, messageBodyBean));
                             messageBodyBean.setLocalCatchPath(FileCacheUtils.getMapShotImagePath());
                             messageBodyBean.setAdapterPosition(chatAdapter.getData().size() - 1);
-                            mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(FileCacheUtils.getMapShotImagePath(), messageBodyBean));
+                            mUploadUtil.submit(BaseChatActivity.this,
+                                    new UploadFileBean(FileCacheUtils.getMapShotImagePath(), messageBodyBean));
                             ObjectBox.addMessage(messageBodyBean);
 
                             break;
                         case 1:
                             // : 2022-01-13 群聊 地图截图
-                            MessageBodyBean mapMsgBean = SendMsgUtil.getGroupLocateMsg(groupId, "", addrName, addrDes, String.valueOf(lat), String.valueOf(lng), groupBean.getUserNickname());
+                            MessageBodyBean mapMsgBean = SendMsgUtil.getGroupLocateMsg(groupId, "", addrName, addrDes
+                                    , String.valueOf(lat), String.valueOf(lng), groupBean.getUserNickname());
                             addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), mapMsgBean);
                             chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_LOCATE, mapMsgBean));
                             mapMsgBean.setLocalCatchPath(FileCacheUtils.getMapShotImagePath());
                             mapMsgBean.setAdapterPosition(chatAdapter.getData().size() - 1);
-                            mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(FileCacheUtils.getMapShotImagePath(), mapMsgBean));
+                            mUploadUtil.submit(BaseChatActivity.this,
+                                    new UploadFileBean(FileCacheUtils.getMapShotImagePath(), mapMsgBean));
                             ObjectBox.addMessage(mapMsgBean);
                             break;
                         case 2:
@@ -1306,7 +1375,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             break;
                     }
 
-//                    mPresenter.uploadFile(MainContract.UPLOAD_MAP_SHOT, FileCacheUtils.getMapShotImagePath());
+                    //                    mPresenter.uploadFile(MainContract.UPLOAD_MAP_SHOT, FileCacheUtils
+                    //                    .getMapShotImagePath());
                     mRecyclerview.scrollToPosition(chatAdapter.getData().size() - 1);
 
                 }
@@ -1355,9 +1425,12 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             public void loadSuccess(int width, int height) {
                 switch (chatType) {
                     case 0:
-                        MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(1, privateContactId, privateContactBean.getUuid(), privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), "");
+                        MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(1, privateContactId,
+                                privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
+                                privateContactBean.getHeadPortrait(), "");
                         messageBodyBean.setRotation(width > height ? "0" : "90");
-                        addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()), messageBodyBean);
+                        addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()),
+                                messageBodyBean);
                         chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, messageBodyBean));
                         mRecyclerview.scrollToPosition(chatAdapter.getData().size() - 1);
                         messageBodyBean.setLocalCatchPath(picPath);
@@ -1369,7 +1442,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                         break;
                     case 1:
                         // : 2022-01-13 群聊 发送图片文件
-                        MessageBodyBean groupPicMsgBean = SendMsgUtil.getGroupMsg(1, groupId, groupBean.getUserNickname(), picPath);
+                        MessageBodyBean groupPicMsgBean = SendMsgUtil.getGroupMsg(1, groupId,
+                                groupBean.getUserNickname(), picPath);
                         groupPicMsgBean.setRotation(width > height ? "0" : "90");
                         addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), groupPicMsgBean);
                         chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, groupPicMsgBean));
@@ -1406,10 +1480,13 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
         //发送视频文件
         switch (chatType) {
             case 0:
-                MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(2, privateContactId, privateContactBean.getUuid(), privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), "");
+                MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(2, privateContactId,
+                        privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
+                        privateContactBean.getHeadPortrait(), "");
                 messageBodyBean.setRotation(fileBaseInfoBean.getRotation());
                 messageBodyBean.setDuration(fileBaseInfoBean.getDuration());
-                addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()), messageBodyBean);
+                addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()),
+                        messageBodyBean);
                 chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, messageBodyBean));
                 allPicVideoPath.add(messageBodyBean);
                 messageBodyBean.setLocalCatchPath(picPath);
@@ -1420,7 +1497,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 break;
             case 1:
                 // : 2022-01-13 群聊 发送视频文件
-                MessageBodyBean groupVideoFileBean = SendMsgUtil.getGroupMsg(2, groupId, groupBean.getUserNickname(), picPath);
+                MessageBodyBean groupVideoFileBean = SendMsgUtil.getGroupMsg(2, groupId, groupBean.getUserNickname(),
+                        picPath);
                 groupVideoFileBean.setRotation(fileBaseInfoBean.getRotation());
                 groupVideoFileBean.setDuration(fileBaseInfoBean.getDuration());
                 addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), groupVideoFileBean);
@@ -1501,7 +1579,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 if (searchedMsgId > 0) {
                     mRecyclerview.scrollToPosition(searchedMsgPosition);
                 }
-                mPresenter.getGroupUnreadMsg(getBaseBuilder().add("groupId", String.valueOf(groupId)).build(), AppHttpPath.GET_UNREAD_GROUP_MSG);
+                mPresenter.getGroupUnreadMsg(getBaseBuilder().add("groupId", String.valueOf(groupId)).build(),
+                        AppHttpPath.GET_UNREAD_GROUP_MSG);
 
                 break;
             case MainContract.UPLOAD_AUDIO_FILE:
@@ -1512,21 +1591,27 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     for (String picPath : audioPaths) {
                         switch (chatType) {
                             case 0:
-                                MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(3, privateContactId, privateContactBean.getUuid(), privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), picPath);
+                                MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(3, privateContactId,
+                                        privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
+                                        privateContactBean.getHeadPortrait(), picPath);
                                 messageBodyBean.setDuration(String.valueOf(mDuration));
                                 addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()), messageBodyBean);
                                 chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_SEND_AUDIO, messageBodyBean));
                                 ObjectBox.addMessage(messageBodyBean);
-                                mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.SEND_MSG);
+                                mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBodyBean).build(),
+                                        AppHttpPath.SEND_MSG);
                                 break;
                             case 1:
                                 // : 2022-01-13 群聊 上传音频文件
-                                MessageBodyBean audioMessageBodyBean = SendMsgUtil.getGroupMsg(3, groupId, groupBean.getUserNickname(), picPath);
+                                MessageBodyBean audioMessageBodyBean = SendMsgUtil.getGroupMsg(3, groupId,
+                                        groupBean.getUserNickname(), picPath);
                                 audioMessageBodyBean.setDuration(String.valueOf(mDuration));
                                 addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), audioMessageBodyBean);
-                                chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_SEND_AUDIO, audioMessageBodyBean));
+                                chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_SEND_AUDIO,
+                                        audioMessageBodyBean));
                                 ObjectBox.addMessage(audioMessageBodyBean);
-                                mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(audioMessageBodyBean).build(), AppHttpPath.SEND_MSG);
+                                mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(audioMessageBodyBean).build(),
+                                        AppHttpPath.SEND_MSG);
                                 break;
                             case 2:
                                 // TODO: 2022-01-13 密聊 上传音频文件
@@ -1682,9 +1767,11 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             }
                         });
                     }
-                    SelectGroupNoticePeopleFragment selectContactFragment = (SelectGroupNoticePeopleFragment) getSupportFragmentManager().findFragmentById(R.id.select_contact_fg);
+                    SelectGroupNoticePeopleFragment selectContactFragment =
+                            (SelectGroupNoticePeopleFragment) getSupportFragmentManager().findFragmentById(R.id.select_contact_fg);
                     if (detailBean != null) {
-                        selectContactFragment.getGroupInfo(detailBean, new SelectGroupNoticePeopleFragment.OnContactClick() {
+                        selectContactFragment.getGroupInfo(detailBean,
+                                new SelectGroupNoticePeopleFragment.OnContactClick() {
                             @Override
                             public void contactClicked(ContactBean contactBean) {
                                 noticePeopleDialog.dismiss();
@@ -1709,14 +1796,16 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     mIvMore.setVisibility(View.GONE);
                     switch (chatType) {
                         case 0:
-                            MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(0, privateContactId, privateContactBean.getUuid(), privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), content);
+                            MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(0, privateContactId,
+                                    privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
+                                    privateContactBean.getHeadPortrait(), content);
                             messageBody.setDraft(true);
-                            Hawk.put(HawkProperty.getDraftKey(privateContactId,true),messageBody);
+                            Hawk.put(HawkProperty.getDraftKey(privateContactId, true), messageBody);
                             break;
                         case 1:
                             MessageBodyBean groupMsgBean = SendMsgUtil.getGroupMsg(0, groupId, 0, null, content);
                             groupMsgBean.setDraft(true);
-                            Hawk.put(HawkProperty.getDraftKey(groupId,false),groupMsgBean);
+                            Hawk.put(HawkProperty.getDraftKey(groupId, false), groupMsgBean);
                             break;
                         case 2:
                             // TODO: 2022/3/22 密聊
@@ -1727,13 +1816,13 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 } else {
                     switch (chatType) {
                         case 0:
-                            if (Hawk.contains(HawkProperty.getDraftKey(privateContactId,true))) {
-                                Hawk.delete(HawkProperty.getDraftKey(privateContactId,true));
+                            if (Hawk.contains(HawkProperty.getDraftKey(privateContactId, true))) {
+                                Hawk.delete(HawkProperty.getDraftKey(privateContactId, true));
                             }
                             break;
                         case 1:
-                            if (Hawk.contains(HawkProperty.getDraftKey(groupId,false))) {
-                                Hawk.delete(HawkProperty.getDraftKey(groupId,false));
+                            if (Hawk.contains(HawkProperty.getDraftKey(groupId, false))) {
+                                Hawk.delete(HawkProperty.getDraftKey(groupId, false));
                             }
                             break;
                         case 2:
@@ -2098,8 +2187,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 case 2:
                     //视频
                     bodyBean.setContent(filePaths.get(0));
-//                    String videoCover = ImageLoadUtil.getVideoThumbnailOfBase64(bodyBean.getLocalCatchPath());
-//                    bodyBean.setVideoCover(videoCover);
+                    //                    String videoCover = ImageLoadUtil.getVideoThumbnailOfBase64(bodyBean
+                    //                    .getLocalCatchPath());
+                    //                    bodyBean.setVideoCover(videoCover);
                     break;
                 case 6:
                     //位置

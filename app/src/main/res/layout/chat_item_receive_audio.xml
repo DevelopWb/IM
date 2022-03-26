@@ -25,7 +25,6 @@
         android:layout_marginLeft="10dp"
         android:text="昵称"
         android:textSize="10dp"
-        android:visibility="gone"
         app:layout_constraintLeft_toRightOf="@+id/audio_head_iv"
         app:layout_constraintTop_toTopOf="@+id/audio_head_iv"></TextView>
     <RelativeLayout
@@ -34,7 +33,6 @@
         android:layout_marginLeft="10dp"
         app:layout_constraintLeft_toRightOf="@+id/audio_head_iv"
         android:layout_height="35dp"
-        app:layout_constraintBottom_toBottomOf="@+id/audio_head_iv"
         app:layout_constraintTop_toBottomOf="@+id/receiver_nick_name_tv"
         android:background="@mipmap/receiver_chat_bg"
         >
@@ -46,7 +44,7 @@
             android:layout_height="15dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/audio_animation_left_list" />
+            android:src="@drawable/audio_animation_left_list" />
 
     </RelativeLayout>
 
