@@ -36,6 +36,8 @@ buildscript {
         classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
 
         classpath 'com.aliyun.ams:emas-services:1.0.1'
+        //知乎选择图片的控件需要
+        classpath 'com.novoda:bintray-release:0.8.1'
 
     }
 }

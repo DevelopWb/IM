@@ -19,10 +19,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -271,14 +271,14 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
     private void updateApplyButton() {
         int selectedCount = mSelectedCollection.count();
         if (selectedCount == 0) {
-            mButtonApply.setText(R.string.button_apply_default);
+            mButtonApply.setText(R.string.button_sure_default);
             mButtonApply.setEnabled(false);
         } else if (selectedCount == 1 && mSpec.singleSelectionModeEnabled()) {
-            mButtonApply.setText(R.string.button_apply_default);
+            mButtonApply.setText(R.string.button_sure_default);
             mButtonApply.setEnabled(true);
         } else {
             mButtonApply.setEnabled(true);
-            mButtonApply.setText(getString(R.string.button_apply, selectedCount));
+            mButtonApply.setText(getString(R.string.button_sure, selectedCount));
         }
 
         if (mSpec.originalable) {

@@ -16,7 +16,7 @@
 package com.zhihu.matisse.internal.ui.widget;
 
 import android.graphics.Rect;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 public class MediaGridInset extends RecyclerView.ItemDecoration {

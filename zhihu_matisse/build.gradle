@@ -14,48 +14,53 @@
  * limitations under the License.
  */
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'checkstyle'
-
+def configs = rootProject.ext.android
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.2'
+    compileSdkVersion configs.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 29
+        minSdkVersion configs.minSdkVersion
+        targetSdkVersion configs.targetSdkVersion
+        versionCode configs.versionCode
+        versionName configs.versionName
+
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
     lintOptions {
         abortOnError false
     }
 }
 
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation "androidx.annotation:annotation:1.1.0"
-    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "com.android.support:support-v4:28.0.0"
+    implementation "com.android.support:appcompat-v7:28.0.0"
+    implementation "com.android.support:support-annotations:28.0.0"
+    implementation "com.android.support:recyclerview-v7:28.0.0"
     implementation 'it.sephiroth.android.library.imagezoom:library:1.0.4'
 
-    compileOnly 'com.github.bumptech.glide:glide:4.9.0'
+    compileOnly 'com.github.bumptech.glide:glide:3.7.0'
     compileOnly 'com.squareup.picasso:picasso:2.5.2'
 }
 
 // jcenter configuration for novoda's bintray-release
 // $ ./gradlew clean build bintrayUpload -PbintrayUser=BINTRAY_USERNAME -PbintrayKey=BINTRAY_KEY -PdryRun=false
-//publish {
-//    userOrg = 'zhihu'
-//    groupId = 'com.zhihu.android'
-//    artifactId = 'matisse'
-//    publishVersion = '0.5.3-beta3'
-//    desc = 'A well-designed local image selector for Android'
-//    website = 'https://www.zhihu.com/'
-//}
+publish {
+    userOrg = 'zhihu'
+    groupId = 'com.zhihu.android'
+    artifactId = 'matisse'
+    publishVersion = '0.5.2-beta4'
+    desc = 'A well-designed local image selector for Android'
+    website = 'https://www.zhihu.com/'
+}
 
 task javadoc(type: Javadoc) {
     options.encoding = "utf-8"

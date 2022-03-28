@@ -39,7 +39,6 @@ import java.util.List;
  */
 public class FileCacheUtils {
 
-    public static String HEAD_PIC = "headpic.png";//头像
     public static long fileMaxLength = 500 * 1024 * 1024;//文件最大长度
 
 

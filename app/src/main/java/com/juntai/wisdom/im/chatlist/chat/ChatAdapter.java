@@ -351,17 +351,17 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 helper.addOnLongClickListener(R.id.sender_pic_video_iv);
                 helper.addOnLongClickListener(R.id.receiver_pic_video_iv);
                 initSelectedViewStatus(helper, messageBodyBean);
-                ConstraintLayout.LayoutParams senderlayoutParams = (ConstraintLayout.LayoutParams) sendIv.getLayoutParams();
-                ConstraintLayout.LayoutParams receiverlayoutParams = (ConstraintLayout.LayoutParams) receiveIv.getLayoutParams();
-                if ("0".equals(messageBodyBean.getRotation()) || "180".equals(messageBodyBean.getRotation())) {
-                    senderlayoutParams.width = (getWidth(mContext) / 2);
-                    receiverlayoutParams.width = (getWidth(mContext) / 2);
-                } else {
-                    senderlayoutParams.width = (dip2px(80));
-                    receiverlayoutParams.width = (dip2px(80));
-                }
-                sendIv.setLayoutParams(senderlayoutParams);
-                receiveIv.setLayoutParams(receiverlayoutParams);
+//                ConstraintLayout.LayoutParams senderlayoutParams = (ConstraintLayout.LayoutParams) sendIv.getLayoutParams();
+//                ConstraintLayout.LayoutParams receiverlayoutParams = (ConstraintLayout.LayoutParams) receiveIv.getLayoutParams();
+//                if ("0".equals(messageBodyBean.getRotation()) || "180".equals(messageBodyBean.getRotation())) {
+//                    senderlayoutParams.width = (getWidth(mContext) / 2);
+//                    receiverlayoutParams.width = (getWidth(mContext) / 2);
+//                } else {
+//                    senderlayoutParams.width = (dip2px(80));
+//                    receiverlayoutParams.width = (dip2px(80));
+//                }
+//                sendIv.setLayoutParams(senderlayoutParams);
+//                receiveIv.setLayoutParams(receiverlayoutParams);
                 String picVideoContent = messageBodyBean.getContent();
                 int picFromUserId = messageBodyBean.getFromUserId();
                 helper.setGone(R.id.sender_play_iv, false);

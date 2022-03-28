@@ -1,6 +1,9 @@
 package com.juntai.wisdom.im.chatlist.chat.videocall;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
 import android.text.TextUtils;
@@ -131,6 +134,7 @@ public class VideoRequestActivity extends SoundManagerActivity<ChatPresent> impl
      */
     private int callType = 4;
     private TextView mWaitDesTv;
+    private AudioManager audioManager;
 
     @Override
     public int getLayoutView() {
@@ -163,6 +167,14 @@ public class VideoRequestActivity extends SoundManagerActivity<ChatPresent> impl
         mNameTv = (TextView) findViewById(R.id.name_tv);
         mCallOnGp.setVisibility(View.GONE);
         mRootEglBase = EglBase.create();
+        audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager != null) {
+            audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+            audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL,
+                    audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL),
+                    AudioManager.FX_KEY_CLICK);
+            audioManager.setSpeakerphoneOn(true);
+        }
     }
 
     private void initSurfaceView() {
@@ -176,7 +188,6 @@ public class VideoRequestActivity extends SoundManagerActivity<ChatPresent> impl
         mSmallSurfaceView.init(mRootEglBase.getEglBaseContext(), null);
         mSmallSurfaceView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
         mSmallSurfaceView.setMirror(false);
-        mSmallSurfaceView.setEnableHardwareScaler(true /* enabled */);
         mSmallSurfaceView.setZOrderMediaOverlay(true);
         mSmallSurfaceView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -432,7 +443,7 @@ public class VideoRequestActivity extends SoundManagerActivity<ChatPresent> impl
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行
-    public void receiveMessage(FinishVideoActivityMsgBean finishVideoActivityMsgBean) {
+    public void receiveFinishMessage(FinishVideoActivityMsgBean finishVideoActivityMsgBean) {
         finish();
     }
 

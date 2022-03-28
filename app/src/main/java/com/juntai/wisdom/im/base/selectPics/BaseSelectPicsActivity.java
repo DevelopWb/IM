@@ -17,7 +17,7 @@ import android.text.TextUtils;
 import com.juntai.disabled.basecomponent.mvp.BasePresenter;
 import com.juntai.disabled.basecomponent.utils.BaseAppUtils;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
-import com.juntai.disabled.basecomponent.utils.GlideEngine4;
+import com.juntai.wisdom.im.utils.GlideEngine4;
 import com.juntai.disabled.basecomponent.utils.LogUtil;
 import com.juntai.disabled.bdmap.BaseRequestLocationActivity;
 import com.juntai.wisdom.im.utils.CalendarUtil;

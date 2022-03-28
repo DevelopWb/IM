@@ -22,8 +22,7 @@ import android.database.MatrixCursor;
 import android.database.MergeCursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-
-import androidx.loader.content.CursorLoader;
+import android.support.v4.content.CursorLoader;
 
 import com.zhihu.matisse.internal.entity.Album;
 import com.zhihu.matisse.internal.entity.Item;
@@ -94,33 +93,10 @@ public class AlbumMediaLoader extends CursorLoader {
     }
     // ===============================================================
 
-    // === params for album ALL && showSingleMediaType: true && MineType=="image/gif"
-    private static final String SELECTION_ALL_FOR_GIF =
-            MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
-                    + " AND "
-                    + MediaStore.MediaColumns.MIME_TYPE + "=?"
-                    + " AND " + MediaStore.MediaColumns.SIZE + ">0";
-
-    private static String[] getSelectionArgsForGifType(int mediaType) {
-        return new String[]{String.valueOf(mediaType), "image/gif"};
-    }
-    // ===============================================================
-
-    // === params for ordinary album && showSingleMediaType: true  && MineType=="image/gif" ===
-    private static final String SELECTION_ALBUM_FOR_GIF =
-            MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
-                    + " AND "
-                    + " bucket_id=?"
-                    + " AND "
-                    + MediaStore.MediaColumns.MIME_TYPE + "=?"
-                    + " AND " + MediaStore.MediaColumns.SIZE + ">0";
-
-    private static String[] getSelectionAlbumArgsForGifType(int mediaType, String albumId) {
-        return new String[]{String.valueOf(mediaType), albumId, "image/gif"};
-    }
-    // ===============================================================
-
-    private static final String ORDER_BY = MediaStore.Images.Media.DATE_TAKEN + " DESC";
+    private static final String ORDER_BY ="case ifnull(" + MediaStore.Images.Media.DATE_TAKEN + ",0)" +
+            " when 0 then " + MediaStore.Images.Media.DATE_MODIFIED + "*1000" +
+            " else " + MediaStore.Images.Media.DATE_TAKEN +
+            " end" + " DESC , " + MediaStore.Images.ImageColumns._ID + " DESC";
     private final boolean mEnableCapture;
 
     private AlbumMediaLoader(Context context, String selection, String[] selectionArgs, boolean capture) {
@@ -134,41 +110,25 @@ public class AlbumMediaLoader extends CursorLoader {
         boolean enableCapture;
 
         if (album.isAll()) {
-            if (SelectionSpec.getInstance().onlyShowGif()) {
-                selection = SELECTION_ALL_FOR_GIF;
-                selectionArgs = getSelectionArgsForGifType(
-                        MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
-            } else if (SelectionSpec.getInstance().onlyShowImages()) {
+            if (SelectionSpec.getInstance().onlyShowImages()) {
                 selection = SELECTION_ALL_FOR_SINGLE_MEDIA_TYPE;
-                selectionArgs =
-                        getSelectionArgsForSingleMediaType(
-                                MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
+                selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
             } else if (SelectionSpec.getInstance().onlyShowVideos()) {
                 selection = SELECTION_ALL_FOR_SINGLE_MEDIA_TYPE;
-                selectionArgs =
-                        getSelectionArgsForSingleMediaType(
-                                MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO);
+                selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO);
             } else {
                 selection = SELECTION_ALL;
                 selectionArgs = SELECTION_ALL_ARGS;
             }
             enableCapture = capture;
         } else {
-            if (SelectionSpec.getInstance().onlyShowGif()) {
-                selection = SELECTION_ALBUM_FOR_GIF;
-                selectionArgs =
-                        getSelectionAlbumArgsForGifType(
-                                MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE, album.getId());
-            } else if (SelectionSpec.getInstance().onlyShowImages()) {
+            if (SelectionSpec.getInstance().onlyShowImages()) {
                 selection = SELECTION_ALBUM_FOR_SINGLE_MEDIA_TYPE;
-                selectionArgs =
-                        getSelectionAlbumArgsForSingleMediaType(
-                                MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
-                                album.getId());
+                selectionArgs = getSelectionAlbumArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
+                        album.getId());
             } else if (SelectionSpec.getInstance().onlyShowVideos()) {
                 selection = SELECTION_ALBUM_FOR_SINGLE_MEDIA_TYPE;
-                selectionArgs = getSelectionAlbumArgsForSingleMediaType(
-                        MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO,
+                selectionArgs = getSelectionAlbumArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO,
                         album.getId());
             } else {
                 selection = SELECTION_ALBUM;

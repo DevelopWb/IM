@@ -272,7 +272,9 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                     if (Hawk.contains(HawkProperty.getDraftKey(datum.getId(),true))) {
                         messageBodyBean = Hawk.get(HawkProperty.getDraftKey(datum.getId(),true));
                     }else {
-                        messageBodyBean = mPresenter.findPrivateChatRecordLastMessage(datum.getId());
+                        if (mPresenter != null) {
+                            messageBodyBean = mPresenter.findPrivateChatRecordLastMessage(datum.getId());
+                        }
                     }
                     if (messageBodyBean != null) {
                         ArrayMap<String, MultipleItem> hashMap = new ArrayMap<>();
@@ -296,10 +298,15 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                 MessageBodyBean messageBodyBean = null;
                 if (Hawk.contains(HawkProperty.getDraftKey(group.getGroupId(),false))) {
                     messageBodyBean = Hawk.get(HawkProperty.getDraftKey(group.getGroupId(),false));
-                    MessageBodyBean bodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
-                    messageBodyBean.setRead(bodyBean == null || bodyBean.isRead());
+                    if (mPresenter != null) {
+                        MessageBodyBean bodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
+                        messageBodyBean.setRead(bodyBean == null || bodyBean.isRead());
+                    }
+
                 }else {
-                     messageBodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
+                    if (mPresenter != null) {
+                        messageBodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
+                    }
                 }
                 if (messageBodyBean != null) {
                     group.setLastMessage(messageBodyBean);

@@ -17,7 +17,7 @@
 package com.zhihu.matisse.listener;
 
 import android.net.Uri;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 

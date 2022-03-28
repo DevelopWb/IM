@@ -22,7 +22,7 @@ import com.juntai.disabled.basecomponent.mvp.IPresenter;
 import com.juntai.disabled.basecomponent.utils.BaseAppUtils;
 import com.juntai.disabled.basecomponent.utils.DisplayUtil;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
-import com.juntai.disabled.basecomponent.utils.GlideEngine4;
+import com.juntai.wisdom.im.utils.GlideEngine4;
 import com.juntai.disabled.basecomponent.utils.LogUtil;
 import com.juntai.disabled.bdmap.utils.DateUtil;
 import com.juntai.disabled.federation.R;

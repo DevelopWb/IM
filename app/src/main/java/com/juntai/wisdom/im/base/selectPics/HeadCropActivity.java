@@ -13,6 +13,7 @@ import com.juntai.disabled.basecomponent.utils.RxTask;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.utils.MyFileProvider;
+import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.oginotihiro.cropview.CropView;
 
 import java.io.File;
@@ -29,6 +30,11 @@ public class HeadCropActivity extends BaseAppActivity implements View.OnClickLis
     public static String HEAD_PIC = "headpic";
     public static String CROPED_HEAD_PIC = "cropedheadpic";
     private Bitmap croppedBitmap;
+    /**
+     * 头像名称
+     */
+    private static String HEAD_PIC_NAME = String.format("headpic_%s.png", UserInfoManager.getUserUUID());
+
 
     /**
      * 确定
@@ -84,7 +90,7 @@ public class HeadCropActivity extends BaseAppActivity implements View.OnClickLis
                     @Override
                     public String doOnIoThread() {
                         croppedBitmap = mHeadCropCv.getOutput();
-                        return FileCacheUtils.saveBitmap(croppedBitmap, FileCacheUtils.HEAD_PIC);
+                        return FileCacheUtils.saveBitmap(croppedBitmap, HEAD_PIC_NAME);
                     }
 
                     @Override

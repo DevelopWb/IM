@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.juntai.disabled.basecomponent.base.BaseMvpActivity;
 import com.juntai.disabled.basecomponent.mvp.BasePresenter;
-import com.juntai.disabled.basecomponent.utils.GlideEngine4;
+import com.juntai.wisdom.im.utils.GlideEngine4;
 import com.juntai.disabled.basecomponent.utils.JsonUtil;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.entrance.main.MainActivity;
