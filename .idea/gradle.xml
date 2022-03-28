@@ -17,10 +17,12 @@
             <option value="$PROJECT_DIR$/chathelp" />
             <option value="$PROJECT_DIR$/indexlib" />
             <option value="$PROJECT_DIR$/jjdxm-ijkplayer" />
+            <option value="$PROJECT_DIR$/libwebrtc" />
             <option value="$PROJECT_DIR$/module_Base" />
             <option value="$PROJECT_DIR$/module_Map" />
             <option value="$PROJECT_DIR$/module_Video" />
             <option value="$PROJECT_DIR$/oscvpush" />
+            <option value="$PROJECT_DIR$/rtc-chat" />
             <option value="$PROJECT_DIR$/zXingLiteLib" />
             <option value="$PROJECT_DIR$/zhihu_matisse" />
           </set>

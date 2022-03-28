@@ -1,6 +1,8 @@
 package com.juntai.wisdom.im.base;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import com.juntai.disabled.basecomponent.base.BaseObserver;
@@ -20,6 +22,7 @@ import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean_;
 import com.juntai.wisdom.im.bean.UserBean;
+import com.juntai.wisdom.im.utils.MyFileProvider;
 import com.juntai.wisdom.im.utils.ObjectBox;
 import com.juntai.wisdom.im.utils.SendMsgUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
@@ -225,7 +228,18 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
         }
         return arrays.get(arrays.size() - 1);
     }
-
+    /**
+     * 安装APK
+     */
+    public void installApk(Context mContext,String filePath) {
+        File file = new File(filePath);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = MyFileProvider.getUriFromFile(mContext,file);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        //不加入此行代码 容易提示解析包错误
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        mContext.startActivity(intent);
+    }
     /**
      * 删除群聊信息
      */

@@ -4,6 +4,9 @@
         <files-path path="files" name="files" />
         <cache-path path="files" name="cache" />
         <external-path name="sdcard" path="." />
+        <external-path
+            name="CSJ"
+            path="超视距" />
         <external-path path="files" name="external" />
         <external-path name="camera_photos" path="" />
         <external-files-path path="files" name="externalfiles"/>

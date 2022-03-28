@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -56,7 +57,22 @@ public class EmojiUtils {
         }
         return inSampleSize;
     }
-
+    /**
+     * 判断字符串中是否有超链接，若有，则返回超链接。
+     * @param str
+     * @return
+     */
+    public static String[] judgeString(String str){
+        Matcher m = Pattern.compile("(((https|http)?://)?([a-z0-9]+[.])|(www.))"
+                + "\\w+[.|\\/]([a-z0-9]{0,})?[[.]([a-z0-9]{0,})]+((/[\\S&&[^,;\u4E00-\u9FA5]]+)+)?([.][a-z0-9]{0,}+|/?)").matcher(str);
+        String[] url = new String[str.length()/5];
+        int count = 0;
+        while(m.find()){
+            count++;
+            url[count] = m.group();
+        }
+        return url;
+    }
     public static void showEmojiTextView(Context context,TextView textView, String content,int textSize) {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(content);
 
@@ -65,6 +81,10 @@ public class EmojiUtils {
             spannableStringBuilder.setSpan(colorSpan, 0, content.indexOf("@我]")+3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
         }
+
+        String[] url = judgeString(content);  //超链接判断返回数组
+        CharSequence charSequence;
+        //有超链接
         /**
          * \s匹配空格，\S就是匹配除空格以外的所有字符
          * +?是懒惰限定符，表示至少匹配一次，但尽量少匹配

@@ -92,6 +92,7 @@ dependencies {
     implementation project(':zhihu_matisse')
     implementation project(':indexlib')
     implementation project((':oscvpush'))
+    implementation project(path: ':rtc-chat')
     implementation 'com.oginotihiro:cropview:1.0.0'
     implementation 'com.rabtman.wsmanager:wsmanager:1.0.2'
     /**
@@ -99,7 +100,7 @@ dependencies {
      */
     implementation "me.leolin:ShortcutBadger:1.1.22@aar"
     implementation project(':jjdxm-ijkplayer')
-    implementation 'org.webrtc:google-webrtc:1.0.26131'
+
 /**
  * 文件下载
  */

@@ -18,7 +18,9 @@ import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.BaseAppActivity;
+import com.juntai.wisdom.im.base.BaseAppPresent;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
+import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
 import com.juntai.wisdom.im.utils.MyFileProvider;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
@@ -31,7 +33,8 @@ import org.wlf.filedownloader.FileDownloader;
  * @description 描述   文件详情
  * @date 2022-03-04 10:24
  */
-public class FileDetailActivity extends BaseAppActivity implements BaseAppActivity.OnFileDownloadStatus, View.OnClickListener {
+public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements BaseAppActivity.OnFileDownloadStatus,
+        View.OnClickListener {
 
     private MessageBodyBean messageBodyBean;
     private LinearLayout mFileBaseInfoLl;
@@ -54,8 +57,8 @@ public class FileDetailActivity extends BaseAppActivity implements BaseAppActivi
     private FrameLayout mFileFrameLl;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected ChatPresent createPresenter() {
+        return new ChatPresent();
     }
 
     @Override
@@ -175,7 +178,13 @@ public class FileDetailActivity extends BaseAppActivity implements BaseAppActivi
                 break;
             default:
                 if (!addTbsReaderView(filePath)) {
-                    openUnofficeFile("用其他应用打开");
+                    if (getSavedFileName(messageBodyBean).contains(".apk")) {
+                        mPresenter.installApk(mContext,filePath);
+                    }else {
+                        openUnofficeFile("用其他应用打开");
+
+                    }
+
                 }
                 break;
         }

@@ -33,7 +33,7 @@ public class HeadCropActivity extends BaseAppActivity implements View.OnClickLis
     /**
      * 头像名称
      */
-    private static String HEAD_PIC_NAME = String.format("headpic_%s.png", UserInfoManager.getUserUUID());
+    private static String HEAD_PIC_NAME = String.format("headpic_%s.png", System.currentTimeMillis());
 
 
     /**

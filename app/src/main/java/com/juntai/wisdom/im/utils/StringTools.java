@@ -51,29 +51,6 @@ public class StringTools {
             textView.setText(spannableString);
         }
     }
-//    /**
-//     * 设置文字部分颜色
-//     *
-//     * @return
-//     */
-//    public static void setTextPartColor2(TextView textView, String content, int startIndex, int endIndex,
-//                                        String textColor) {
-//        SpannableStringBuilder spannableString = null;
-//        if (StringTools.isStringValueOk(content)) {
-//            spannableString = new SpannableStringBuilder (content);
-//
-//            spannableString.setSpan(new ClickableSpan() {
-//                @Override
-//                public void onClick(@NonNull View widget) {
-//                    textView.setText("2寸近照");
-////                    if (onClickListener != null) {
-////                        onClickListener.onClick(widget);
-////                    }
-//                }
-//            }, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//            textView.setText(spannableString);
-//        }
-//    }
 
     /**
      * 设置文字部分颜色

@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,10 @@ import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.negier.emojifragment.util.EmojiUtils;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import anet.channel.util.StringUtils;
 
 /**
  * @Author: tobato
@@ -244,6 +249,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 EditText receiveTv = helper.getView(R.id.receiver_content_tv);
                 sendTv.setMaxWidth(getWidth(mContext) - dip2px(110));
                 receiveTv.setMaxWidth(getWidth(mContext) - dip2px(110));
+
                 if (UserInfoManager.getUserId() == fromUserId) {
                     //我发送的消息
                     initNickName(helper, messageBodyBean, 0);
@@ -351,17 +357,6 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 helper.addOnLongClickListener(R.id.sender_pic_video_iv);
                 helper.addOnLongClickListener(R.id.receiver_pic_video_iv);
                 initSelectedViewStatus(helper, messageBodyBean);
-//                ConstraintLayout.LayoutParams senderlayoutParams = (ConstraintLayout.LayoutParams) sendIv.getLayoutParams();
-//                ConstraintLayout.LayoutParams receiverlayoutParams = (ConstraintLayout.LayoutParams) receiveIv.getLayoutParams();
-//                if ("0".equals(messageBodyBean.getRotation()) || "180".equals(messageBodyBean.getRotation())) {
-//                    senderlayoutParams.width = (getWidth(mContext) / 2);
-//                    receiverlayoutParams.width = (getWidth(mContext) / 2);
-//                } else {
-//                    senderlayoutParams.width = (dip2px(80));
-//                    receiverlayoutParams.width = (dip2px(80));
-//                }
-//                sendIv.setLayoutParams(senderlayoutParams);
-//                receiveIv.setLayoutParams(receiverlayoutParams);
                 String picVideoContent = messageBodyBean.getContent();
                 int picFromUserId = messageBodyBean.getFromUserId();
                 helper.setGone(R.id.sender_play_iv, false);
@@ -592,4 +587,8 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
         return content;
 //        return messageBodyBean.getFileName().substring(0,messageBodyBean.getFileName().lastIndexOf("."))+content;
     }
+
+
+
+
 }
