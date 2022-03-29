@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:text="昵称"
+        android:paddingBottom="5dp"
         android:textSize="10dp"
         android:visibility="gone"
         app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
@@ -34,10 +35,11 @@
 
     <ImageView
         android:id="@+id/receiver_pic_video_iv"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:scaleType="fitCenter"
+        android:scaleType="matrix"
+        android:adjustViewBounds="true"
         android:src="@mipmap/splash_bg"
         app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
         app:layout_constraintTop_toBottomOf="@+id/receiver_nick_name_tv"></ImageView>
@@ -54,6 +56,7 @@
         android:id="@+id/sender_nick_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
         android:layout_marginRight="10dp"
         android:text="昵称"
         android:textSize="10dp"
@@ -63,10 +66,11 @@
 
     <ImageView
         android:id="@+id/sender_pic_video_iv"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        android:scaleType="fitCenter"
+        android:scaleType="matrix"
+        android:adjustViewBounds="true"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
         app:layout_constraintTop_toBottomOf="@+id/sender_nick_name_tv"

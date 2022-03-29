@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.juntai.disabled.basecomponent.base.BaseActivity;
+import com.juntai.disabled.basecomponent.base.WebViewActivity;
 import com.juntai.disabled.basecomponent.utils.BaseAppUtils;
 import com.juntai.disabled.federation.R;
 
@@ -57,10 +58,10 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.user_xieyi:
-                startActivity(new Intent(mContext, UserAgreementActivity.class).putExtra("url", getString(R.string.user_xieyi_url)));
+                startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", getString(R.string.user_xieyi_url)));
                 break;
             case R.id.secret_xieyi:
-                startActivity(new Intent(mContext, UserAgreementActivity.class).putExtra("url", getString(R.string.secret_xieyi_url)));
+                startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", getString(R.string.secret_xieyi_url)));
                 break;
             default:
                 break;

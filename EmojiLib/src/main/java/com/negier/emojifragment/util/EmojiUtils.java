@@ -1,19 +1,25 @@
 package com.negier.emojifragment.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.view.View;
 import android.widget.TextView;
 
 import com.negier.emojifragment.R;
+import com.juntai.disabled.basecomponent.base.WebViewActivity;
 import com.negier.emojifragment.bean.Emoji;
 
 import java.util.ArrayList;
@@ -65,7 +71,7 @@ public class EmojiUtils {
     public static String[] judgeString(String str){
         Matcher m = Pattern.compile("(((https|http)?://)?([a-z0-9]+[.])|(www.))"
                 + "\\w+[.|\\/]([a-z0-9]{0,})?[[.]([a-z0-9]{0,})]+((/[\\S&&[^,;\u4E00-\u9FA5]]+)+)?([.][a-z0-9]{0,}+|/?)").matcher(str);
-        String[] url = new String[str.length()/5];
+        String[] url = new String[str.length()];
         int count = 0;
         while(m.find()){
             count++;
@@ -73,7 +79,7 @@ public class EmojiUtils {
         }
         return url;
     }
-    public static void showEmojiTextView(Context context,TextView textView, String content,int textSize) {
+    public static void showEmojiTextView(final Context context, TextView textView, String content, int textSize) {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(content);
 
         if (content.contains("[有人@我]")) {
@@ -82,9 +88,44 @@ public class EmojiUtils {
 
         }
 
-        String[] url = judgeString(content);  //超链接判断返回数组
-        CharSequence charSequence;
-        //有超链接
+//        String[] url = judgeString(content);  //超链接判断返回数组
+//        //有超链接
+//        if (url.length>0) {
+//            for (int i = 0; i < url.length; i++) {
+//                String s = url[i];
+//                if (!TextUtils.isEmpty(s)) {
+//                    ClickableSpan clickableSpan=new ClickableSpan() {
+//                        @Override
+//                        public void onClick(View widget) {
+//                            TextView tv = (TextView) widget;
+//                            String s = tv
+//                                    .getText()
+//                                    .subSequence(tv.getSelectionStart(),
+//                                            tv.getSelectionEnd()).toString();
+//                            context.startActivity(new Intent(context, WebViewActivity.class).putExtra("url",
+//                                    s));
+//
+//                        }
+//                        @Override
+//                        public void updateDrawState(TextPaint ds) {
+//                            //去掉可点击文字的下划线
+//                            ds.setUnderlineText(false);
+//                        }
+//                    };
+//                    //背景颜色
+//                    ForegroundColorSpan foregroundColorSpan=new ForegroundColorSpan(Color.parseColor("#0066FF"));
+//                    spannableStringBuilder.setSpan(foregroundColorSpan,content.indexOf(s),content.indexOf(s)+s.length(),
+//                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                    //文本可点击，有点击事件
+//                    spannableStringBuilder.setSpan(clickableSpan,content.indexOf(s),content.indexOf(s)+s.length(),
+//                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                    // 设置此方法后，点击事件才能生效
+//                    textView.setMovementMethod(LinkMovementMethod.getInstance());
+//                }
+//
+//            }
+//        }
+
         /**
          * \s匹配空格，\S就是匹配除空格以外的所有字符
          * +?是懒惰限定符，表示至少匹配一次，但尽量少匹配

@@ -54,7 +54,7 @@
                 android:id="@+id/regist_phone_et"
                 style="@style/login_edit_tv_style"
                 android:layout_marginTop="10dp"
-                android:hint="请输入你的账号"
+                android:hint="请输入你的手机号"
                 android:inputType="phone"
                 android:maxLength="11" />
 

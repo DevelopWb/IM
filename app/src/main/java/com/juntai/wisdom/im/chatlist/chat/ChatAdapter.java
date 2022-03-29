@@ -357,6 +357,19 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 helper.addOnLongClickListener(R.id.sender_pic_video_iv);
                 helper.addOnLongClickListener(R.id.receiver_pic_video_iv);
                 initSelectedViewStatus(helper, messageBodyBean);
+                ConstraintLayout.LayoutParams senderlayoutParams =
+                        (ConstraintLayout.LayoutParams) sendIv.getLayoutParams();
+                ConstraintLayout.LayoutParams receiverlayoutParams =
+                        (ConstraintLayout.LayoutParams) receiveIv.getLayoutParams();
+                if ("0".equals(messageBodyBean.getRotation()) || "180".equals(messageBodyBean.getRotation())) {
+                    senderlayoutParams.width =(dip2px(200));
+                    receiverlayoutParams.width = (dip2px(200));
+                } else {
+                    senderlayoutParams.width = (dip2px(100));
+                    receiverlayoutParams.width = (dip2px(100));
+                }
+                sendIv.setLayoutParams(senderlayoutParams);
+                receiveIv.setLayoutParams(receiverlayoutParams);
                 String picVideoContent = messageBodyBean.getContent();
                 int picFromUserId = messageBodyBean.getFromUserId();
                 helper.setGone(R.id.sender_play_iv, false);
@@ -381,9 +394,10 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     if (1 == messageBodyBean.getMsgType()) {
                         //有可能是转发的网络图片
                         if (TextUtils.isEmpty(messageBodyBean.getLocalCatchPath())) {
-                            ImageLoadUtil.loadSquareImage(mContext, messageBodyBean.getContent(), helper.getView(R.id.sender_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, messageBodyBean.getContent(),
+                                    helper.getView(R.id.sender_pic_video_iv));
                         } else {
-                            ImageLoadUtil.loadSquareImage(mContext, messageBodyBean.getLocalCatchPath(), helper.getView(R.id.sender_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, messageBodyBean.getLocalCatchPath(), helper.getView(R.id.sender_pic_video_iv));
                         }
                     } else {
                         if (TextUtils.isEmpty(messageBodyBean.getLocalCatchPath())) {
@@ -421,9 +435,9 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                          * 对方发的图片  优先展示缓存到本地的图片  如果没有缓存到本地 就加载线上缩略图
                          */
                         if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean))) {
-                            ImageLoadUtil.loadSquareImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
                         } else {
-                            ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(picVideoContent), helper.getView(R.id.receiver_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageThumUrl(picVideoContent), helper.getView(R.id.receiver_pic_video_iv));
 
                         }
                     } else {

@@ -275,9 +275,6 @@
         <activity
             android:name="com.juntai.wisdom.im.mine.AboutActivity"
             android:launchMode="singleTop" /> <!-- 个人信息 -->
-        <activity
-            android:name="com.juntai.wisdom.im.mine.UserAgreementActivity"
-            android:launchMode="singleTop" />
         <activity android:name="com.juntai.wisdom.im.base.BaseAppActivity" /> <!-- vivo appid和appkey    不能在lib中注册 -->
         <meta-data
             android:name="com.vivo.push.api_key"

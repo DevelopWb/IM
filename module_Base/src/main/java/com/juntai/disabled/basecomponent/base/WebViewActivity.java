@@ -1,4 +1,4 @@
-package com.juntai.wisdom.im.mine;
+package com.juntai.disabled.basecomponent.base;
 
 import android.os.Bundle;
 import android.webkit.WebSettings;
@@ -6,16 +6,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
+import com.juntai.disabled.basecomponent.R;
 import com.juntai.disabled.basecomponent.base.BaseActivity;
-import com.juntai.disabled.federation.R;
-
 
 
 /**
  * 用户协议
  */
 
-public class UserAgreementActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity {
     String urlString;
     private WebView mAgreementWeb;
     private LinearLayout mAgreementLayout;
@@ -34,7 +33,6 @@ public class UserAgreementActivity extends BaseActivity {
     public void initView() {
         mAgreementWeb = (WebView) findViewById(R.id.agreement_web);
         mAgreementLayout = (LinearLayout) findViewById(R.id.agreement_layout);
-
         urlString = getIntent().getStringExtra("url");
         //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
         WebSettings webSettings = mAgreementWeb.getSettings();

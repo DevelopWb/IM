@@ -16,8 +16,8 @@
 16-->
 17<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 18    package="com.zhihu.matisse"
-19    android:versionCode="127"
-20    android:versionName="1.2.7" >
+19    android:versionCode="128"
+20    android:versionName="1.2.8" >
 21
 22    <uses-sdk
 23        android:minSdkVersion="24"
