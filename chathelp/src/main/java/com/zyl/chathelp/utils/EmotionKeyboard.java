@@ -224,12 +224,12 @@ public class EmotionKeyboard {
      */
     public void showSoftInput() {
         mEditText.requestFocus();
-        mEditText.post(new Runnable() {
+        mEditText.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mInputManager.showSoftInput(mEditText, 0);
             }
-        });
+        },200L);
         unlockContentHeightDelayed();//软件盘显示后，释放内容高度
     }
 

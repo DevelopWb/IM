@@ -2142,7 +2142,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
     }
 
     private void showMoreLayout() {
-        mMoreActionRv.setVisibility(View.VISIBLE);
+        if (!mMoreActionRv.isShown()) {
+            mMoreActionRv.setVisibility(View.VISIBLE);
+        }
     }
 
     private void hideMoreLayout() {
