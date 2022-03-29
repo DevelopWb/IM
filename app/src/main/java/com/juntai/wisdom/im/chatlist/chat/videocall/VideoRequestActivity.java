@@ -183,11 +183,11 @@ public class VideoRequestActivity extends SoundManagerActivity<ChatPresent> impl
         mSmallSurfaceView = findViewById(R.id.smallSurfaceView);
         mBigSurfaceView.init(mRootEglBase.getEglBaseContext(), null);
         mBigSurfaceView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
-        mBigSurfaceView.setMirror(false);
+        mBigSurfaceView.setMirror(true);
         mBigSurfaceView.setEnableHardwareScaler(false /* enabled */);
         mSmallSurfaceView.init(mRootEglBase.getEglBaseContext(), null);
         mSmallSurfaceView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
-        mSmallSurfaceView.setMirror(false);
+        mSmallSurfaceView.setMirror(true);
         mSmallSurfaceView.setZOrderMediaOverlay(true);
         mSmallSurfaceView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -364,9 +364,13 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 if ("0".equals(messageBodyBean.getRotation()) || "180".equals(messageBodyBean.getRotation())) {
                     senderlayoutParams.width =(dip2px(200));
                     receiverlayoutParams.width = (dip2px(200));
+                    sendIv.setMaxHeight(dip2px(150));
+                    receiveIv.setMaxHeight(dip2px(150));
                 } else {
                     senderlayoutParams.width = (dip2px(100));
                     receiverlayoutParams.width = (dip2px(100));
+                    sendIv.setMaxHeight(dip2px(220));
+                    receiveIv.setMaxHeight(dip2px(220));
                 }
                 sendIv.setLayoutParams(senderlayoutParams);
                 receiveIv.setLayoutParams(receiverlayoutParams);

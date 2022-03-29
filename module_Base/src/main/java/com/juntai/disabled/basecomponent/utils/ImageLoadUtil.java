@@ -508,7 +508,13 @@ public class ImageLoadUtil {
         rotation = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION);
         videoDuration = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         String width = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+        String height = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
         mediaMetadataRetriever.release();
+        if ("0".equals(rotation)) {
+            if (Integer.parseInt(width)*2<Integer.parseInt(height)) {
+                rotation = "90";
+            }
+        }
         return new FileBaseInfoBean(rotation, videoDuration);
 
     }

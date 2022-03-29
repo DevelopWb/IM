@@ -48,7 +48,7 @@
         android:paddingBottom="8dp"
         android:text="dfssdf"
         android:textColor="@android:color/black"
-        android:textSize="16dp"
+        android:textSize="14sp"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
         app:layout_constraintTop_toBottomOf="@+id/receiver_nick_name_tv"></EditText>
@@ -88,7 +88,7 @@
         android:paddingBottom="8dp"
         android:text="测试对齐方式测试对齐方式测试对齐方式测试对齐方式测试对齐方式测试对齐方式"
         android:textColor="@android:color/black"
-        android:textSize="16dp"
+        android:textSize="14sp"
         app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
         app:layout_constraintTop_toBottomOf="@+id/sender_nick_name_tv"></EditText>
 
