@@ -91,7 +91,7 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
                 //本地原图片存在
                 ImageLoadUtil.loadImageCache(getActivity(), messageBodyBean.getLocalCatchPath(), mPhotoDisplayPv);
             } else {
-                //本地原图片被删除
+                //本地原图片被删除  或者是转发的别人的照片
                 loadNetImageFile();
             }
         } else {
