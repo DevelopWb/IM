@@ -70,7 +70,8 @@
         <ImageView
             android:id="@+id/qrcode_iv"
             android:layout_width="match_parent"
-            android:padding="25dp"
+            android:padding="50dp"
+            android:src="@mipmap/app_icon"
             android:adjustViewBounds="true"
             android:layout_height="wrap_content"></ImageView>
         <TextView

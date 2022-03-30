@@ -32,7 +32,6 @@ import com.juntai.wisdom.im.mine.myCollect.MyCollectActivity;
 import com.juntai.wisdom.im.mine.myinfo.MyInformationActivity;
 import com.juntai.wisdom.im.mine.secret.SecrecyActivity;
 import com.juntai.wisdom.im.utils.HawkProperty;
-import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.orhanobut.hawk.Hawk;
 
@@ -225,7 +224,7 @@ public class MyCenterFragment extends BaseAppFragment<MyCenterPresent> implement
                     mTelNumber.setVisibility(View.VISIBLE);
                     if (!headUrl.equals(userBean.getData().getHeadPortrait())) {
                         headUrl = userBean.getData().getHeadPortrait();
-                        ImageLoadUtil.loadCirImgNoCrash(mContext.getApplicationContext(), UrlFormatUtil.getImageThumUrl(headUrl), mHeadImage, R.mipmap.default_user_head_icon, R.mipmap.default_user_head_icon);
+                        ImageLoadUtil.loadHeadPic(mContext,headUrl,mHeadImage,true);
                     }
                     Hawk.put(HawkProperty.SP_KEY_USER, userBean);
                 }

@@ -298,7 +298,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
         AppNetModule.createrRetrofit()
                 .collect(body)
                 .compose(RxScheduler.ObsIoMain(getView()))
-                .subscribe(new BaseObserver<BaseResult>(getView()) {
+                .subscribe(new BaseObserver<BaseResult>(null) {
                     @Override
                     public void onSuccess(BaseResult o) {
                         if (getView() != null) {
@@ -340,7 +340,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
         AppNetModule.createrRetrofit()
                 .getAllCollection(body)
                 .compose(RxScheduler.ObsIoMain(getView()))
-                .subscribe(new BaseObserver<CollectMessagesBean>(getView()) {
+                .subscribe(new BaseObserver<CollectMessagesBean>(null) {
                     @Override
                     public void onSuccess(CollectMessagesBean o) {
                         if (getView() != null) {
@@ -365,7 +365,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
         AppNetModule.createrRetrofit()
                 .getGroupInfo(body)
                 .compose(RxScheduler.ObsIoMain(getView()))
-                .subscribe(new BaseObserver<GroupDetailBean>(getView()) {
+                .subscribe(new BaseObserver<GroupDetailBean>(null) {
                     @Override
                     public void onSuccess(GroupDetailBean o) {
                         if (getView() != null) {

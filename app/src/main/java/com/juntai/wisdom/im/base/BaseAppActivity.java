@@ -61,7 +61,7 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
     protected TbsReaderView mTbsReaderView;
     public UploadUtil mUploadUtil;
 
-    private OnFileUploadStatus  onFileUploadStatus;
+    private OnFileUploadStatus onFileUploadStatus;
 
 
     public void setOnFileUploadStatus(OnFileUploadStatus onFileUploadStatus) {
@@ -71,17 +71,18 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
     public void setOnFileDownloadStatus(OnFileDownloadStatus onFileDownloadStatus) {
         this.onFileDownloadStatus = onFileDownloadStatus;
     }
+
     /**
      * 实现文本复制功能
      *
      * @param content
      */
-    public void copy(String content)
-    {
+    public void copy(String content) {
 // 得到剪贴板管理器
-        ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         cmb.setText(content.trim());
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +107,7 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
                 Log.d("onThreadProgressChange", "onThreadProgressChange" + uploadFileBean.getFilePath() + "---------" + percent);
 
                 if (onFileUploadStatus != null) {
-                    onFileUploadStatus.onUploadProgressChange(uploadFileBean,percent);
+                    onFileUploadStatus.onUploadProgressChange(uploadFileBean, percent);
                 }
             }
 
@@ -124,8 +125,10 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
         });
     }
 
+
     public interface OnFileUploadStatus {
         void onUploadProgressChange(UploadFileBean uploadFileBean, int percent);
+
         void onUploadFinish(UploadFileBean uploadFileBean);
 
     }
@@ -218,31 +221,41 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
      */
     public String getSavedFileName(MessageBodyBean messageBodyBean) {
         String content = messageBodyBean.getContent();
+        return getSavedFileName(content);
+    }
+
+    /**
+     * 获取文件名称
+     *
+     * @return
+     */
+    public String getSavedFileName(String content) {
         if (TextUtils.isEmpty(content)) {
             return null;
         }
-
         if (content.contains("/")) {
             content = content.substring(content.lastIndexOf("/") + 1, content.length());
         }
         return content;
-//        return messageBodyBean.getFileName().substring(0,messageBodyBean.getFileName().lastIndexOf("."))+content;
     }
+
     /**
      * 获取文件名称  后缀
+     *
      * @param messageBodyBean
      * @return
      */
-    public String getSavedFileNameWithoutSuffix(MessageBodyBean messageBodyBean){
+    public String getSavedFileNameWithoutSuffix(MessageBodyBean messageBodyBean) {
         String content = messageBodyBean.getContent();
         if (TextUtils.isEmpty(content)) {
             return null;
         }
         if (content.contains("/")) {
-            content = content.substring(content.lastIndexOf("/")+1,content.lastIndexOf("."));
+            content = content.substring(content.lastIndexOf("/") + 1, content.lastIndexOf("."));
         }
         return content;
     }
+
     /**
      * 进度条进度
      *
@@ -481,8 +494,6 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
     protected void selectedPicsAndEmpressed(List<String> icons) {
 
     }
-
-
 
 
     @Override

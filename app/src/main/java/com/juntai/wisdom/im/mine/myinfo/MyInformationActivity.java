@@ -23,7 +23,6 @@ import com.juntai.wisdom.im.bean.UserBean;
 import com.juntai.wisdom.im.mine.MyCenterContract;
 import com.juntai.wisdom.im.mine.MyCenterPresent;
 import com.juntai.wisdom.im.mine.myinfo.selectAddr.SetAddrActivity;
-import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 
 import java.util.ArrayList;
@@ -159,9 +158,8 @@ public class MyInformationActivity extends BaseRecyclerviewActivity<MyCenterPres
             beanList.add(new TextKeyValueBean(MY_INFO_SEX, userBean.getGender()==0?"":userBean.getGender()==1?"男":"女"));
             beanList.add(new TextKeyValueBean(MY_INFO_AREA, userBean.getAddress()));
             baseQuickAdapter.setNewData(beanList);
-            ImageLoadUtil.loadCirImgNoCrash(getApplicationContext(), UrlFormatUtil.getImageThumUrl(userBean.getHeadPortrait()),
-                    imageView,
-                    R.mipmap.default_user_head_icon, R.mipmap.default_user_head_icon);
+            ImageLoadUtil.loadHeadPic(mContext,userBean.getHeadPortrait(),imageView,true);
+
         }
     }
 

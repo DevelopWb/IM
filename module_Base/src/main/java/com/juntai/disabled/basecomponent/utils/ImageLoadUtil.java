@@ -207,12 +207,43 @@ public class ImageLoadUtil {
      * @param view
      */
     public static void loadSquareImage(Context context, String url, ImageView view) {
-        Glide.with(context).load(url).apply(new RequestOptions()
-                .error(R.drawable.nopicture).placeholder(R.drawable.nopicture)
-                .transform(new RoundedCorners(15)).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.RESOURCE)).into(view);
-
+        loadHeadPic(context,url,view,false);
     }
+    /**
+     * 加载头像
+     * isCircle 是否是圆形头像
+     */
+    public static void loadHeadPic(Context mContext, String headUrl,ImageView imageView, boolean isCircle) {
+        String content = null;
+        if (TextUtils.isEmpty(headUrl)) {
+            return;
+        }
+        if (headUrl.contains("/")) {
+            content = headUrl.substring(headUrl.lastIndexOf("/") + 1, headUrl.length());
+        }
+        if (!FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + content)) {
+            //本地没有缓存
+            if (isCircle) {
+                ImageLoadUtil.loadCirImgWithCrash(mContext, headUrl, imageView, R.mipmap.default_user_head_icon);
+            } else {
+                Glide.with(mContext).load(headUrl).apply(new RequestOptions()
+                        .error(R.drawable.nopicture).placeholder(R.drawable.nopicture)
+                        .transform(new RoundedCorners(15)).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.RESOURCE)).into(imageView);
+            }
 
+            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, headUrl, true);
+
+        } else {
+            if (isCircle) {
+                ImageLoadUtil.loadCirImgWithCrash(mContext, FileCacheUtils.getAppImagePath(true) + content, imageView, R.mipmap.default_user_head_icon);
+            } else {
+                Glide.with(mContext).load(FileCacheUtils.getAppImagePath(true) + content).apply(new RequestOptions()
+                        .error(R.drawable.nopicture).placeholder(R.drawable.nopicture)
+                        .transform(new RoundedCorners(15)).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.RESOURCE)).into(imageView);
+            }
+
+        }
+    }
     /**
      * 加载圆角方形图片
      *
@@ -257,8 +288,8 @@ public class ImageLoadUtil {
     /**
      * 加载圆形图
      */
-    public static void loadCirImgWithCrash(Context context, String url, ImageView view, int placeholder, int error) {
-        Glide.with(context).load(url).apply(new RequestOptions().error(error).placeholder(placeholder).circleCrop()).into(view);
+    public static void loadCirImgWithCrash(Context context, String url, ImageView view,int defauleDrawble) {
+        Glide.with(context).load(url).apply(new RequestOptions().error(defauleDrawble).placeholder(defauleDrawble).circleCrop().diskCacheStrategy(DiskCacheStrategy.RESOURCE).skipMemoryCache(false)).into(view);
     }
 
 

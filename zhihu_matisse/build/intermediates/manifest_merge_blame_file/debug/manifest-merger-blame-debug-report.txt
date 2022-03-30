@@ -21,28 +21,28 @@
 21
 22    <uses-sdk
 23        android:minSdkVersion="24"
-23-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml
+23-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml
 24        android:targetSdkVersion="28" />
-24-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml
+24-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml
 25
 26    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-26-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:21:5-80
-26-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:21:22-78
+26-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:21:5-80
+26-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:21:22-78
 27    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-27-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:22:5-79
-27-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:22:22-77
+27-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:22:5-79
+27-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:22:22-77
 28
 29    <application>
-29-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:24:5-28:19
+29-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:24:5-28:19
 30        <activity android:name="com.zhihu.matisse.ui.MatisseActivity" />
-30-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:25:9-72
-30-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:25:19-70
+30-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:25:9-72
+30-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:25:19-70
 31        <activity android:name="com.zhihu.matisse.internal.ui.AlbumPreviewActivity" />
-31-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:26:9-86
-31-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:26:19-84
+31-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:26:9-86
+31-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:26:19-84
 32        <activity android:name="com.zhihu.matisse.internal.ui.SelectedPreviewActivity" />
-32-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:27:9-89
-32-->F:\code\IM\zhihu_matisse\src\main\AndroidManifest.xml:27:19-87
+32-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:27:9-89
+32-->D:\Project\IM\zhihu_matisse\src\main\AndroidManifest.xml:27:19-87
 33    </application>
 34
 35</manifest>

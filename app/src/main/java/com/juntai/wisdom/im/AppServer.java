@@ -97,8 +97,6 @@ public interface AppServer {
     @POST(AppHttpPath.MODIFY_USER_ACCOUNT)
     Observable<BaseResult> modifyAccount(@Body RequestBody requestBody);
 
-    @POST(AppHttpPath.GET_QRCODE)
-    Observable<BaseResult> getQRCode(@Body RequestBody requestBody);
 
     @POST(AppHttpPath.COMMIT_SUGGESTION)
     Observable<BaseResult> commitSuggestion(@Body RequestBody requestBody);

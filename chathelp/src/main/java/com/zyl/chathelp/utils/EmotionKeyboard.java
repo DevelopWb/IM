@@ -107,7 +107,7 @@ public class EmotionKeyboard {
 
         } else {
             if (isSoftInputShown()) {//同上
-                lockContentHeight();
+//                lockContentHeight();
                 showEmotionLayout();
                 unlockContentHeightDelayed();
             } else {
@@ -170,8 +170,9 @@ public class EmotionKeyboard {
 
     private void showEmotionLayout() {
         int softInputHeight = getSupportSoftInputHeight();
-        if (softInputHeight == 0) {
-            softInputHeight = mSp.getInt(SHARE_PREFERENCE_SOFT_INPUT_HEIGHT, dip2Px(270));
+        if (softInputHeight == 0||softInputHeight<800) {
+            //有时候手写全屏的时候有问题
+            softInputHeight = 846;
         }
         hideSoftInput();
         mEmotionLayout.getLayoutParams().height = softInputHeight;
@@ -216,7 +217,7 @@ public class EmotionKeyboard {
             public void run() {
                 ((LinearLayout.LayoutParams) mContentView.getLayoutParams()).weight = 1.0F;
             }
-        }, 200L);
+        }, 200);
     }
 
     /**

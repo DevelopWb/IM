@@ -135,26 +135,6 @@ public class MyCenterPresent extends BaseAppPresent<IModel, MyCenterContract.ICe
                 });
     }
 
-    public void getQRCode(RequestBody body, String tag) {
-        AppNetModule.createrRetrofit()
-                .getQRCode(body)
-                .compose(RxScheduler.ObsIoMain(getView()))
-                .subscribe(new BaseObserver<BaseResult>(getView()) {
-                    @Override
-                    public void onSuccess(BaseResult o) {
-                        if (getView() != null) {
-                            getView().onSuccess(tag, o);
-                        }
-                    }
-
-                    @Override
-                    public void onError(String msg) {
-                        if (getView() != null) {
-                            getView().onError(tag, msg);
-                        }
-                    }
-                });
-    }
     public void commitSuggestion(RequestBody body, String tag) {
         AppNetModule.createrRetrofit()
                 .commitSuggestion(body)

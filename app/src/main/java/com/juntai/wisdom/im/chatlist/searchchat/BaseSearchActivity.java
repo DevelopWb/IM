@@ -78,81 +78,86 @@ public abstract class BaseSearchActivity extends BaseAppActivity<ChatPresent> im
         mSearchContentSv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                if (TextUtils.isEmpty(s)) {
-                    return false;
-                }
-                switch (getSearchType()) {
-                    case 1:
-                        List<MessageBodyBean> arrays = ObjectBox.get().boxFor(MessageBodyBean.class).query(
-                                MessageBodyBean_.groupId.equal(0)
-                                        .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
-                                                .and(MessageBodyBean_.toUserId.oneOf(new int[]{contactBean.getId(), UserInfoManager.getUserId()}))
-                                                .and(MessageBodyBean_.fromUserId.oneOf(new int[]{contactBean.getId(), UserInfoManager.getUserId()}))
-                                                .and(MessageBodyBean_.content.equal(s))
-                                        )).build().find();
-                        adapter.setNewData(arrays);
-                        break;
-                    case 2:
-                        // : 2022-01-25 群聊
-                        List<MessageBodyBean> groupMsges = ObjectBox.get().boxFor(MessageBodyBean.class).query(
-                                MessageBodyBean_.groupId.equal(groupBean.getGroupId())
-                                        .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
-                                                .and(MessageBodyBean_.content.equal(s))
-                                        )).build().find();
-                        adapter.setNewData(groupMsges);
-                        break;
-                    case 3:
-                        // : 2022-01-25 搜索本地联系人
-                        List<ContactBean> searchedContacts = new ArrayList<>();
-                        List<ContactBean> contactBeans = getIntent().getParcelableArrayListExtra(BASE_PARCELABLE);
-                        for (ContactBean bean : contactBeans) {
-                            if (bean.getRemarksNickname().contains(s)) {
-                                searchedContacts.add(bean);
-                            }
-                        }
-                        adapter.setNewData(searchedContacts);
-                        break;
-
-                    case 4:
-                        List<MultipleItem> contactAndGroups = getContactAndGroup(s);
-                        adapter.setNewData(contactAndGroups);
-                        // : 2022-03-02 查找对应的收藏数据  暂时不分页
-                        mPresenter.getAllCollection(getBaseBuilder().add("keyword", s).build(), AppHttpPath.ALL_COLLECTS);
-                        break;
-                    case 5:
-
-                        //通讯录相关内容
-                        List<MultipleItem> data = getContactAndGroup(s);
-
-                        // TODO: 2022-01-27  聊天记录相关内容
-                        if (5 == getSearchType()) {
-
-                        }
-                        adapter.setNewData(data);
-
-                        break;
-                    case 6:
-                        // : 2022-03-02 查找对应的收藏数据  暂时不分页
-                        mPresenter.getAllCollection(getBaseBuilder().add("keyword", s).build(), AppHttpPath.ALL_COLLECTS);
-
-
-                        break;
-                    default:
-                        break;
-                }
+                if (commitSearch(s)) return false;
                 getViewFocus(mRecyclerview);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-
-
+                if (commitSearch(s)) return false;
                 return false;
             }
         });
 
 
+    }
+
+    private boolean commitSearch(String s) {
+        if (TextUtils.isEmpty(s)) {
+            return true;
+        }
+        switch (getSearchType()) {
+            case 1:
+                List<MessageBodyBean> arrays = ObjectBox.get().boxFor(MessageBodyBean.class).query(
+                        MessageBodyBean_.groupId.equal(0)
+                                .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
+                                        .and(MessageBodyBean_.toUserId.oneOf(new int[]{contactBean.getId(), UserInfoManager.getUserId()}))
+                                        .and(MessageBodyBean_.fromUserId.oneOf(new int[]{contactBean.getId(), UserInfoManager.getUserId()}))
+                                        .and(MessageBodyBean_.content.equal(s))
+                                )).build().find();
+                adapter.setNewData(arrays);
+                break;
+            case 2:
+                // : 2022-01-25 群聊
+                List<MessageBodyBean> groupMsges = ObjectBox.get().boxFor(MessageBodyBean.class).query(
+                        MessageBodyBean_.groupId.equal(groupBean.getGroupId())
+                                .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
+                                        .and(MessageBodyBean_.content.equal(s))
+                                )).build().find();
+                adapter.setNewData(groupMsges);
+                break;
+            case 3:
+                // : 2022-01-25 搜索本地联系人
+                List<ContactBean> searchedContacts = new ArrayList<>();
+                List<ContactBean> contactBeans = getIntent().getParcelableArrayListExtra(BASE_PARCELABLE);
+                for (ContactBean bean : contactBeans) {
+                    if (bean.getRemarksNickname().contains(s)) {
+                        searchedContacts.add(bean);
+                    }
+                }
+                adapter.setNewData(searchedContacts);
+                break;
+
+            case 4:
+                List<MultipleItem> contactAndGroups = getContactAndGroup(s);
+                adapter.setNewData(contactAndGroups);
+                // : 2022-03-02 查找对应的收藏数据  暂时不分页
+                mPresenter.getAllCollection(getBaseBuilder().add("keyword", s).build(), AppHttpPath.ALL_COLLECTS);
+                break;
+            case 5:
+
+                //通讯录相关内容
+                List<MultipleItem> data = getContactAndGroup(s);
+
+                // TODO: 2022-01-27  聊天记录相关内容
+                if (5 == getSearchType()) {
+
+                }
+                adapter.setNewData(data);
+
+                break;
+            case 6:
+                // : 2022-03-02 查找对应的收藏数据  暂时不分页
+                mPresenter.getAllCollection(getBaseBuilder().add("keyword", s).build(), AppHttpPath.ALL_COLLECTS);
+
+
+                break;
+            default:
+                break;
+        }
+
+        return false;
     }
 
     private List<MultipleItem> getContactAndGroup(String s) {
