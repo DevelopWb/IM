@@ -21,6 +21,7 @@ import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.bean.ContactBean;
+import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.bean.GroupListBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
@@ -224,7 +225,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                     }
                     break;
                 case MultipleItem.ITEM_SELECT_GROUP:
-                    GroupListBean.DataBean groupBean = (GroupListBean.DataBean) multipleItem.getObject();
+                    GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) multipleItem.getObject();
                     switch (forwardType) {
                         case 0:
                             sendGroupNormalMsg(groupBean, operatingMsgBean);
@@ -326,7 +327,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
     /**
      * 发送群聊普通信息
      */
-    private void sendGroupNormalMsg(GroupListBean.DataBean groupBean, MessageBodyBean olderMessageBodyBean) {
+    private void sendGroupNormalMsg(GroupDetailBean.DataBean groupBean, MessageBodyBean olderMessageBodyBean) {
         MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(olderMessageBodyBean.getMsgType(), groupBean.getGroupId(), groupBean.getUserNickname(), olderMessageBodyBean.getContent());
         switch (olderMessageBodyBean.getMsgType()) {
             case 1:
@@ -414,7 +415,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                 break;
             case BASE_REQUEST_RESULT2:
                 if (data != null) {
-                    GroupListBean.DataBean groupBean = data.getParcelableExtra(BASE_PARCELABLE);
+                    GroupDetailBean.DataBean groupBean = data.getParcelableExtra(BASE_PARCELABLE);
                     fragment.notifyGroup(groupBean);
                 }
                 break;

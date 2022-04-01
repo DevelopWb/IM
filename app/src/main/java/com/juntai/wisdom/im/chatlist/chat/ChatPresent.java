@@ -13,6 +13,7 @@ import com.juntai.wisdom.im.AppNetModule;
 import com.juntai.wisdom.im.base.BaseAppPresent;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.GroupBean;
+import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.bean.GroupListBean;
 import com.juntai.wisdom.im.bean.HomePageMenuBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
@@ -74,8 +75,8 @@ public class ChatPresent extends BaseAppPresent<IModel, MainContract.IBaseView> 
         }
         position = data.size();
         // : 2022-02-12 群聊
-        List<GroupListBean.DataBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
-        for (GroupListBean.DataBean group : groups) {
+        List<GroupDetailBean.DataBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
+        for (GroupDetailBean.DataBean group : groups) {
             if (group.getGroupName().contains(s)) {
                 data.add(new MultipleItem(MultipleItem.ITEM_GROUP, group));
             }

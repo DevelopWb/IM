@@ -1,11 +1,6 @@
 package com.juntai.wisdom.im.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.juntai.disabled.basecomponent.base.BaseResult;
-
-import java.util.List;
 
 /**
  * @Author: tobato
@@ -17,13 +12,13 @@ import java.util.List;
 public class GroupBean extends BaseResult {
 
 
-    private GroupListBean.DataBean data;
+    private GroupDetailBean.DataBean data;
 
-    public GroupListBean.DataBean getData() {
+    public GroupDetailBean.DataBean getData() {
         return data;
     }
 
-    public void setData(GroupListBean.DataBean data) {
+    public void setData(GroupDetailBean.DataBean data) {
         this.data = data;
     }
 

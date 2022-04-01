@@ -11,7 +11,7 @@ import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.GroupBean;
-import com.juntai.wisdom.im.bean.GroupListBean;
+import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.PeopleBean;
 import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
@@ -147,7 +147,7 @@ public class SelectGroupChatPeopleActivity extends BaseAppActivity<ChatPresent> 
             case AppHttpPath.CREAT_GROUP:
                 GroupBean groupBean = (GroupBean) o;
                 if (groupBean != null) {
-                    GroupListBean.DataBean dataBean = groupBean.getData();
+                    GroupDetailBean.DataBean dataBean = groupBean.getData();
                     dataBean.setGroupId(dataBean.getId());
                     //本地添加一条群聊消息
                     MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(10, dataBean.getId(), 0,null, "你已成功创建群聊");

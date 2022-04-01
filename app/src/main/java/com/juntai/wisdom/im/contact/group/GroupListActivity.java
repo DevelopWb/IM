@@ -7,6 +7,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseRecyclerviewActivity;
+import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.bean.GroupListBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
@@ -37,7 +38,7 @@ public class GroupListActivity extends BaseRecyclerviewActivity<ChatPresent> imp
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MultipleItem multipleItem = (MultipleItem) adapter.getItem(position);
-                GroupListBean.DataBean  dataBean = (GroupListBean.DataBean) multipleItem.getObject();
+                GroupDetailBean.DataBean  dataBean = (GroupDetailBean.DataBean) multipleItem.getObject();
                 // : 2022-01-13 跳转到群聊消息界面
                 startActivity(new Intent(mContext, GroupChatActivity.class)
                         .putExtra(BASE_ID,dataBean.getGroupId()));
@@ -76,11 +77,11 @@ public class GroupListActivity extends BaseRecyclerviewActivity<ChatPresent> imp
         super.onSuccess(tag, o);
         GroupListBean groupListBean = (GroupListBean) o;
         if (groupListBean != null) {
-            List<GroupListBean.DataBean> arrays = groupListBean.getData();
+            List<GroupDetailBean.DataBean> arrays = groupListBean.getData();
             if (arrays != null) {
                 Hawk.put(HawkProperty.GROUP_LIST,arrays);
                 baseQuickAdapter.setNewData(null);
-                for (GroupListBean.DataBean array : arrays) {
+                for (GroupDetailBean.DataBean array : arrays) {
                     array.setHasEndLine(true);
                     baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_GROUP, array));
                 }

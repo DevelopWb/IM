@@ -12,7 +12,7 @@ import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.BaseAppFragment;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupListBean;
+import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.bean.PeopleBean;
 import com.juntai.wisdom.im.contact.ContactAdapter;
@@ -62,8 +62,8 @@ public class SelectGroupAndContactFragment extends BaseAppFragment<MainPresent> 
         mIndexBar.setmPressedShowTextView(mTvSideBarHint)//设置HintTextView
 //                .setNeedRealIndex(true)//设置需要真实的索引
                 .setmLayoutManager(manager);//设置RecyclerView的LayoutManager
-        List<GroupListBean.DataBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
-        for (GroupListBean.DataBean group : groups) {
+        List<GroupDetailBean.DataBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
+        for (GroupDetailBean.DataBean group : groups) {
             adapter.addData(new MultipleItem(MultipleItem.ITEM_SELECT_GROUP,group));
         }
         List<ContactBean> data = Hawk.get(HawkProperty.getContactListKey());
@@ -97,13 +97,13 @@ public class SelectGroupAndContactFragment extends BaseAppFragment<MainPresent> 
         }
     }
 
-    public void notifyGroup(GroupListBean.DataBean selectGroupBean) {
+    public void notifyGroup(GroupDetailBean.DataBean selectGroupBean) {
         List<MultipleItem> arrays = adapter.getData();
         for (int i = 0; i < arrays.size(); i++) {
             MultipleItem array = arrays.get(i);
             switch (array.getItemType()) {
                 case MultipleItem.ITEM_SELECT_GROUP:
-                    GroupListBean.DataBean groupBean = (GroupListBean.DataBean) array.getObject();
+                    GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) array.getObject();
                     if (selectGroupBean.getId() == groupBean.getId()) {
                         if (groupBean.isSelected()) {
                             ToastUtils.toast(mContext, "已经选过了");
@@ -144,7 +144,7 @@ public class SelectGroupAndContactFragment extends BaseAppFragment<MainPresent> 
                         adapter.notifyItemChanged(position);
                         break;
                     case MultipleItem.ITEM_SELECT_GROUP:
-                        GroupListBean.DataBean groupBean = (GroupListBean.DataBean) multipleItem.getObject();
+                        GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) multipleItem.getObject();
                         if (groupBean.isSelected()) {
                             groupBean.setSelected(false);
                         }else {
@@ -177,7 +177,7 @@ public class SelectGroupAndContactFragment extends BaseAppFragment<MainPresent> 
                     }
                     break;
                 case MultipleItem.ITEM_SELECT_GROUP:
-                    GroupListBean.DataBean groupBean = (GroupListBean.DataBean) array.getObject();
+                    GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) array.getObject();
                     if (groupBean.isSelected()) {
                         selectedItems.add(array);
                     }

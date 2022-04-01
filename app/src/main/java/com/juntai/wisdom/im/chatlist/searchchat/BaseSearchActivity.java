@@ -13,7 +13,7 @@ import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.bean.CollectMessagesBean;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupListBean;
+import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
@@ -37,7 +37,7 @@ public abstract class BaseSearchActivity extends BaseAppActivity<ChatPresent> im
     private RecyclerView mRecyclerview;
     protected ContactBean contactBean;
     protected BaseQuickAdapter adapter;
-    protected GroupListBean.DataBean groupBean;
+    protected GroupDetailBean.DataBean groupBean;
 
     @Override
     protected ChatPresent createPresenter() {

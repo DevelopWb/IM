@@ -8,7 +8,7 @@ import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.basecomponent.utils.ScreenUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.BaseAppActivity;
-import com.juntai.wisdom.im.bean.GroupListBean;
+import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
@@ -30,7 +30,7 @@ public class GroupQrcodeActivity extends BaseAppActivity<ChatPresent> implements
     private TextView mContactorNameTv;
     private ImageView mQrcodeIv;
     private String qrcodeUrl;
-    private GroupListBean.DataBean groupBean;
+    private GroupDetailBean.DataBean groupBean;
 
     @Override
     protected ChatPresent createPresenter() {

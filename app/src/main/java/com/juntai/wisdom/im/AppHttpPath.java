@@ -8,7 +8,7 @@ public class AppHttpPath {
 //    public static final String BASE_SOCKET = "ws://192.168.124.118/webSocket/";
         public static final String BASE_SOCKET = "ws://www.juntaikeji.com:21213/webSocket/";
 //    public static final String BASE_IMAGE = "http://192.168.124.118:9598";
-    public static final String BASE_IMAGE = "http://www.juntaikeji.com:19170";
+//    public static final String BASE_IMAGE = "http://www.juntaikeji.com:19170";
 
     public static final String CHAT_VIDEO_URL = "turn:stun.juntaikeji.com:19603";
     public static final String ALL_CITYS = "https://restapi.amap.com/v3/config/district?";

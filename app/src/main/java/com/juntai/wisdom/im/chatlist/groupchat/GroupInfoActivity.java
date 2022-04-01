@@ -12,7 +12,6 @@ import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseRecyclerviewActivity;
 import com.juntai.wisdom.im.bean.GroupDetailBean;
-import com.juntai.wisdom.im.bean.GroupListBean;
 import com.juntai.wisdom.im.bean.GroupPeoplesBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.bean.PeopleBean;
@@ -37,7 +36,7 @@ import java.util.List;
  */
 public class GroupInfoActivity extends BaseRecyclerviewActivity<ChatPresent> implements MainContract.IBaseView, ChatInfoAdapter.OnChatInfoCallBack {
 
-    private GroupListBean.DataBean groupBean;
+    private GroupDetailBean.DataBean groupBean;
     private GroupDetailBean.DataBean dataBean;
     public final static int GROUP_INFO_REQUEST = 10093;
 
@@ -222,7 +221,7 @@ public class GroupInfoActivity extends BaseRecyclerviewActivity<ChatPresent> imp
         switch (tag) {
             case AppHttpPath.GET_GROUP_INFO:
                 GroupDetailBean groupPeoplesBean = (GroupDetailBean) o;
-                groupBean = GsonTools.modelA2B(groupPeoplesBean.getData(), GroupListBean.DataBean.class);
+                groupBean = GsonTools.modelA2B(groupPeoplesBean.getData(), GroupDetailBean.DataBean.class);
                 if (groupPeoplesBean != null) {
                     dataBean = groupPeoplesBean.getData();
                     if (dataBean != null) {
