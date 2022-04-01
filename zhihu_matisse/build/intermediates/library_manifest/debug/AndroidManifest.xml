@@ -16,8 +16,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zhihu.matisse"
-    android:versionCode="129"
-    android:versionName="1.2.9" >
+    android:versionCode="130"
+    android:versionName="1.3.0" >
 
     <uses-sdk
         android:minSdkVersion="24"

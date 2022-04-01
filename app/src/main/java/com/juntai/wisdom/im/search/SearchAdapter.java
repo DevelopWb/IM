@@ -1,8 +1,12 @@
 package com.juntai.wisdom.im.search;
 
+import android.widget.Filter;
+import android.widget.Filterable;
+
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
+import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.GroupListBean;
@@ -13,6 +17,7 @@ import com.juntai.wisdom.im.utils.CalendarUtil;
 import com.juntai.wisdom.im.utils.MyFileProvider;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +27,11 @@ import java.util.List;
  * @UpdateUser: 更新者
  * @UpdateDate: 2020/4/15 10:10
  */
-public class SearchAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseViewHolder> {
+public class SearchAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseViewHolder>  implements Filterable {
+
+    private ArrayFilter mFilter;
+    List<MultipleItem> datas ;
+
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -31,6 +40,7 @@ public class SearchAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseV
      */
     public SearchAdapter(List<MultipleItem> data) {
         super(data);
+        this.datas = data;
         addItemType(MultipleItem.ITEM_TITLE, R.layout.item_layout);
         addItemType(MultipleItem.ITEM_CONTACT, R.layout.item_contact);
         addItemType(MultipleItem.ITEM_GROUP, R.layout.item_contact);
@@ -149,6 +159,91 @@ public class SearchAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseV
         helper.setText(R.id.collect_time_tv, CalendarUtil.formatCollectDataOfChatList(messageBodyBean.getCollectionCreateTime()));
         return messageBodyBean;
     }
+    private MessageBodyBean getMessageBodyBean(MultipleItem item) {
+        MessageBodyBean messageBodyBean = (MessageBodyBean) item.getObject();
+        return messageBodyBean;
+    }
 
 
+    @Override
+    public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new ArrayFilter();
+        }
+        return mFilter;
+    }
+
+
+    /**
+     * 数据过滤
+     */
+    private class ArrayFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {//constraint用户输入关键词
+            FilterResults results = new  FilterResults();
+            List<MultipleItem> newData = new ArrayList<MultipleItem>();
+            if (constraint == null || constraint.toString().trim().length() == 0) {
+            } else {
+                String prefixString = constraint.toString().toLowerCase();
+
+                for (MultipleItem item : datas) {
+                    switch (item.getItemType()) {
+                        case MultipleItem.ITEM_CONTACT:
+                            ContactBean contactBean = (ContactBean) item.getObject();
+                            if (contactBean.getRemarksNickname().startsWith(prefixString)) {
+                                newData.add(item);
+                            }
+                            break;
+                        case MultipleItem.ITEM_GROUP:
+                            GroupListBean.DataBean  groupBean = (GroupListBean.DataBean) item.getObject();
+                            if (groupBean.getGroupName().startsWith(prefixString)) {
+                                newData.add(item);
+                            }
+                            break;
+                        case MultipleItem.ITEM_COLLECTION_TEXT:
+                        case MultipleItem.ITEM_COLLECTION_PIC:
+                        case MultipleItem.ITEM_COLLECTION_VIDEO:
+                        case MultipleItem.ITEM_COLLECTION_AUDIO:
+                            if (getMessageBodyBean(item).getContent().startsWith(prefixString)) {
+                                newData.add(item);
+                            }
+                            break;
+                        case MultipleItem.ITEM_COLLECTION_FILE:
+                            if (getMessageBodyBean(item).getFileName().startsWith(prefixString)) {
+                                newData.add(item);
+                            }
+
+                            break;
+                        case MultipleItem.ITEM_COLLECTION_LOCATE:
+                            if (getMessageBodyBean(item).getAddrDes().startsWith(prefixString)) {
+                                newData.add(item);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            results.values = newData;
+            results.count = newData.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            datas = (ArrayList)results.values;
+            if (datas == null || datas.size() ==0){
+                ToastUtils.warning(mContext, "暂无相关部门！");
+            }
+            notifyDataSetChanged();
+        }
+
+        //给输入框返回的选择结果
+        @Override
+        public CharSequence convertResultToString(Object resultValue) {
+//            PoliceBranchBean.DataBean testBean = (PoliceBranchBean.DataBean) resultValue;
+//            return testBean.getName();
+            return "";
+        }
+    }
 }

@@ -207,9 +207,6 @@ public interface AppServer {
     @POST(AppHttpPath.GET_GROUP_LIST)
     Observable<GroupListBean> getGroupList(@Body RequestBody requestBody);
 
-    @POST(AppHttpPath.GET_GROUP_QRCODE)
-    Observable<BaseResult> getGroupQRcode(@Body RequestBody requestBody);
-
 
     @POST(AppHttpPath.GET_GROUP_INFO)
     Observable<GroupDetailBean> getGroupInfo(@Body RequestBody requestBody);

@@ -18,7 +18,7 @@ import com.negier.emojifragment.util.EmojiUtils;
  * @UpdateUser: 更新者
  * @UpdateDate: 2022-01-25 10:52
  */
-public class SearchChatAdapter extends BaseQuickAdapter<MessageBodyBean, BaseViewHolder>  {
+public class SearchChatAdapter extends BaseQuickAdapter<MessageBodyBean, BaseViewHolder>   {
     public SearchChatAdapter(int layoutResId) {
         super(layoutResId);
     }

@@ -1,19 +1,20 @@
 package com.juntai.wisdom.im.chatlist.groupchat;
 
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juntai.disabled.basecomponent.base.BaseResult;
+import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
+import com.juntai.disabled.basecomponent.utils.ScreenUtils;
 import com.juntai.disabled.federation.R;
-import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.bean.GroupListBean;
 import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
+import com.king.zxing.util.CodeUtils;
+
+import static android.graphics.BitmapFactory.decodeFile;
 
 /**
  * @aouther tobato
@@ -51,38 +52,19 @@ public class GroupQrcodeActivity extends BaseAppActivity<ChatPresent> implements
             ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageOriginalUrl(groupBean.getGroupPicture()), mContactorIconIv);
             mContactorNameTv.setText(groupBean.getGroupName());
         }
-
-
         mQrcodeIv = (ImageView) findViewById(R.id.qrcode_iv);
-        mQrcodeIv.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                initBottomDialog(getBaseBottomDialogMenus("保存图片"), UrlFormatUtil.getImageOriginalUrl(qrcodeUrl));
-                return true;
-            }
-        });
     }
 
     @Override
     public void initData() {
-        mPresenter.getGroupQRcode(getBaseBuilder().add("groupId",String.valueOf(groupBean.getGroupId())).build(), AppHttpPath.GET_GROUP_QRCODE);
+        mQrcodeIv.setImageBitmap(CodeUtils.createQRCode(String.format("https://www.baidu.com?uuid=%s&type=2",
+                groupBean.getGroupUuid()), ScreenUtils.getInstance(mContext).getScreenWidth(), decodeFile(FileCacheUtils.getAppImagePath(true)+getSavedFileName(groupBean.getGroupPicture())))
+        );
     }
 
 
     @Override
     public void onSuccess(String tag, Object o) {
-        switch (tag) {
-            case AppHttpPath.GET_GROUP_QRCODE:
-                BaseResult baseResult = (BaseResult) o;
-                qrcodeUrl = baseResult.getMessage();
-                if (!TextUtils.isEmpty(qrcodeUrl)) {
-                    ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageOriginalUrl(qrcodeUrl), mQrcodeIv);
-                }
-
-                break;
-            default:
-                break;
-        }
     }
 
 }

@@ -1,7 +1,6 @@
 package com.juntai.wisdom.im.chatlist.chat;
 
 import android.content.Context;
-import android.media.MediaRecorder;
 import android.util.Log;
 
 import com.juntai.disabled.basecomponent.base.BaseObserver;
@@ -12,14 +11,18 @@ import com.juntai.disabled.basecomponent.utils.RxScheduler;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.AppNetModule;
 import com.juntai.wisdom.im.base.BaseAppPresent;
+import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.GroupBean;
 import com.juntai.wisdom.im.bean.GroupListBean;
 import com.juntai.wisdom.im.bean.HomePageMenuBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MessageListBean;
+import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.bean.MyMenuBean;
 import com.juntai.wisdom.im.entrance.main.MainContract;
+import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.UserInfoManager;
+import com.orhanobut.hawk.Hawk;
 
 import org.webrtc.Camera1Enumerator;
 import org.webrtc.Camera2Enumerator;
@@ -32,7 +35,6 @@ import org.webrtc.PeerConnectionFactory;
 import org.webrtc.VideoCapturer;
 import org.webrtc.VideoDecoderFactory;
 import org.webrtc.VideoEncoderFactory;
-import org.webrtc.audio.JavaAudioDeviceModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +60,32 @@ public class ChatPresent extends BaseAppPresent<IModel, MainContract.IBaseView> 
     public final static String EDIT_MSG_DELETE = "删除";
     public final static String EDIT_MSG_FORWARD = "转发";
 
+    public List<MultipleItem> getContactAndGroup(String s) {
+        List<MultipleItem> data = new ArrayList<>();
+        int position = 0;
+        List<ContactBean> localContacts = Hawk.get(HawkProperty.getContactListKey());
+        for (ContactBean bean : localContacts) {
+            if (bean.getRemarksNickname().contains(s)) {
+                data.add(new MultipleItem(MultipleItem.ITEM_CONTACT, bean));
+            }
+        }
+        if (data.size() > 0) {
+            data.add(0, new MultipleItem(MultipleItem.ITEM_TITLE, "通讯录"));
+        }
+        position = data.size();
+        // : 2022-02-12 群聊
+        List<GroupListBean.DataBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
+        for (GroupListBean.DataBean group : groups) {
+            if (group.getGroupName().contains(s)) {
+                data.add(new MultipleItem(MultipleItem.ITEM_GROUP, group));
+            }
+
+        }
+        if (data.size() > position) {
+            data.add(position, new MultipleItem(MultipleItem.ITEM_TITLE, "群聊"));
+        }
+        return data;
+    }
 
 
     /**
@@ -299,30 +327,6 @@ public class ChatPresent extends BaseAppPresent<IModel, MainContract.IBaseView> 
                 });
     }
 
-    /**
-     * @param body
-     * @param tag
-     */
-    public void getGroupQRcode(RequestBody body, String tag) {
-        AppNetModule.createrRetrofit()
-                .getGroupQRcode(body)
-                .compose(RxScheduler.ObsIoMain(getView()))
-                .subscribe(new BaseObserver<BaseResult>(getView()) {
-                    @Override
-                    public void onSuccess(BaseResult o) {
-                        if (getView() != null) {
-                            getView().onSuccess(tag, o);
-                        }
-                    }
-
-                    @Override
-                    public void onError(String msg) {
-                        if (getView() != null) {
-                            getView().onError(tag, msg);
-                        }
-                    }
-                });
-    }
 
     /**
      * @param body

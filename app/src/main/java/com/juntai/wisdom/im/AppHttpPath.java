@@ -185,10 +185,6 @@ public class AppHttpPath {
      */
     public static final String MODIFY_GROUP_NAME = BASE + "/group/updateGroupInfo";
     /**
-     * 群二维码
-     */
-    public static final String GET_GROUP_QRCODE = BASE + "/group/getGroupQrCodePoster";
-    /**
      * 获取群聊详情
      */
     public static final String GET_GROUP_INFO = BASE + "/group/selectGroupByGroupId";
