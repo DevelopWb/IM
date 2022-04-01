@@ -5,6 +5,7 @@ import android.content.Intent;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.disabled.basecomponent.base.BaseActivity;
 import com.juntai.wisdom.im.AppHttpPath;
+import com.juntai.wisdom.im.bean.CollectMessagesBean;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.GroupListBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
@@ -14,6 +15,7 @@ import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
 import com.juntai.wisdom.im.chatlist.searchchat.BaseSearchActivity;
 import com.juntai.wisdom.im.contact.ContactorInfoActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,10 +24,11 @@ import java.util.List;
  * @date 2022-01-27 15:05
  */
 public class SearchActivity extends BaseSearchActivity {
-
+    private String str;
 
     @Override
     protected boolean commitSearch(String s) {
+        this.str =s;
         // TODO: 2022/4/1 这个地方需要加上聊天记录的搜索
         List<MultipleItem> contactAndGroups = mPresenter.getContactAndGroup(s);
         adapter.setNewData(contactAndGroups);
@@ -65,6 +68,60 @@ public class SearchActivity extends BaseSearchActivity {
             case MultipleItem.ITEM_COLLECTION_FILE:
                 startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE, (MessageBodyBean) multipleItem.getObject()));
 
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onSuccess(String tag, Object o) {
+        switch (tag) {
+            case AppHttpPath.ALL_COLLECTS:
+                CollectMessagesBean collectMessagesBean = (CollectMessagesBean) o;
+                CollectMessagesBean.DataBean dataBean = collectMessagesBean.getData();
+                if (dataBean != null) {
+                    List<MessageBodyBean> messageBodyBeans = dataBean.getList();
+                    List<MultipleItem> data = new ArrayList<>();
+                    if (messageBodyBeans != null) {
+                        if (4 == getSearchType()) {
+                            if (messageBodyBeans.size() > 0) {
+                                data.add(new MultipleItem(MultipleItem.ITEM_TITLE, "我的收藏"));
+                            }
+                        }
+                        for (MessageBodyBean messageBodyBean : messageBodyBeans) {
+                            //收藏消息类型 普通文本  图片 视频  音频  8文件 6位置
+                            switch (messageBodyBean.getMsgType()) {
+                                case 0:
+                                    data.add(new MultipleItem(MultipleItem.ITEM_COLLECTION_TEXT, messageBodyBean));
+                                    break;
+                                case 1:
+                                    data.add(new MultipleItem(MultipleItem.ITEM_COLLECTION_PIC, messageBodyBean));
+                                    break;
+                                case 2:
+                                    data.add(new MultipleItem(MultipleItem.ITEM_COLLECTION_VIDEO, messageBodyBean));
+                                    break;
+                                case 3:
+                                    data.add(new MultipleItem(MultipleItem.ITEM_COLLECTION_AUDIO, messageBodyBean));
+                                    break;
+                                case 6:
+                                    data.add(new MultipleItem(MultipleItem.ITEM_COLLECTION_LOCATE, messageBodyBean));
+                                    break;
+                                case 8:
+                                    data.add(new MultipleItem(MultipleItem.ITEM_COLLECTION_FILE, messageBodyBean));
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        if (4 == getSearchType()) {
+                            adapter.addData(data);
+                        } else {
+                            adapter.setNewData(data);
+                        }
+                    }
+//                    ((SearchAdapter.ArrayFilter)((SearchAdapter) adapter).getFilter()).setArrays(adapter.getData()).filter(str);
+                }
                 break;
             default:
                 break;
