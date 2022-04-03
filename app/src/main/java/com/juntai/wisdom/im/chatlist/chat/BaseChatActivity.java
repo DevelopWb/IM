@@ -51,6 +51,7 @@ import com.juntai.wisdom.im.base.uploadFile.UploadFileBean;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.FileSelectBean;
 import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.HomePageMenuBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean_;
@@ -166,10 +167,10 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
     //每次展示20条数据
     private int limit = 20;
     private BottomSheetDialog noticePeopleDialog;
-    private GroupDetailBean.DataBean groupBean;
+    private GroupDetailInfoBean groupBean;
     private long searchedMsgId;
     private int searchedMsgPosition;
-    private GroupDetailBean.DataBean detailBean;
+    private GroupDetailInfoBean detailBean;
     /**
      * 正在被操作的消息实体
      */
@@ -1546,7 +1547,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             case AppHttpPath.GET_GROUP_INFO:
                 GroupDetailBean groupDetailBean = (GroupDetailBean) o;
                 detailBean = groupDetailBean.getData();
-                groupBean = GsonTools.modelA2B(detailBean, GroupDetailBean.DataBean.class);
+                groupBean = GsonTools.modelA2B(detailBean, GroupDetailInfoBean.class);
                 setTitleName(groupBean.getGroupName());
                 //获取历史数据
                 List<MessageBodyBean> arrays = mPresenter.findGroupChatRecord(groupId);

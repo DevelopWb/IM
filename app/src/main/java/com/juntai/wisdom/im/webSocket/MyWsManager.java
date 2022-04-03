@@ -20,7 +20,7 @@ import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.AddContractOrGroupMsgBean;
 import com.juntai.wisdom.im.bean.BaseWsMessageBean;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.UnReadMsgsBean;
 import com.juntai.wisdom.im.bean.VideoActivityMsgBean;
@@ -175,9 +175,9 @@ public class MyWsManager {
          * @return
          */
         private boolean checkLocalGroup(MessageBodyBean messageBodyBean) {
-            List<GroupDetailBean.DataBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
+            List<GroupDetailInfoBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
             List<Integer> groupIds = new ArrayList<>();
-            for (GroupDetailBean.DataBean group : groups) {
+            for (GroupDetailInfoBean group : groups) {
                 groupIds.add(group.getGroupId());
             }
             return groupIds.contains(messageBodyBean.getGroupId());

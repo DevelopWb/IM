@@ -55,7 +55,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void error(Context context,String msg){
-        Toasty.error(context.getApplicationContext(),msg).show();
+        Toasty.error(context.getApplicationContext(),msg,Toasty.LENGTH_LONG).show();
     }
 
     public static void error(Context context,int msg){

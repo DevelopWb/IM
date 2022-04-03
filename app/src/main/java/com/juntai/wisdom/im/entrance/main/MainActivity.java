@@ -38,7 +38,7 @@ import com.juntai.wisdom.im.base.customview.MainPagerAdapter;
 import com.juntai.wisdom.im.bean.AddContractOrGroupMsgBean;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.ContactListBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.GroupInfoByUuidBean;
 import com.juntai.wisdom.im.bean.GroupListBean;
 import com.juntai.wisdom.im.bean.HomePageMenuBean;
@@ -377,7 +377,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
 
                 GroupListBean groupListBean = (GroupListBean) o;
                 if (groupListBean != null) {
-                    List<GroupDetailBean.DataBean> arrays = groupListBean.getData();
+                    List<GroupDetailInfoBean> arrays = groupListBean.getData();
                     if (arrays != null) {
                         Hawk.put(HawkProperty.GROUP_LIST, arrays);
                     }
@@ -407,7 +407,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
                 GroupInfoByUuidBean groupInfoByUuidBean = (GroupInfoByUuidBean) o;
                 if (groupInfoByUuidBean != null) {
                     GroupInfoByUuidBean.DataBean dataBean = groupInfoByUuidBean.getData();
-                    GroupDetailBean.DataBean groupBean = GsonTools.modelA2B(dataBean, GroupDetailBean.DataBean.class);
+                    GroupDetailInfoBean groupBean = GsonTools.modelA2B(dataBean, GroupDetailInfoBean.class);
                     groupBean.setGroupId(dataBean.getId());
                     startActivity(new Intent(mContext, GroupChatActivity.class)
                             .putExtra(BASE_ID, groupBean.getGroupId()));

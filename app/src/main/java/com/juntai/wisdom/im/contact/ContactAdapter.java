@@ -10,7 +10,7 @@ import com.juntai.disabled.basecomponent.utils.DisplayUtil;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
@@ -70,7 +70,7 @@ public class ContactAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Base
                 helper.setText(R.id.amount_tv, String.valueOf(amount));
                 break;
             case MultipleItem.ITEM_GROUP:
-                GroupDetailBean.DataBean  groupBean = (GroupDetailBean.DataBean) item.getObject();
+                GroupDetailInfoBean groupBean = (GroupDetailInfoBean) item.getObject();
                 helper.setText(R.id.item_name, groupBean.getGroupName());
                 ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(groupBean.getGroupPicture()), helper.getView(R.id.item_iv));
 
@@ -102,7 +102,7 @@ public class ContactAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Base
 
                 break;
             case MultipleItem.ITEM_SELECT_GROUP:
-                GroupDetailBean.DataBean  selectGroupBean = (GroupDetailBean.DataBean) item.getObject();
+                GroupDetailInfoBean  selectGroupBean = (GroupDetailInfoBean) item.getObject();
                 helper.setText(R.id.item_name, selectGroupBean.getGroupName());
                 ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(selectGroupBean.getGroupPicture()), helper.getView(R.id.item_iv));
                 if (selectGroupBean.isHasEndLine()) {

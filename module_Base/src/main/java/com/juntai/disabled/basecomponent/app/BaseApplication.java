@@ -9,6 +9,8 @@ import android.util.DisplayMetrics;
 
 import com.juntai.disabled.basecomponent.BuildConfig;
 import com.juntai.disabled.basecomponent.R;
+import com.juntai.disabled.basecomponent.utils.BaseAppUtils;
+import com.juntai.disabled.basecomponent.utils.CrashHandler;
 import com.juntai.disabled.basecomponent.utils.LogUtil;
 import com.juntai.disabled.basecomponent.utils.NavigationBarInfo;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -50,7 +52,7 @@ public abstract class BaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         app = this;
-
+        CrashHandler.getInstance().init(getApplicationContext(), BaseAppUtils.getAppName());
         getScreen(this);
         if (BuildConfig.DEBUG) {
             //

@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 
@@ -35,7 +35,7 @@ public class ReceiverAdapter  extends BaseQuickAdapter<MultipleItem, BaseViewHol
                 ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(contactBean.getHeadPortrait()),helper.getView(R.id.receiver_head_iv));
                 break;
             case MultipleItem.ITEM_SELECT_GROUP:
-                GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) item.getObject();
+                GroupDetailInfoBean groupBean = (GroupDetailInfoBean) item.getObject();
                 helper.setText(R.id.receiver_name_tv,groupBean.getGroupName());
                 ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(groupBean.getGroupPicture()),helper.getView(R.id.receiver_head_iv));
                 break;

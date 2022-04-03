@@ -21,8 +21,7 @@ import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
-import com.juntai.wisdom.im.bean.GroupListBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
@@ -225,7 +224,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                     }
                     break;
                 case MultipleItem.ITEM_SELECT_GROUP:
-                    GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) multipleItem.getObject();
+                    GroupDetailInfoBean groupBean = (GroupDetailInfoBean) multipleItem.getObject();
                     switch (forwardType) {
                         case 0:
                             sendGroupNormalMsg(groupBean, operatingMsgBean);
@@ -327,7 +326,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
     /**
      * 发送群聊普通信息
      */
-    private void sendGroupNormalMsg(GroupDetailBean.DataBean groupBean, MessageBodyBean olderMessageBodyBean) {
+    private void sendGroupNormalMsg(GroupDetailInfoBean groupBean, MessageBodyBean olderMessageBodyBean) {
         MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(olderMessageBodyBean.getMsgType(), groupBean.getGroupId(), groupBean.getUserNickname(), olderMessageBodyBean.getContent());
         switch (olderMessageBodyBean.getMsgType()) {
             case 1:
@@ -415,7 +414,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                 break;
             case BASE_REQUEST_RESULT2:
                 if (data != null) {
-                    GroupDetailBean.DataBean groupBean = data.getParcelableExtra(BASE_PARCELABLE);
+                    GroupDetailInfoBean groupBean = data.getParcelableExtra(BASE_PARCELABLE);
                     fragment.notifyGroup(groupBean);
                 }
                 break;

@@ -26,7 +26,7 @@ import com.juntai.wisdom.im.base.uploadFile.UploadFileBean;
 import com.juntai.wisdom.im.base.uploadFile.UploadUtil;
 import com.juntai.wisdom.im.base.uploadFile.listener.OnUploadListener;
 import com.juntai.wisdom.im.bean.FinishVideoActivityMsgBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.chatlist.chat.PrivateChatActivity;
 import com.juntai.wisdom.im.utils.HawkProperty;
@@ -322,8 +322,8 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
      * @return
      */
     protected boolean isHaveGroup(String uuid) {
-        List<GroupDetailBean.DataBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
-        for (GroupDetailBean.DataBean group : groups) {
+        List<GroupDetailInfoBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
+        for (GroupDetailInfoBean group : groups) {
             String str = group.getGroupUuid();
             if (uuid.equals(str)) {
                 return true;

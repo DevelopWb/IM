@@ -1,5 +1,8 @@
 package com.juntai.wisdom.im.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.juntai.disabled.basecomponent.base.BaseResult;
 
 import java.util.List;
@@ -24,7 +27,7 @@ public class GroupPeoplesBean extends BaseResult {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         /**
          * id : 5
          * uuid : 6d9b0683413948d89ad2693e1d121a19
@@ -138,5 +141,54 @@ public class GroupPeoplesBean extends BaseResult {
         public void setAddress(String address) {
             this.address = address == null ? "" : address;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.id);
+            dest.writeString(this.uuid);
+            dest.writeString(this.accountNumber);
+            dest.writeString(this.phoneNumber);
+            dest.writeString(this.nickname);
+            dest.writeString(this.myNickname);
+            dest.writeString(this.groupNickname);
+            dest.writeString(this.headPortrait);
+            dest.writeInt(this.gender);
+            dest.writeString(this.qrCode);
+            dest.writeString(this.address);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.id = in.readInt();
+            this.uuid = in.readString();
+            this.accountNumber = in.readString();
+            this.phoneNumber = in.readString();
+            this.nickname = in.readString();
+            this.myNickname = in.readString();
+            this.groupNickname = in.readString();
+            this.headPortrait = in.readString();
+            this.gender = in.readInt();
+            this.qrCode = in.readString();
+            this.address = in.readString();
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
 }

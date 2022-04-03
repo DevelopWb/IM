@@ -11,7 +11,7 @@ import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppActivity;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.GroupInfoByUuidBean;
 import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
 import com.juntai.wisdom.im.entrance.main.MainContract;
@@ -88,7 +88,7 @@ public class JoinGroupByUuidActivity extends BaseAppActivity<MainPresent> implem
             case AppHttpPath.JOIN_GROUP:
                 //跳转到群聊界面
                 ToastUtils.toast(mContext,"已成功加入");
-                GroupDetailBean.DataBean groupBean = GsonTools.modelA2B(dataBean,GroupDetailBean.DataBean.class);
+                GroupDetailInfoBean groupBean = GsonTools.modelA2B(dataBean,GroupDetailInfoBean.class);
                 groupBean.setGroupId(dataBean.getId());
                 startActivity(new Intent(mContext, GroupChatActivity.class)
                         .putExtra(BASE_ID,groupBean.getGroupId()));

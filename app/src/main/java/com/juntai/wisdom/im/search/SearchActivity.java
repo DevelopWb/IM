@@ -7,7 +7,7 @@ import com.juntai.disabled.basecomponent.base.BaseActivity;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.bean.CollectMessagesBean;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.chatlist.chat.displayFile.FileDetailActivity;
@@ -58,7 +58,7 @@ public class SearchActivity extends BaseSearchActivity {
                 break;
             case MultipleItem.ITEM_GROUP:
                 //群聊
-                GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) multipleItem.getObject();
+                GroupDetailInfoBean groupBean = (GroupDetailInfoBean) multipleItem.getObject();
                 startActivity(new Intent(mContext, GroupChatActivity.class)
                         .putExtra(BASE_ID, groupBean.getGroupId()));
                 break;

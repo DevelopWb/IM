@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.chatlist.searchchat.BaseSearchActivity;
 import com.juntai.wisdom.im.search.SearchAdapter;
@@ -59,7 +59,7 @@ public class SearchGroupAndContactActivity extends BaseSearchActivity {
                 break;
             case MultipleItem.ITEM_GROUP:
                 //群聊
-                GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) multipleItem1.getObject();
+                GroupDetailInfoBean groupBean = (GroupDetailInfoBean) multipleItem1.getObject();
                 setResult(BASE_REQUEST_RESULT2, new Intent().putExtra(BASE_PARCELABLE, groupBean));
                 finish();
                 break;

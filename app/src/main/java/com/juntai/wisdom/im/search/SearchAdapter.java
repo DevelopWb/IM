@@ -9,7 +9,7 @@ import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.entrance.main.MainContract;
@@ -83,7 +83,7 @@ public class SearchAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseV
                 helper.setGone(R.id.amount_tv, false);
                 break;
             case MultipleItem.ITEM_GROUP:
-                GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) item.getObject();
+                GroupDetailInfoBean groupBean = (GroupDetailInfoBean) item.getObject();
                 helper.setText(R.id.item_name, groupBean.getGroupName());
                 ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(groupBean.getGroupPicture()), helper.getView(R.id.item_iv));
 
@@ -196,7 +196,7 @@ public class SearchAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseV
                             }
                             break;
                         case MultipleItem.ITEM_GROUP:
-                            GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) item.getObject();
+                            GroupDetailInfoBean groupBean = (GroupDetailInfoBean) item.getObject();
                             if (groupBean.getGroupName().startsWith(prefixString)) {
                                 newData.add(item);
                             }

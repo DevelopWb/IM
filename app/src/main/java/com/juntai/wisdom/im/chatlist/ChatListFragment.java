@@ -13,7 +13,7 @@ import com.juntai.disabled.basecomponent.base.BaseActivity;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.wisdom.im.base.BaseRecyclerviewFragment;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.HomePageMenuBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
@@ -84,7 +84,7 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                         break;
 
                     case MultipleItem.ITEM_CHAT_LIST_GROUP:
-                        GroupDetailBean.DataBean dataBean = (GroupDetailBean.DataBean) multipleItem.getObject();
+                        GroupDetailInfoBean dataBean = (GroupDetailInfoBean) multipleItem.getObject();
                         startActivity(new Intent(mContext, GroupChatActivity.class)
                                 .putExtra(BaseActivity.BASE_ID, dataBean.getGroupId()));
                         break;
@@ -144,7 +144,7 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                         break;
 
                     case MultipleItem.ITEM_CHAT_LIST_GROUP:
-                        GroupDetailBean.DataBean dataBean = (GroupDetailBean.DataBean) multipleItem.getObject();
+                        GroupDetailInfoBean dataBean = (GroupDetailInfoBean) multipleItem.getObject();
                         getBaseActivity().showAlertDialog("删除后,将清空该群聊的消息记录", "确定", "取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -260,7 +260,8 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
      */
     public void initAdapterData() {
         List<ContactBean> data = Hawk.get(HawkProperty.getContactListKey());
-        List<GroupDetailBean.DataBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
+        List<GroupDetailInfoBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
+
         arrays = new ArrayList<>();
         List<ArrayMap<String, MultipleItem>> arrayMapList = new ArrayList<>();
         List<ArrayMap<String, MultipleItem>> arrayTopMapList = new ArrayList<>();
@@ -292,32 +293,35 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
             }
 
         }
-        if (groups != null) {
-            for (GroupDetailBean.DataBean group : groups) {
-                ArrayMap<String, MultipleItem> hashMap = new ArrayMap<>();
-                MessageBodyBean messageBodyBean = null;
-                if (Hawk.contains(HawkProperty.getDraftKey(group.getGroupId(),false))) {
-                    messageBodyBean = Hawk.get(HawkProperty.getDraftKey(group.getGroupId(),false));
-                    if (mPresenter != null) {
-                        MessageBodyBean bodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
-                        messageBodyBean.setRead(bodyBean == null || bodyBean.isRead());
+        if (groups.size()>0) {
+            // : 2022/4/1 这么写是因为数据结构更改了
+            if (groups.get(0) instanceof GroupDetailInfoBean) {
+                for (GroupDetailInfoBean group : groups) {
+                    ArrayMap<String, MultipleItem> hashMap = new ArrayMap<>();
+                    MessageBodyBean messageBodyBean = null;
+                    if (Hawk.contains(HawkProperty.getDraftKey(group.getGroupId(),false))) {
+                        messageBodyBean = Hawk.get(HawkProperty.getDraftKey(group.getGroupId(),false));
+                        if (mPresenter != null) {
+                            MessageBodyBean bodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
+                            messageBodyBean.setRead(bodyBean == null || bodyBean.isRead());
+                        }
+
+                    }else {
+                        if (mPresenter != null) {
+                            messageBodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
+                        }
+                    }
+                    if (messageBodyBean != null) {
+                        group.setLastMessage(messageBodyBean);
+                        hashMap.put(messageBodyBean.getCreateTime(), new MultipleItem(MultipleItem.ITEM_CHAT_LIST_GROUP, group));
+                        if (1 == group.getIsTop()) {
+                            arrayTopMapList.add(hashMap);
+                        } else {
+                            arrayMapList.add(hashMap);
+                        }
                     }
 
-                }else {
-                    if (mPresenter != null) {
-                        messageBodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
-                    }
                 }
-                if (messageBodyBean != null) {
-                    group.setLastMessage(messageBodyBean);
-                    hashMap.put(messageBodyBean.getCreateTime(), new MultipleItem(MultipleItem.ITEM_CHAT_LIST_GROUP, group));
-                    if (1 == group.getIsTop()) {
-                        arrayTopMapList.add(hashMap);
-                    } else {
-                        arrayMapList.add(hashMap);
-                    }
-                }
-
             }
         }
         sortAdapterData(arrayTopMapList);

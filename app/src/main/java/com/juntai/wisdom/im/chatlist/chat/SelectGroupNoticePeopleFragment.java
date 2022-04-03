@@ -11,10 +11,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
-import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppFragment;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.GroupPeoplesBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.contact.ContactAdapter;
@@ -43,7 +42,7 @@ public class SelectGroupNoticePeopleFragment extends BaseAppFragment<MainPresent
     private ContactAdapter adapter;
     private LinearLayoutManager manager;
     private  OnContactClick onContactClick;
-    private GroupDetailBean.DataBean groupBean;
+    private GroupDetailInfoBean groupBean;
 
     @Override
     protected int getLayoutRes() {
@@ -70,7 +69,7 @@ public class SelectGroupNoticePeopleFragment extends BaseAppFragment<MainPresent
     /**
      * 获取群信息
      */
-    public void getGroupInfo(GroupDetailBean.DataBean groupDetailBean,OnContactClick onContactClick) {
+    public void getGroupInfo(GroupDetailInfoBean groupDetailBean, OnContactClick onContactClick) {
         this.onContactClick = onContactClick;
         this.groupBean =groupDetailBean;
         List<GroupPeoplesBean.DataBean> dataBeans = groupDetailBean.getUserInfoVoList();

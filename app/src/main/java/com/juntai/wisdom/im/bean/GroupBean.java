@@ -12,13 +12,13 @@ import com.juntai.disabled.basecomponent.base.BaseResult;
 public class GroupBean extends BaseResult {
 
 
-    private GroupDetailBean.DataBean data;
+    private GroupDetailInfoBean data;
 
-    public GroupDetailBean.DataBean getData() {
+    public GroupDetailInfoBean getData() {
         return data;
     }
 
-    public void setData(GroupDetailBean.DataBean data) {
+    public void setData(GroupDetailInfoBean data) {
         this.data = data;
     }
 

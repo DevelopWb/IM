@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.utils.CalendarUtil;
@@ -119,7 +119,7 @@ public class HomepageChatListAdapter extends BaseMultiItemQuickAdapter<MultipleI
                 helper.setText(R.id.msg_time_tv, CalendarUtil.formatDataOfChatList(messageBodyBean.getCreateTime()));
                 break;
             case MultipleItem.ITEM_CHAT_LIST_GROUP:
-                GroupDetailBean.DataBean groupBean = (GroupDetailBean.DataBean) item.getObject();
+                GroupDetailInfoBean groupBean = (GroupDetailInfoBean) item.getObject();
                 helper.setText(R.id.item_name_tv, groupBean.getGroupName());
                 ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(groupBean.getGroupPicture()), helper.getView(R.id.contact_name_iv));
                 MessageBodyBean groupMsgBean = groupBean.getLastMessage();

@@ -115,13 +115,13 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     private void onException(int unknownError) {
         switch (unknownError) {
             case CONNECT_ERROR:
-                onError("服务器访问失败");
+                onError("未连接,请检查网络是否正常");
                 break;
             case CONNECT_TIMEOUT:
-                onError("连接超时");
+                onError("网络连接超时");
                 break;
             case BAD_NETWORK:
-                onError("当前网络连接不可用，请检查网络设置");
+                onError("当前网络连接不可用，请检查网络是否正常");
                 break;
             case PARSE_ERROR:
                 onError("解析数据失败");

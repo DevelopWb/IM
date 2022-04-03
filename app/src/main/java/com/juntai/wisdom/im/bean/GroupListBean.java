@@ -14,13 +14,13 @@ import java.util.List;
 public class GroupListBean extends BaseResult {
 
 
-    private List<GroupDetailBean.DataBean> data;
+    private List<GroupDetailInfoBean> data;
 
-    public List<GroupDetailBean.DataBean> getData() {
+    public List<GroupDetailInfoBean> getData() {
         return data;
     }
 
-    public void setData(List<GroupDetailBean.DataBean> data) {
+    public void setData(List<GroupDetailInfoBean> data) {
         this.data = data;
     }
 
