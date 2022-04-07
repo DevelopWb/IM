@@ -160,7 +160,6 @@ public class UserInfoVoListBean implements Parcelable {
         dest.writeInt(this.gender);
         dest.writeString(this.qrCode);
         dest.writeString(this.address);
-        dest.writeSerializable(this.groupDetailInfoBeans);
     }
 
     public UserInfoVoListBean() {
@@ -179,7 +178,6 @@ public class UserInfoVoListBean implements Parcelable {
         this.gender = in.readInt();
         this.qrCode = in.readString();
         this.address = in.readString();
-        this.groupDetailInfoBeans = (ToOne<GroupDetailInfoBean>) in.readSerializable();
     }
 
     public static final Parcelable.Creator<UserInfoVoListBean> CREATOR = new Parcelable.Creator<UserInfoVoListBean>() {

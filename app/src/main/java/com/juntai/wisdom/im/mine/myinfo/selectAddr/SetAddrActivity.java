@@ -41,6 +41,7 @@ public class SetAddrActivity extends BaseRecyclerviewActivity<MyCenterPresent> i
 
     @Override
     public void initData() {
+        super.initData();
         setTitleName("选择地区");
         String presentAdCode = getIntent().getStringExtra(BASE_STRING);
         mPresenter.getAllCitys(presentAdCode, AppHttpPath.ALL_CITYS);

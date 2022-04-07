@@ -65,6 +65,7 @@ public class MobileContactsActivity extends BaseRecyclerviewActivity<MainPresent
 
     @Override
     public void initData() {
+        super.initData();
         setTitleName("查看手机通讯录");
         mSmartrefreshlayout.setEnableLoadMore(false);
         baseQuickAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

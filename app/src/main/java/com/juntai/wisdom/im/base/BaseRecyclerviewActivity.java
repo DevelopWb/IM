@@ -60,8 +60,13 @@ public abstract class BaseRecyclerviewActivity<P extends BasePresenter> extends 
             });
 
         }
-        getRvAdapterData();
 
+
+    }
+
+    @Override
+    public void initData() {
+        getRvAdapterData();
     }
 
     protected abstract LinearLayoutManager getBaseAdapterManager();

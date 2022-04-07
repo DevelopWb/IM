@@ -65,6 +65,7 @@ public class ChatInfoActivity extends BaseRecyclerviewActivity<ChatPresent> impl
 
     @Override
     public void initData() {
+        super.initData();
         if (getIntent() != null) {
             contactBean = getIntent().getParcelableExtra(BASE_PARCELABLE);
         }

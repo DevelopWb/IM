@@ -3,12 +3,14 @@ package com.juntai.wisdom.im.utils;
 import android.content.Context;
 
 import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean_;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MyObjectBox;
 
 import java.util.List;
 
 import io.objectbox.BoxStore;
+import io.objectbox.query.QueryBuilder;
 
 /**
  * @Author: tobato
@@ -51,6 +53,7 @@ public class ObjectBox {
      * 保存群组信息
      */
     public static void addGroup(GroupDetailInfoBean...  groupDetailInfoBeans) {
+        get().boxFor(GroupDetailInfoBean.class).removeAll();
         if (groupDetailInfoBeans.length>0) {
             for (GroupDetailInfoBean groupDetailInfoBean : groupDetailInfoBeans) {
                 groupDetailInfoBean.setOwner(UserInfoManager.getUserUUID());
@@ -63,6 +66,7 @@ public class ObjectBox {
      * 保存群组信息
      */
     public static void addGroup(List<GroupDetailInfoBean> groupDetailInfoBeans) {
+        get().boxFor(GroupDetailInfoBean.class).removeAll();
         if (groupDetailInfoBeans.size()>0) {
             for (GroupDetailInfoBean groupDetailInfoBean : groupDetailInfoBeans) {
                 groupDetailInfoBean.setOwner(UserInfoManager.getUserUUID());
@@ -81,4 +85,60 @@ public class ObjectBox {
     public static void deleteMessage(MessageBodyBean...  messageBodyBean) {
         get().boxFor(MessageBodyBean.class).remove(messageBodyBean);
     }
+
+
+
+    /**
+     * 查找所有的群组
+     *
+     * @return
+     */
+    public static List<GroupDetailInfoBean> getAllGroupList() {
+        QueryBuilder<GroupDetailInfoBean> builder = ObjectBox.get().boxFor(GroupDetailInfoBean.class).query(
+                GroupDetailInfoBean_.owner.equal(UserInfoManager.getUserUUID()));
+        return builder
+                .build()
+                .find();
+    }
+    /**
+     * 查找群组
+     *
+     * @return
+     */
+    public static GroupDetailInfoBean getGroup(int groupId) {
+        QueryBuilder<GroupDetailInfoBean> builder = ObjectBox.get().boxFor(GroupDetailInfoBean.class).query(
+                GroupDetailInfoBean_.owner.equal(UserInfoManager.getUserUUID())
+        .and(GroupDetailInfoBean_.groupId.equal(groupId)));
+        return builder
+                .build()
+                .findUnique();
+    }
+    /**
+     * 检测群组是否存在
+     *
+     * @return
+     */
+    public static boolean checkGroupIsExist(int groupId) {
+        QueryBuilder<GroupDetailInfoBean> builder = ObjectBox.get().boxFor(GroupDetailInfoBean.class).query(
+                GroupDetailInfoBean_.groupId.equal(groupId)
+                        .and(GroupDetailInfoBean_.owner.equal(UserInfoManager.getUserUUID())));
+        return builder
+                .build()
+                .find().size()>0;
+    }
+
+    /**
+     * 检测群组是否存在
+     *
+     * @return
+     */
+    public static boolean checkGroupIsExist(String uuid) {
+        QueryBuilder<GroupDetailInfoBean> builder = ObjectBox.get().boxFor(GroupDetailInfoBean.class).query(
+                GroupDetailInfoBean_.uuid.equal(uuid)
+                        .and(GroupDetailInfoBean_.owner.equal(UserInfoManager.getUserUUID())));
+        return builder
+                .build()
+                .find().size()>0;
+    }
+
 }

@@ -249,7 +249,7 @@
     },
     {
       "id": "5:4442337187037043274",
-      "lastPropertyId": "12:2809140792617214151",
+      "lastPropertyId": "13:420758525621780329",
       "name": "GroupDetailInfoBean",
       "properties": [
         {
@@ -281,7 +281,9 @@
         {
           "id": "6:3967187213220239773",
           "name": "groupId",
-          "type": 5
+          "indexId": "4:815438199426368856",
+          "type": 5,
+          "flags": 40
         },
         {
           "id": "7:1619139096140841616",
@@ -312,9 +314,20 @@
           "id": "12:2809140792617214151",
           "name": "userNickname",
           "type": 9
+        },
+        {
+          "id": "13:420758525621780329",
+          "name": "owner",
+          "type": 9
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "2:4717089497014796365",
+          "name": "userInfoVoList",
+          "targetId": "7:1428302099573679450"
+        }
+      ]
     },
     {
       "id": "7:1428302099573679450",
@@ -395,8 +408,8 @@
     }
   ],
   "lastEntityId": "7:1428302099573679450",
-  "lastIndexId": "2:3041584164092669162",
-  "lastRelationId": "1:3224099116268506980",
+  "lastIndexId": "4:815438199426368856",
+  "lastRelationId": "2:4717089497014796365",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -407,7 +420,8 @@
     8220401430823001923
   ],
   "retiredIndexUids": [
-    5818169319260215308
+    5818169319260215308,
+    7889304876950227755
   ],
   "retiredPropertyUids": [
     1720712038293696455,

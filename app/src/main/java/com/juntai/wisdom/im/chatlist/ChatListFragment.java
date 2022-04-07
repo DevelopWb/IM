@@ -260,7 +260,7 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
      */
     public void initAdapterData() {
         List<ContactBean> data = Hawk.get(HawkProperty.getContactListKey());
-        List<GroupDetailInfoBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
+        List<GroupDetailInfoBean> groups =ObjectBox.getAllGroupList();
 
         arrays = new ArrayList<>();
         List<ArrayMap<String, MultipleItem>> arrayMapList = new ArrayList<>();

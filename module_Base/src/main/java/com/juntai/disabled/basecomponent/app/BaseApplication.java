@@ -52,7 +52,6 @@ public abstract class BaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         app = this;
-        CrashHandler.getInstance().init(getApplicationContext(), BaseAppUtils.getAppName());
         getScreen(this);
         if (BuildConfig.DEBUG) {
             //
@@ -60,6 +59,9 @@ public abstract class BaseApplication extends MultiDexApplication {
                     tag(getString(R.string.app_name)).build()));
             LogUtil.logInit(true);
             com.juntai.disabled.basecomponent.utils.Logger.LOG_ENABLE = true;
+        }else {
+            CrashHandler.getInstance().init(getApplicationContext(), BaseAppUtils.getAppName());
+
         }
         registerActivityLifecycleCallbacks(mCallbacks);
 

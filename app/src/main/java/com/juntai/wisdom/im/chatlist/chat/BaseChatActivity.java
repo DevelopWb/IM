@@ -170,7 +170,6 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
     private GroupDetailInfoBean groupBean;
     private long searchedMsgId;
     private int searchedMsgPosition;
-    private GroupDetailInfoBean detailBean;
     /**
      * 正在被操作的消息实体
      */
@@ -279,16 +278,25 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     //离线消息跳转进来
                     MessageBodyBean mMessageBodyBean = GsonTools.changeGsonToBean(groupMsgStr, MessageBodyBean.class);
                     groupId = mMessageBodyBean.getGroupId();
+                    if (ObjectBox.checkGroupIsExist(groupId)) {
+                        //存在群组信息 加载群组聊天记录
+                        groupBean =ObjectBox.getGroup(groupId);
+                        getGruopRecord();
+                    }
                 } else {
                     groupId = intent.getIntExtra(BASE_ID, 0);
+                    //加载群组聊天记录
+                    groupBean =ObjectBox.getGroup(groupId);
+                    getGruopRecord();
                 }
+                mPresenter.getGroupInfo(getBaseBuilder().add("groupId", String.valueOf(groupId)).build(),
+                        AppHttpPath.GET_GROUP_INFO);
+
                 if (Hawk.contains(HawkProperty.getDraftKey(groupId, false))) {
                     MessageBodyBean messageBodyBean = Hawk.get(HawkProperty.getDraftKey(groupId, false));
                     mContentEt.setText(messageBodyBean.getContent());
                     mContentEt.setSelection(messageBodyBean.getContent().length());
                 }
-                mPresenter.getGroupInfo(getBaseBuilder().add("groupId", String.valueOf(groupId)).build(),
-                        AppHttpPath.GET_GROUP_INFO);
 
 
                 break;
@@ -729,33 +737,33 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                 String audioUri = UrlFormatUtil.getImageOriginalUrl(messageBodyBean.getContent());
                                 AudioPlayManager.getInstance().startPlay(mContext, Uri.parse(audioUri),
                                         new IAudioPlayListener() {
-                                    @Override
-                                    public void onStart(Uri var1) {
-                                        if (ivAudio != null && ivAudio.getBackground() instanceof AnimationDrawable) {
-                                            AnimationDrawable animation = (AnimationDrawable) ivAudio.getBackground();
-                                            animation.start();
-                                        }
-                                    }
+                                            @Override
+                                            public void onStart(Uri var1) {
+                                                if (ivAudio != null && ivAudio.getBackground() instanceof AnimationDrawable) {
+                                                    AnimationDrawable animation = (AnimationDrawable) ivAudio.getBackground();
+                                                    animation.start();
+                                                }
+                                            }
 
-                                    @Override
-                                    public void onStop(Uri var1) {
-                                        if (ivAudio != null && ivAudio.getBackground() instanceof AnimationDrawable) {
-                                            AnimationDrawable animation = (AnimationDrawable) ivAudio.getBackground();
-                                            animation.stop();
-                                            animation.selectDrawable(0);
-                                        }
+                                            @Override
+                                            public void onStop(Uri var1) {
+                                                if (ivAudio != null && ivAudio.getBackground() instanceof AnimationDrawable) {
+                                                    AnimationDrawable animation = (AnimationDrawable) ivAudio.getBackground();
+                                                    animation.stop();
+                                                    animation.selectDrawable(0);
+                                                }
 
-                                    }
+                                            }
 
-                                    @Override
-                                    public void onComplete(Uri var1) {
-                                        if (ivAudio != null && ivAudio.getBackground() instanceof AnimationDrawable) {
-                                            AnimationDrawable animation = (AnimationDrawable) ivAudio.getBackground();
-                                            animation.stop();
-                                            animation.selectDrawable(0);
-                                        }
-                                    }
-                                });
+                                            @Override
+                                            public void onComplete(Uri var1) {
+                                                if (ivAudio != null && ivAudio.getBackground() instanceof AnimationDrawable) {
+                                                    AnimationDrawable animation = (AnimationDrawable) ivAudio.getBackground();
+                                                    animation.stop();
+                                                    animation.selectDrawable(0);
+                                                }
+                                            }
+                                        });
                                 break;
                             default:
                                 break;
@@ -1144,7 +1152,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
      * 发送群聊普通信息
      */
     private void sendGroupNormalMsg(String content) {
-        MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(0, groupId, detailBean.getGroupCreateUserId(),
+        MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(0, groupId, groupBean.getGroupCreateUserId(),
                 groupBean.getUserNickname(), content);
         mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), messageBody);
@@ -1556,41 +1564,10 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 break;
             case AppHttpPath.GET_GROUP_INFO:
                 GroupDetailBean groupDetailBean = (GroupDetailBean) o;
-                detailBean = groupDetailBean.getData();
-                groupBean = GsonTools.modelA2B(detailBean, GroupDetailInfoBean.class);
-                setTitleName(groupBean.getGroupName());
-                //获取历史数据
-                List<MessageBodyBean> arrays = mPresenter.findGroupChatRecord(groupId);
-                if (arrays != null && arrays.size() > 0) {
-                    for (int i = 0; i < arrays.size(); i++) {
-                        MessageBodyBean startBean = arrays.get(i);
-                        if (searchedMsgId == startBean.getId()) {
-                            searchedMsgPosition = i;
-                        }
-                        if (!startBean.isRead()) {
-                            startBean.setRead(true);
-                            //更新数据库数据
-                            ObjectBox.addMessage(startBean);
-                        }
-                        initAdapterDataFromMsgTypes(startBean);
-                        if (i < arrays.size() - 1) {
-                            MessageBodyBean endBean = arrays.get(i + 1);
-                            addDateTag(startBean, endBean);
-                        }
-                        if (i == arrays.size() - 1) {
-                            if (!startBean.isRead() && startBean.isCanDelete()) {
-                                ObjectBox.deleteMessage(startBean);
-                            }
-                        }
-
-
-                    }
+                groupBean = groupDetailBean.getData();
+                if (chatAdapter.getData().size()==0) {
+                    getGruopRecord();
                 }
-                if (searchedMsgId > 0) {
-                    mRecyclerview.scrollToPosition(searchedMsgPosition);
-                }
-                mPresenter.getGroupUnreadMsg(getBaseBuilder().add("groupId", String.valueOf(groupId)).build(),
-                        AppHttpPath.GET_UNREAD_GROUP_MSG);
 
                 break;
             case MainContract.UPLOAD_AUDIO_FILE:
@@ -1662,6 +1639,45 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             default:
                 break;
         }
+    }
+
+    /**
+     * 获取群组的聊天记录
+     */
+    private void getGruopRecord() {
+        setTitleName(groupBean.getGroupName());
+        //获取历史数据
+        List<MessageBodyBean> arrays = mPresenter.findGroupChatRecord(groupId);
+        if (arrays != null && arrays.size() > 0) {
+            for (int i = 0; i < arrays.size(); i++) {
+                MessageBodyBean startBean = arrays.get(i);
+                if (searchedMsgId == startBean.getId()) {
+                    searchedMsgPosition = i;
+                }
+                if (!startBean.isRead()) {
+                    startBean.setRead(true);
+                    //更新数据库数据
+                    ObjectBox.addMessage(startBean);
+                }
+                initAdapterDataFromMsgTypes(startBean);
+                if (i < arrays.size() - 1) {
+                    MessageBodyBean endBean = arrays.get(i + 1);
+                    addDateTag(startBean, endBean);
+                }
+                if (i == arrays.size() - 1) {
+                    if (!startBean.isRead() && startBean.isCanDelete()) {
+                        ObjectBox.deleteMessage(startBean);
+                    }
+                }
+
+
+            }
+        }
+        if (searchedMsgId > 0) {
+            mRecyclerview.scrollToPosition(searchedMsgPosition);
+        }
+        mPresenter.getGroupUnreadMsg(getBaseBuilder().add("groupId", String.valueOf(groupId)).build(),
+                AppHttpPath.GET_UNREAD_GROUP_MSG);
     }
 
 
@@ -1779,15 +1795,15 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     }
                     SelectGroupNoticePeopleFragment selectContactFragment =
                             (SelectGroupNoticePeopleFragment) getSupportFragmentManager().findFragmentById(R.id.select_contact_fg);
-                    if (detailBean != null) {
-                        selectContactFragment.getGroupInfo(detailBean,
+                    if (groupBean != null&&groupBean.getUserInfoVoList()!=null&&!groupBean.getUserInfoVoList().isEmpty()) {
+                        selectContactFragment.getGroupInfo(groupBean,
                                 new SelectGroupNoticePeopleFragment.OnContactClick() {
-                            @Override
-                            public void contactClicked(ContactBean contactBean) {
-                                noticePeopleDialog.dismiss();
-                                mContentEt.append(contactBean.getNickname() + " ");
-                            }
-                        });
+                                    @Override
+                                    public void contactClicked(ContactBean contactBean) {
+                                        noticePeopleDialog.dismiss();
+                                        mContentEt.append(contactBean.getNickname() + " ");
+                                    }
+                                });
 
                         noticePeopleDialog.show();
                     }

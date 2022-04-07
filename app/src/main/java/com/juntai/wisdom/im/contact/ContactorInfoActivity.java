@@ -148,7 +148,7 @@ public class ContactorInfoActivity extends BaseRecyclerviewActivity<MainPresent>
 
     @Override
     public void initData() {
-
+        super.initData();
         baseQuickAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

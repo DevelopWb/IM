@@ -33,6 +33,7 @@ public class SecrecyActivity extends BaseRecyclerviewActivity<MyCenterPresent> i
 
     @Override
     public void initData() {
+        super.initData();
         setTitleName("隐私");
         baseQuickAdapter.setNewData(getMenuBeans());
 

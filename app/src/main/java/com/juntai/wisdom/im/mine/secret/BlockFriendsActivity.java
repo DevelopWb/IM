@@ -32,6 +32,7 @@ public class BlockFriendsActivity extends BaseRecyclerviewActivity<MainPresent> 
 
     @Override
     public void initData() {
+        super.initData();
         setTitleName("通讯录黑名单");
         baseQuickAdapter.setEmptyView(getAdapterEmptyView("暂无黑名单成员",-1));
         baseQuickAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

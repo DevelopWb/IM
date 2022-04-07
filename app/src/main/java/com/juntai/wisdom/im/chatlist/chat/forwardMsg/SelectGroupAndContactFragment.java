@@ -19,6 +19,7 @@ import com.juntai.wisdom.im.contact.ContactAdapter;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.entrance.main.MainPresent;
 import com.juntai.wisdom.im.utils.HawkProperty;
+import com.juntai.wisdom.im.utils.ObjectBox;
 import com.mcxtzhang.indexlib.IndexBar.widget.IndexBar;
 import com.orhanobut.hawk.Hawk;
 
@@ -62,7 +63,7 @@ public class SelectGroupAndContactFragment extends BaseAppFragment<MainPresent> 
         mIndexBar.setmPressedShowTextView(mTvSideBarHint)//设置HintTextView
 //                .setNeedRealIndex(true)//设置需要真实的索引
                 .setmLayoutManager(manager);//设置RecyclerView的LayoutManager
-        List<GroupDetailInfoBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
+        List<GroupDetailInfoBean> groups = ObjectBox.getAllGroupList();
         for (GroupDetailInfoBean group : groups) {
             adapter.addData(new MultipleItem(MultipleItem.ITEM_SELECT_GROUP,group));
         }

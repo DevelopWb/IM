@@ -27,10 +27,6 @@ public class HawkProperty {
     //联系人列表
     public static String CONTACT_LIST = "contactlist"+UserInfoManager.getUserId();
     /**
-     * 所有的群
-     */
-    public static String GROUP_LIST = "grouplist"+UserInfoManager.getUserId();
-    /**
      * 好友请求
      */
     public static String FRIEND_APPLY = "friendApply";

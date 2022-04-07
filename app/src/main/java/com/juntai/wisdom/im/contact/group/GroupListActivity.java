@@ -14,8 +14,7 @@ import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
 import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
 import com.juntai.wisdom.im.contact.ContactAdapter;
 import com.juntai.wisdom.im.entrance.main.MainContract;
-import com.juntai.wisdom.im.utils.HawkProperty;
-import com.orhanobut.hawk.Hawk;
+import com.juntai.wisdom.im.utils.ObjectBox;
 
 import java.util.List;
 
@@ -33,6 +32,7 @@ public class GroupListActivity extends BaseRecyclerviewActivity<ChatPresent> imp
 
     @Override
     public void initData() {
+        super.initData();
         setTitleName("群聊");
         baseQuickAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -53,7 +53,18 @@ public class GroupListActivity extends BaseRecyclerviewActivity<ChatPresent> imp
     }
 
     @Override
+    public void initView() {
+        super.initView();
+        List<GroupDetailInfoBean> arrays = ObjectBox.getAllGroupList();
+        for (GroupDetailInfoBean array : arrays) {
+            array.setHasEndLine(true);
+            baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_GROUP, array));
+        }
+    }
+
+    @Override
     protected void getRvAdapterData() {
+
         mPresenter.getGroupList(getBaseBuilder().build(), AppHttpPath.GET_GROUP_LIST);
     }
 
@@ -79,7 +90,7 @@ public class GroupListActivity extends BaseRecyclerviewActivity<ChatPresent> imp
         if (groupListBean != null) {
             List<GroupDetailInfoBean> arrays = groupListBean.getData();
             if (arrays != null) {
-                Hawk.put(HawkProperty.GROUP_LIST,arrays);
+                ObjectBox.addGroup(arrays);
                 baseQuickAdapter.setNewData(null);
                 for (GroupDetailInfoBean array : arrays) {
                     array.setHasEndLine(true);

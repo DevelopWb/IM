@@ -101,6 +101,7 @@ public class SelectFileActivity extends BaseRecyclerviewActivity<ChatPresent> im
 
     @Override
     public void initData() {
+        super.initData();
         initFileResourcePop();
         if (getIntent() != null) {
             chatType = getIntent().getIntExtra(BASE_ID,0);

@@ -40,6 +40,7 @@ public class ChatRecordDetailActivity extends BaseRecyclerviewActivity {
 
     @Override
     public void initData() {
+        super.initData();
         if (getIntent() != null) {
             String content = getIntent().getStringExtra(BASE_STRING);
             if (!TextUtils.isEmpty(content)) {

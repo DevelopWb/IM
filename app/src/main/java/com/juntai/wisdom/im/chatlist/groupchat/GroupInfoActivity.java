@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseRecyclerviewActivity;
@@ -74,6 +73,7 @@ public class GroupInfoActivity extends BaseRecyclerviewActivity<ChatPresent> imp
 
     @Override
     public void initData() {
+        super.initData();
         if (getIntent() != null) {
             groupBean = getIntent().getParcelableExtra(BASE_PARCELABLE);
         }
@@ -222,7 +222,7 @@ public class GroupInfoActivity extends BaseRecyclerviewActivity<ChatPresent> imp
         switch (tag) {
             case AppHttpPath.GET_GROUP_INFO:
                 GroupDetailBean groupPeoplesBean = (GroupDetailBean) o;
-                groupBean = GsonTools.modelA2B(groupPeoplesBean.getData(), GroupDetailInfoBean.class);
+                groupBean =groupPeoplesBean.getData();
                 if (groupPeoplesBean != null) {
                     dataBean = groupPeoplesBean.getData();
                     if (dataBean != null) {

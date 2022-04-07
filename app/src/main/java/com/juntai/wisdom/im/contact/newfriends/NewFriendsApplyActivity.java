@@ -59,6 +59,7 @@ public class NewFriendsApplyActivity extends BaseRecyclerviewActivity<MainPresen
 
     @Override
     public void initData() {
+        super.initData();
         setTitleName("新的朋友");
         getTitleRightTv().setText("添加朋友");
         getTitleRightTv().setOnClickListener(new View.OnClickListener() {

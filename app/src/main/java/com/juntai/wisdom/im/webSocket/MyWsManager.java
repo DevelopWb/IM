@@ -20,7 +20,6 @@ import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.AddContractOrGroupMsgBean;
 import com.juntai.wisdom.im.bean.BaseWsMessageBean;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.UnReadMsgsBean;
 import com.juntai.wisdom.im.bean.VideoActivityMsgBean;
@@ -30,6 +29,7 @@ import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
 import com.juntai.wisdom.im.contact.newfriends.NewFriendsApplyActivity;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.NotificationTool;
+import com.juntai.wisdom.im.utils.ObjectBox;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.orhanobut.hawk.Hawk;
 import com.rabtman.wsmanager.WsManager;
@@ -153,7 +153,7 @@ public class MyWsManager {
                             }
                             break;
                         case 2:
-                            if (checkLocalGroup(messageBody)) {
+                            if (ObjectBox.checkGroupIsExist(messageBody.getGroupId())) {
                                 EventManager.getEventBus().post(messageBody);
                             } else {
                                 EventManager.getEventBus().post(new AddContractOrGroupMsgBean(messageBody));
@@ -169,19 +169,6 @@ public class MyWsManager {
             }
         }
 
-        /**
-         * 检测本地联系人
-         * @param messageBodyBean
-         * @return
-         */
-        private boolean checkLocalGroup(MessageBodyBean messageBodyBean) {
-            List<GroupDetailInfoBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
-            List<Integer> groupIds = new ArrayList<>();
-            for (GroupDetailInfoBean group : groups) {
-                groupIds.add(group.getGroupId());
-            }
-            return groupIds.contains(messageBodyBean.getGroupId());
-        }
 
         /**
          * 检测本地群组

@@ -58,6 +58,7 @@ public class FriendInfoSetActivity extends BaseRecyclerviewActivity<ChatPresent>
 
     @Override
     public void initData() {
+        super.initData();
         setTitleName("资料设置");
         if (getIntent() != null) {
             contactBean = getIntent().getParcelableExtra(BASE_PARCELABLE);

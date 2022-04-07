@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.model.LatLng;
-import com.juntai.disabled.basecomponent.base.WebViewActivity;
 import com.juntai.disabled.basecomponent.mvp.BasePresenter;
 import com.juntai.disabled.basecomponent.utils.MD5;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
@@ -27,16 +26,12 @@ import com.juntai.wisdom.im.base.uploadFile.UploadFileBean;
 import com.juntai.wisdom.im.base.uploadFile.UploadUtil;
 import com.juntai.wisdom.im.base.uploadFile.listener.OnUploadListener;
 import com.juntai.wisdom.im.bean.FinishVideoActivityMsgBean;
-import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.chatlist.chat.PrivateChatActivity;
-import com.juntai.wisdom.im.contact.group.JoinGroupByUuidActivity;
-import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.NotificationTool;
 import com.juntai.wisdom.im.utils.ObjectBox;
 import com.juntai.wisdom.im.utils.StringTools;
 import com.juntai.wisdom.im.utils.UserInfoManager;
-import com.orhanobut.hawk.Hawk;
 import com.tencent.smtt.sdk.TbsReaderView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -318,20 +313,13 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
     }
 
     /**
-     * 是否已经是群成员
+     * 检测该群是否已经存在
      *
      * @param uuid
      * @return
      */
-    public boolean isHaveGroup(String uuid) {
-        List<GroupDetailInfoBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
-        for (GroupDetailInfoBean group : groups) {
-            String str = group.getGroupUuid();
-            if (uuid.equals(str)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean isGroupExsit(String uuid) {
+        return ObjectBox.checkGroupIsExist(uuid);
     }
 
     public void receiveVideoCallMessageBody(MessageBodyBean messageBodyBean) {

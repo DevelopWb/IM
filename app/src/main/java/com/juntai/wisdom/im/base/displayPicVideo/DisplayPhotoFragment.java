@@ -319,7 +319,7 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
             } else {
                 //群聊
                 // : 2022-01-18 群信息
-                if (!getBaseAppActivity().isHaveGroup(uuid)) {
+                if (!getBaseAppActivity().isGroupExsit(uuid)) {
                     //如果不是群成员
                     startActivity(new Intent(mContext, JoinGroupByUuidActivity.class).putExtra(BASE_STRING, uuid));
                 } else {

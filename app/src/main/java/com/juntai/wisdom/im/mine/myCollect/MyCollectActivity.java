@@ -51,6 +51,7 @@ public class MyCollectActivity extends BaseRecyclerviewActivity<MyCenterPresent>
 
     @Override
     public void initData() {
+        super.initData();
         setTitleName("我的收藏");
         mSearchTv = (TextView) findViewById(R.id.search_tv);
         mSearchTv.setOnClickListener(this);

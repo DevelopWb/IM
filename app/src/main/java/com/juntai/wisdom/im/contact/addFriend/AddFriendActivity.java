@@ -69,6 +69,7 @@ public class AddFriendActivity extends BaseSearchAndListActivity {
 
     @Override
     public void initData() {
+        super.initData();
         mSearchContentSv.setQueryHint("超视距号/手机号");
         baseQuickAdapter.setHeaderView(getHeadView());
         baseQuickAdapter.setNewData(getAdapterData());
@@ -113,7 +114,7 @@ public class AddFriendActivity extends BaseSearchAndListActivity {
                 } else {
                     //群聊
                     // : 2022-01-18 群信息
-                    if (!isHaveGroup(uuid)) {
+                    if (!isGroupExsit(uuid)) {
                         //如果不是群成员
                         startActivity(new Intent(mContext, JoinGroupByUuidActivity.class).putExtra(BASE_STRING,uuid));
                     }else {

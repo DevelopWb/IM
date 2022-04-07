@@ -362,7 +362,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
                 if (groupListBean != null) {
                     List<GroupDetailInfoBean> arrays = groupListBean.getData();
                     if (arrays != null) {
-                        Hawk.put(HawkProperty.GROUP_LIST, arrays);
+                        ObjectBox.addGroup(arrays);
                     }
                 }
                 chatListFragment.initAdapterData();
@@ -580,7 +580,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
             } else {
                 //群聊
                 // : 2022-01-18 群信息
-                if (!isHaveGroup(uuid)) {
+                if (!isGroupExsit(uuid)) {
                     //如果不是群成员
                     startActivity(new Intent(mContext, JoinGroupByUuidActivity.class).putExtra(BASE_STRING, uuid));
                 } else {

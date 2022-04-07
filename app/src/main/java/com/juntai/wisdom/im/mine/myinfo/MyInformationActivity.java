@@ -113,6 +113,7 @@ public class MyInformationActivity extends BaseRecyclerviewActivity<MyCenterPres
 
     @Override
     public void initData() {
+        super.initData();
         setTitleName("我的信息");
         baseQuickAdapter.setHeaderView(getHeadView());
         initAdapterData();
