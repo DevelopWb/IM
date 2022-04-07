@@ -14,8 +14,8 @@ import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.BaseAppFragment;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
-import com.juntai.wisdom.im.bean.GroupPeoplesBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
+import com.juntai.wisdom.im.bean.UserInfoVoListBean;
 import com.juntai.wisdom.im.contact.ContactAdapter;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.entrance.main.MainPresent;
@@ -72,11 +72,11 @@ public class SelectGroupNoticePeopleFragment extends BaseAppFragment<MainPresent
     public void getGroupInfo(GroupDetailInfoBean groupDetailBean, OnContactClick onContactClick) {
         this.onContactClick = onContactClick;
         this.groupBean =groupDetailBean;
-        List<GroupPeoplesBean.DataBean> dataBeans = groupDetailBean.getUserInfoVoList();
+        List<UserInfoVoListBean> dataBeans = groupDetailBean.getUserInfoVoList();
         List<ContactBean> peoples = new ArrayList<>();
         HashMap<Integer, String> remarkMap = HawkProperty.getGlobleMap();
 
-        for (GroupPeoplesBean.DataBean dataBean : dataBeans) {
+        for (UserInfoVoListBean dataBean : dataBeans) {
             ContactBean contactBean = GsonTools.modelA2B(dataBean, ContactBean.class);
             assert contactBean != null;
             if (remarkMap.containsKey(contactBean.getId())) {

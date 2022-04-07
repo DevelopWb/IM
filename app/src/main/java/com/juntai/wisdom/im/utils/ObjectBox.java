@@ -2,8 +2,11 @@ package com.juntai.wisdom.im.utils;
 
 import android.content.Context;
 
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MyObjectBox;
+
+import java.util.List;
 
 import io.objectbox.BoxStore;
 
@@ -40,6 +43,30 @@ public class ObjectBox {
             for (MessageBodyBean bodyBean : messageBodyBean) {
                 bodyBean.setOwner(UserInfoManager.getUserUUID());
                 get().boxFor(MessageBodyBean.class).put(bodyBean);
+            }
+        }
+
+    }
+    /**
+     * 保存群组信息
+     */
+    public static void addGroup(GroupDetailInfoBean...  groupDetailInfoBeans) {
+        if (groupDetailInfoBeans.length>0) {
+            for (GroupDetailInfoBean groupDetailInfoBean : groupDetailInfoBeans) {
+                groupDetailInfoBean.setOwner(UserInfoManager.getUserUUID());
+                get().boxFor(GroupDetailInfoBean.class).put(groupDetailInfoBean);
+            }
+        }
+
+    }
+    /**
+     * 保存群组信息
+     */
+    public static void addGroup(List<GroupDetailInfoBean> groupDetailInfoBeans) {
+        if (groupDetailInfoBeans.size()>0) {
+            for (GroupDetailInfoBean groupDetailInfoBean : groupDetailInfoBeans) {
+                groupDetailInfoBean.setOwner(UserInfoManager.getUserUUID());
+                get().boxFor(GroupDetailInfoBean.class).put(groupDetailInfoBean);
             }
         }
 

@@ -13,10 +13,10 @@ import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseRecyclerviewActivity;
 import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
-import com.juntai.wisdom.im.bean.GroupPeoplesBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.bean.PeopleBean;
 import com.juntai.wisdom.im.bean.TextKeyValueBean;
+import com.juntai.wisdom.im.bean.UserInfoVoListBean;
 import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
 import com.juntai.wisdom.im.chatlist.chat.chatInfo.ChatInfoAdapter;
 import com.juntai.wisdom.im.chatlist.searchchat.SearchGroupChatActivity;
@@ -176,12 +176,12 @@ public class GroupInfoActivity extends BaseRecyclerviewActivity<ChatPresent> imp
     }
 
     public List<MultipleItem> getMenuBeans(GroupDetailInfoBean dataBean) {
-        List<GroupPeoplesBean.DataBean> peoples = dataBean.getUserInfoVoList();
+        List<UserInfoVoListBean> peoples = dataBean.getUserInfoVoList();
         List<PeopleBean> peopleBeans = new ArrayList<>();
         if (peoples != null) {
             setTitleName(String.format("群聊信息(%s)", peoples.size()));
             HashMap<Integer, String> remarkNameMap = HawkProperty.getGlobleMap();
-            for (GroupPeoplesBean.DataBean people : peoples) {
+            for (UserInfoVoListBean people : peoples) {
                 if (remarkNameMap.containsKey(people.getId())) {
                     peopleBeans.add(new PeopleBean(remarkNameMap.get(people.getId()), people.getHeadPortrait(), people.getId(), 0));
 
