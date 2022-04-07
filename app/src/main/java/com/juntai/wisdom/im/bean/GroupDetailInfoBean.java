@@ -13,6 +13,7 @@ import java.util.List;
  * @UpdateUser: 更新者
  * @UpdateDate: 2022/4/1 17:19
  */
+
 public class GroupDetailInfoBean implements Parcelable {
 
     /**
@@ -28,6 +29,7 @@ public class GroupDetailInfoBean implements Parcelable {
     private boolean selected;
     //群列表中叫这个名字
     private String groupUuid;
+    private String qrCode;
     private boolean hasEndLine;
     private MessageBodyBean lastMessage;
     private int groupId;
@@ -39,6 +41,14 @@ public class GroupDetailInfoBean implements Parcelable {
     private int groupCreateUserId;
     private String userNickname;
     private List<GroupPeoplesBean.DataBean> userInfoVoList;
+
+    public String getQrCode() {
+        return qrCode == null ? "" : qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode == null ? "" : qrCode;
+    }
 
     public long getId() {
         return id;
@@ -147,6 +157,9 @@ public class GroupDetailInfoBean implements Parcelable {
         this.userInfoVoList = userInfoVoList;
     }
 
+    public GroupDetailInfoBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -157,6 +170,7 @@ public class GroupDetailInfoBean implements Parcelable {
         dest.writeLong(this.id);
         dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
         dest.writeString(this.groupUuid);
+        dest.writeString(this.qrCode);
         dest.writeByte(this.hasEndLine ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.lastMessage, flags);
         dest.writeInt(this.groupId);
@@ -166,16 +180,14 @@ public class GroupDetailInfoBean implements Parcelable {
         dest.writeInt(this.isTop);
         dest.writeInt(this.groupCreateUserId);
         dest.writeString(this.userNickname);
-        dest.writeList(this.userInfoVoList);
-    }
-
-    public GroupDetailInfoBean() {
+        dest.writeTypedList(this.userInfoVoList);
     }
 
     protected GroupDetailInfoBean(Parcel in) {
         this.id = in.readLong();
         this.selected = in.readByte() != 0;
         this.groupUuid = in.readString();
+        this.qrCode = in.readString();
         this.hasEndLine = in.readByte() != 0;
         this.lastMessage = in.readParcelable(MessageBodyBean.class.getClassLoader());
         this.groupId = in.readInt();
@@ -185,11 +197,10 @@ public class GroupDetailInfoBean implements Parcelable {
         this.isTop = in.readInt();
         this.groupCreateUserId = in.readInt();
         this.userNickname = in.readString();
-        this.userInfoVoList = new ArrayList<GroupPeoplesBean.DataBean>();
-        in.readList(this.userInfoVoList, GroupPeoplesBean.DataBean.class.getClassLoader());
+        this.userInfoVoList = in.createTypedArrayList(GroupPeoplesBean.DataBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<GroupDetailInfoBean> CREATOR = new Parcelable.Creator<GroupDetailInfoBean>() {
+    public static final Creator<GroupDetailInfoBean> CREATOR = new Creator<GroupDetailInfoBean>() {
         @Override
         public GroupDetailInfoBean createFromParcel(Parcel source) {
             return new GroupDetailInfoBean(source);

@@ -281,34 +281,7 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
 
                                 case BaseMenuBean.PIC_MENU_SPOT_QRCODE:
                                     // : 2022/4/6 识别二维码
-                                    if (finalResult.contains("=") && finalResult.contains("&")) {
-                                        String uuid = finalResult.substring(finalResult.indexOf("=") + 1, finalResult.indexOf("&"));
-                                        String type = finalResult.substring(finalResult.lastIndexOf("=") + 1, finalResult.length());
-                                        if ("1".equals(type)) {
-                                            //好友
-                                            if (UserInfoManager.getUserUUID().equals(uuid)) {
-                                                ToastUtils.error(mContext, "不能添加自己为好友");
-                                                return;
-                                            }
-
-                                            mPresenter.addFriendByUuid(getBaseAppActivity().getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.ADD_FRIEND_BY_UUID);
-                                        } else if ("2".equals(type)) {
-                                            //群聊
-                                            // : 2022-01-18 群信息
-                                            if (!getBaseAppActivity().isHaveGroup(uuid)) {
-                                                //如果不是群成员
-                                                startActivity(new Intent(mContext, JoinGroupByUuidActivity.class).putExtra(BASE_STRING, uuid));
-                                            } else {
-                                                //是群成员  获取群信息 然后跳转到群聊天界面
-                                                mPresenter.joinGroupByUuid(getBaseAppActivity().getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.JOIN_GROUP_BY_UUID);
-                                            }
-                                        }else {
-                                            startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", finalResult));
-                                        }
-                                    } else {
-                                        startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", finalResult));
-
-                                    }
+                                    resolveQrcode(finalResult);
 
 
                                     break;
@@ -326,6 +299,38 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
         }
     }
 
+    /**
+     * 解析二维码
+     * @param result
+     */
+    public void resolveQrcode(String result) {
+        if (result.contains("juntaikeji")) {
+            //内部二维码
+            String uuid = result.substring(result.indexOf("=") + 1, result.indexOf("&"));
+            String type = result.substring(result.lastIndexOf("=") + 1, result.length());
+            if ("1".equals(type)) {
+                //好友
+                if (UserInfoManager.getUserUUID().equals(uuid)) {
+                    ToastUtils.error(mContext,"不能添加自己为好友");
+                    return;
+                }
+
+                mPresenter.addFriendByUuid(getBaseAppActivity().getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.ADD_FRIEND_BY_UUID);
+            } else {
+                //群聊
+                // : 2022-01-18 群信息
+                if (!getBaseAppActivity().isHaveGroup(uuid)) {
+                    //如果不是群成员
+                    startActivity(new Intent(mContext, JoinGroupByUuidActivity.class).putExtra(BASE_STRING, uuid));
+                } else {
+                    //是群成员  获取群信息 然后跳转到群聊天界面
+                    mPresenter.joinGroupByUuid(getBaseAppActivity().getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.JOIN_GROUP_BY_UUID);
+                }
+            }
+        }else {
+            startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", result));
+        }
+    }
 
     private void downloadImage() {
         String oldFilePath = null;

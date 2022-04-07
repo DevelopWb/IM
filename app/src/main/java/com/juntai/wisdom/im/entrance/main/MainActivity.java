@@ -24,6 +24,7 @@ import com.baidu.location.BDLocation;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.disabled.basecomponent.base.BaseActivity;
 import com.juntai.disabled.basecomponent.base.BaseResult;
+import com.juntai.disabled.basecomponent.base.WebViewActivity;
 import com.juntai.disabled.basecomponent.utils.ActionConfig;
 import com.juntai.disabled.basecomponent.utils.ActivityManagerTool;
 import com.juntai.disabled.basecomponent.utils.DisplayUtil;
@@ -222,31 +223,13 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
             //扫描结果
             if (data != null) {
                 String result = data.getStringExtra(BASE_STRING);
-                String uuid = result.substring(result.indexOf("=") + 1, result.indexOf("&"));
-                String type = result.substring(result.lastIndexOf("=") + 1, result.length());
-                if ("1".equals(type)) {
-                    //好友
-                    if (UserInfoManager.getUserUUID().equals(uuid)) {
-                        ToastUtils.error(mContext,"不能添加自己为好友");
-                        return;
-                    }
+                resolveQrcode(result);
 
-                    mPresenter.addFriendByUuid(getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.ADD_FRIEND_BY_UUID);
-                } else {
-                    //群聊
-                    // : 2022-01-18 群信息
-                    if (!isHaveGroup(uuid)) {
-                        //如果不是群成员
-                        startActivity(new Intent(mContext, JoinGroupByUuidActivity.class).putExtra(BASE_STRING, uuid));
-                    } else {
-                        //是群成员  获取群信息 然后跳转到群聊天界面
-                        mPresenter.joinGroupByUuid(getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.JOIN_GROUP_BY_UUID);
-                    }
-                }
             }
 
         }
     }
+
 
 
     /**
@@ -576,6 +559,38 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
     public void onPause() {
         super.onPause();
         NotificationTool.SHOW_NOTIFICATION = true;
+    }
+    /**
+     * 解析二维码
+     * @param result
+     */
+    public void resolveQrcode(String result) {
+        if (result.contains("juntaikeji")) {
+            //内部二维码
+            String uuid = result.substring(result.indexOf("=") + 1, result.indexOf("&"));
+            String type = result.substring(result.lastIndexOf("=") + 1, result.length());
+            if ("1".equals(type)) {
+                //好友
+                if (UserInfoManager.getUserUUID().equals(uuid)) {
+                    ToastUtils.error(mContext,"不能添加自己为好友");
+                    return;
+                }
+
+                mPresenter.addFriendByUuid(getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.ADD_FRIEND_BY_UUID);
+            } else {
+                //群聊
+                // : 2022-01-18 群信息
+                if (!isHaveGroup(uuid)) {
+                    //如果不是群成员
+                    startActivity(new Intent(mContext, JoinGroupByUuidActivity.class).putExtra(BASE_STRING, uuid));
+                } else {
+                    //是群成员  获取群信息 然后跳转到群聊天界面
+                    mPresenter.joinGroupByUuid(getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.JOIN_GROUP_BY_UUID);
+                }
+            }
+        }else {
+            startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", result));
+        }
     }
 
 }

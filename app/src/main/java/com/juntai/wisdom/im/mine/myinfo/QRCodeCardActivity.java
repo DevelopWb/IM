@@ -62,8 +62,7 @@ public class QRCodeCardActivity extends BaseAppActivity<MyCenterPresent> impleme
     @Override
     public void initData() {
 
-        mQRCodeIv.setImageBitmap(CodeUtils.createQRCode(String.format("https://www.baidu.com?uuid=%s&type=1",
-                UserInfoManager.getUserUUID()), ScreenUtils.getInstance(mContext).getScreenWidth(), decodeFile(FileCacheUtils.getAppImagePath(true)+getSavedFileName(UserInfoManager.getHeadPic())))
+        mQRCodeIv.setImageBitmap(CodeUtils.createQRCode(UserInfoManager.getQRCode(), ScreenUtils.getInstance(mContext).getScreenWidth(), decodeFile(FileCacheUtils.getAppImagePath(true)+getSavedFileName(UserInfoManager.getHeadPic())))
         );
     }
 
