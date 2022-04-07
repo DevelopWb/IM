@@ -41,4 +41,8 @@ dependencies {
 
     api 'com.android.support:design:28.0.0'
     api 'com.google.zxing:core:3.3.3'
+    // 扫码图片中是否有二维码
+    api 'com.huawei.agconnect:agconnect-core:1.4.0.300'
+    api 'com.huawei.hms:scanplus:1.2.4.300'
+
 }

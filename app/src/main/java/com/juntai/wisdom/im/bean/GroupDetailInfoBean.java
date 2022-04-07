@@ -26,10 +26,12 @@ public class GroupDetailInfoBean implements Parcelable {
      */
     private long id;
     private boolean selected;
+    //群列表中叫这个名字
     private String groupUuid;
     private boolean hasEndLine;
     private MessageBodyBean lastMessage;
     private int groupId;
+    //群详情中叫这个名字......
     private String uuid;
     private String groupName;
     private String groupPicture;

@@ -1383,7 +1383,17 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 break;
 
             case ContactorInfoActivity.CONTACT_INFO_RESULT:
-                setTitleName(HawkProperty.getGlobleMap().get(privateContactId));
+                switch (chatType) {
+                    case 0:
+                        setTitleName(HawkProperty.getGlobleMap().get(privateContactId));
+                        break;
+                    case 1:
+
+                        break;
+                    default:
+                        break;
+                }
+
                 break;
             default:
                 break;

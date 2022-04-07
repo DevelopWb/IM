@@ -293,7 +293,7 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
             }
 
         }
-        if (groups.size()>0) {
+        if (groups!=null&&groups.size()>0) {
             // : 2022/4/1 这么写是因为数据结构更改了
             if (groups.get(0) instanceof GroupDetailInfoBean) {
                 for (GroupDetailInfoBean group : groups) {

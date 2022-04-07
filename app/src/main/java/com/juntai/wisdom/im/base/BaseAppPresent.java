@@ -19,9 +19,11 @@ import com.juntai.wisdom.im.AppNetModule;
 import com.juntai.wisdom.im.base.uploadFile.UploadFileBean;
 import com.juntai.wisdom.im.bean.CollectMessagesBean;
 import com.juntai.wisdom.im.bean.GroupDetailBean;
+import com.juntai.wisdom.im.bean.GroupInfoByUuidBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean_;
 import com.juntai.wisdom.im.bean.UserBean;
+import com.juntai.wisdom.im.bean.UserInfoByUUIDBean;
 import com.juntai.wisdom.im.utils.MyFileProvider;
 import com.juntai.wisdom.im.utils.ObjectBox;
 import com.juntai.wisdom.im.utils.SendMsgUtil;
@@ -47,7 +49,47 @@ import okhttp3.RequestBody;
  */
 public abstract class BaseAppPresent<M extends IModel, V extends IView> extends BasePresenter<M, V> {
 
+    public void addFriendByUuid(RequestBody requestBody, String tag) {
+        AppNetModule.createrRetrofit()
+                .addFriendByUuid(requestBody)
+                .compose(RxScheduler.ObsIoMain(getView()))
+                .subscribe(new BaseObserver<UserInfoByUUIDBean>(getView()) {
+                    @Override
+                    public void onSuccess(UserInfoByUUIDBean o) {
+                        if (getView() != null) {
+                            getView().onSuccess(tag, o);
+                        }
+                    }
 
+                    @Override
+                    public void onError(String msg) {
+                        if (getView() != null) {
+                            getView().onError(tag, msg);
+                        }
+                    }
+                });
+    }
+
+    public void joinGroupByUuid(RequestBody requestBody, String tag) {
+        AppNetModule.createrRetrofit()
+                .joinGroupByUuid(requestBody)
+                .compose(RxScheduler.ObsIoMain(getView()))
+                .subscribe(new BaseObserver<GroupInfoByUuidBean>(getView()) {
+                    @Override
+                    public void onSuccess(GroupInfoByUuidBean o) {
+                        if (getView() != null) {
+                            getView().onSuccess(tag, o);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+                        if (getView() != null) {
+                            getView().onError(tag, msg);
+                        }
+                    }
+                });
+    }
     public void regist(String tag, RequestBody body) {
         AppNetModule.createrRetrofit()
                 .regist(body)

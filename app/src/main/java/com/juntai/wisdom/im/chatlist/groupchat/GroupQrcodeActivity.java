@@ -58,7 +58,7 @@ public class GroupQrcodeActivity extends BaseAppActivity<ChatPresent> implements
     @Override
     public void initData() {
         mQrcodeIv.setImageBitmap(CodeUtils.createQRCode(String.format("https://www.baidu.com?uuid=%s&type=2",
-                groupBean.getGroupUuid()), ScreenUtils.getInstance(mContext).getScreenWidth(), decodeFile(FileCacheUtils.getAppImagePath(true)+getSavedFileName(groupBean.getGroupPicture())))
+                groupBean.getUuid()), ScreenUtils.getInstance(mContext).getScreenWidth(), decodeFile(FileCacheUtils.getAppImagePath(true)+getSavedFileName(groupBean.getGroupPicture())))
         );
     }
 

@@ -12,13 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.juntai.disabled.basecomponent.mvp.BasePresenter;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.BaseAppActivity;
-import com.juntai.wisdom.im.base.BaseAppPresent;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
 import com.juntai.wisdom.im.utils.MyFileProvider;
@@ -27,6 +25,7 @@ import com.juntai.wisdom.im.utils.UserInfoManager;
 
 import org.wlf.filedownloader.DownloadFileInfo;
 import org.wlf.filedownloader.FileDownloader;
+import org.wlf.filedownloader.listener.OnDeleteDownloadFileListener;
 
 /**
  * @aouther tobato
@@ -139,7 +138,27 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
                     if (!FileCacheUtils.isFileExists(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean))) {
                         // 文件不存在
                         setViewVisibleOrGone(true, mFileDetailProgressLl);
-                        FileDownloader.reStart(messageBodyBean.getContent());
+                       DownloadFileInfo downloadFileInfo =  FileDownloader.getDownloadFile(messageBodyBean.getContent());
+                        if (downloadFileInfo != null) {
+                            FileDownloader.delete(messageBodyBean.getContent(), true, new OnDeleteDownloadFileListener() {
+                                @Override
+                                public void onDeleteDownloadFilePrepared(DownloadFileInfo downloadFileNeedDelete) {
+
+                                }
+                                @Override
+                                public void onDeleteDownloadFileSuccess(DownloadFileInfo downloadFileDeleted) {
+                                    FileDownloader.start(messageBodyBean.getContent());
+                                }
+
+                                @Override
+                                public void onDeleteDownloadFileFailed(DownloadFileInfo downloadFileInfo, DeleteDownloadFileFailReason failReason) {
+                                    ToastUtils.toast(mContext,"onDeleteDownloadFileFaileddwe4512341");
+                                }
+                            });
+                        }else {
+                            FileDownloader.start(messageBodyBean.getContent());
+                        }
+
                     } else {
                         openFile(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean));
                     }
@@ -209,6 +228,7 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
 
     @Override
     public void onFileDownloadSuccess(DownloadFileInfo downloadFileInfo) {
+
         requestFinish(true, "用其他应用打开");
 
     }

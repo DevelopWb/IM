@@ -321,7 +321,7 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
      * @param uuid
      * @return
      */
-    protected boolean isHaveGroup(String uuid) {
+    public boolean isHaveGroup(String uuid) {
         List<GroupDetailInfoBean> groups = Hawk.get(HawkProperty.GROUP_LIST);
         for (GroupDetailInfoBean group : groups) {
             String str = group.getGroupUuid();

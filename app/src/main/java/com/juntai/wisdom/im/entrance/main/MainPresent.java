@@ -9,10 +9,8 @@ import com.juntai.wisdom.im.AppNetModule;
 import com.juntai.wisdom.im.base.BaseAppPresent;
 import com.juntai.wisdom.im.bean.ContactInfoBean;
 import com.juntai.wisdom.im.bean.ContactListBean;
-import com.juntai.wisdom.im.bean.GroupInfoByUuidBean;
 import com.juntai.wisdom.im.bean.GroupListBean;
 import com.juntai.wisdom.im.bean.NewFriendsBean;
-import com.juntai.wisdom.im.bean.UserInfoByUUIDBean;
 
 import okhttp3.RequestBody;
 
@@ -158,47 +156,7 @@ public class MainPresent extends BaseAppPresent<IModel, MainContract.IBaseView> 
                 });
     }
 
-    public void addFriendByUuid(RequestBody requestBody, String tag) {
-        AppNetModule.createrRetrofit()
-                .addFriendByUuid(requestBody)
-                .compose(RxScheduler.ObsIoMain(getView()))
-                .subscribe(new BaseObserver<UserInfoByUUIDBean>(getView()) {
-                    @Override
-                    public void onSuccess(UserInfoByUUIDBean o) {
-                        if (getView() != null) {
-                            getView().onSuccess(tag, o);
-                        }
-                    }
 
-                    @Override
-                    public void onError(String msg) {
-                        if (getView() != null) {
-                            getView().onError(tag, msg);
-                        }
-                    }
-                });
-    }
-
-    public void joinGroupByUuid(RequestBody requestBody, String tag) {
-        AppNetModule.createrRetrofit()
-                .joinGroupByUuid(requestBody)
-                .compose(RxScheduler.ObsIoMain(getView()))
-                .subscribe(new BaseObserver<GroupInfoByUuidBean>(getView()) {
-                    @Override
-                    public void onSuccess(GroupInfoByUuidBean o) {
-                        if (getView() != null) {
-                            getView().onSuccess(tag, o);
-                        }
-                    }
-
-                    @Override
-                    public void onError(String msg) {
-                        if (getView() != null) {
-                            getView().onError(tag, msg);
-                        }
-                    }
-                });
-    }
 
     public void agreeFriendsApply(RequestBody requestBody, String tag) {
         AppNetModule.createrRetrofit()

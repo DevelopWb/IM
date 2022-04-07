@@ -1,14 +1,22 @@
 package com.juntai.wisdom.im.base.displayPicVideo;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.huawei.hms.hmsscankit.ScanUtil;
+import com.huawei.hms.ml.scan.HmsScan;
+import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions;
+import com.juntai.disabled.basecomponent.base.BaseActivity;
+import com.juntai.disabled.basecomponent.base.WebViewActivity;
 import com.juntai.disabled.basecomponent.bean.BaseMenuBean;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
+import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.basecomponent.widght.BaseBottomDialog;
@@ -16,14 +24,25 @@ import com.juntai.disabled.federation.R;
 import com.juntai.disabled.video.img.PhotoView;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppFragment;
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
+import com.juntai.wisdom.im.bean.GroupInfoByUuidBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
+import com.juntai.wisdom.im.bean.UserInfoByUUIDBean;
 import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
 import com.juntai.wisdom.im.chatlist.chat.chatInfo.ChatInfoActivity;
 import com.juntai.wisdom.im.chatlist.chat.forwardMsg.ForwardMsgActivity;
+import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
+import com.juntai.wisdom.im.contact.ContactorInfoActivity;
+import com.juntai.wisdom.im.contact.group.JoinGroupByUuidActivity;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author: tobato
@@ -85,6 +104,16 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
         mDisplayPicActionDownloadIv = (ImageView) getView(R.id.display_pic_action_download_iv);
         mDisplayPicActionDownloadIv.setOnClickListener(this);
         mPhotoDisplayPv.enable();
+        mPhotoDisplayPv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //图片长按的逻辑  如果有二维码 显示识别图中的二维码
+
+                mDisplayPicActionMoreIv.performClick();
+
+                return true;
+            }
+        });
         if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
             // : 2022-03-09  本人发的视频
             if (FileCacheUtils.isFileExists(messageBodyBean.getLocalCatchPath())) {
@@ -127,9 +156,48 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
                 ToastUtils.toast(mContext, "收藏成功");
                 ((PicVideoDisplayActivity) getActivity()).releaseBottomSheetDialog();
                 break;
+            case AppHttpPath.ADD_FRIEND_BY_UUID:
+                // : 2022-01-18 好友信息
+
+                UserInfoByUUIDBean userInfoByUUIDBean = (UserInfoByUUIDBean) o;
+                if (userInfoByUUIDBean != null && userInfoByUUIDBean.getData() != null) {
+                    startActivity(new Intent(mContext, ContactorInfoActivity.class).putExtra(BaseActivity.BASE_ID, userInfoByUUIDBean.getData().getId()));
+                }
+
+                break;
+            case AppHttpPath.JOIN_GROUP_BY_UUID:
+                GroupInfoByUuidBean groupInfoByUuidBean = (GroupInfoByUuidBean) o;
+                if (groupInfoByUuidBean != null) {
+                    GroupInfoByUuidBean.DataBean dataBean = groupInfoByUuidBean.getData();
+                    GroupDetailInfoBean groupBean = GsonTools.modelA2B(dataBean, GroupDetailInfoBean.class);
+                    groupBean.setGroupId(dataBean.getId());
+                    startActivity(new Intent(mContext, GroupChatActivity.class)
+                            .putExtra(BASE_ID, groupBean.getGroupId()));
+                }
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 将本地图片转成Bitmap
+     *
+     * @param path 已有图片的路径
+     * @return
+     */
+    public static Bitmap getImageBitmap(String path) {
+        Bitmap bitmap = null;
+        try {
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path));
+            bitmap = BitmapFactory.decodeStream(bis);
+            bis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 
     @Override
@@ -137,23 +205,43 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
         MoreActionAdapter actionAdapter = new MoreActionAdapter(R.layout.more_action);
         int id = v.getId();
         if (id == R.id.display_pic_action_more_iv) {
+            List<BaseMenuBean> menuBeans = getBaseActivity().getBaseBottomDialogMenus(
+                    new BaseMenuBean(BaseMenuBean.PIC_MENU_FORWARD, R.mipmap.forword_icon)
+                    , new BaseMenuBean(BaseMenuBean.PIC_MENU_SHARE, R.mipmap.share_icon)
+                    , new BaseMenuBean(BaseMenuBean.PIC_MENU_COLLECT, R.mipmap.collect_icon)
+                    , new BaseMenuBean(BaseMenuBean.PIC_MENU_SAVE, R.mipmap.save_icon));
+            Bitmap bitmap = null;
+            String result = null;
+            if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
+                bitmap = getImageBitmap(messageBodyBean.getLocalCatchPath());
+            } else {
+                bitmap = getImageBitmap(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean));
+            }
+            //“QRCODE_SCAN_TYPE ”和“ DATAMATRIX_SCAN_TYPE表示只扫描QR和Data Matrix的码
+            HmsScanAnalyzerOptions options = new HmsScanAnalyzerOptions.Creator().setHmsScanTypes(HmsScan.QRCODE_SCAN_TYPE, HmsScan.DATAMATRIX_SCAN_TYPE).setPhotoMode(true).create();
+            HmsScan[] hmsScans = ScanUtil.decodeWithBitmap(mContext, bitmap, options);
+            //处理扫码结果
+            if (hmsScans != null && hmsScans.length > 0) {
+                result = hmsScans[0].showResult;
+                //展示扫码结果
+                menuBeans.add(new BaseMenuBean(BaseMenuBean.PIC_MENU_SPOT_QRCODE, R.mipmap.create_qrcode_icon));
+            }
 
-            ((PicVideoDisplayActivity) getActivity()).initBottomDialog(getBaseActivity().getBaseBottomDialogMenus(
-                    new BaseMenuBean("转发", R.mipmap.forword_icon)
-                    , new BaseMenuBean("分享", R.mipmap.share_icon)
-                    , new BaseMenuBean("收藏", R.mipmap.collect_icon)
-                    , new BaseMenuBean("保存到本地", R.mipmap.save_icon)
-                    ), actionAdapter
+
+            String finalResult = result;
+            ((PicVideoDisplayActivity) getActivity()).initBottomDialog(menuBeans
+                    , actionAdapter
                     , new GridLayoutManager(mContext, 5), new BaseBottomDialog.OnItemClick() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            switch (position) {
-                                case 0:
+                            BaseMenuBean menuBean = (BaseMenuBean) adapter.getItem(position);
+                            ((PicVideoDisplayActivity) getActivity()).releaseBottomSheetDialog();
+                            switch (menuBean.getName()) {
+                                case BaseMenuBean.PIC_MENU_FORWARD:
                                     // : 2022-02-28 转发
                                     startActivityForResult(new Intent(mContext, ForwardMsgActivity.class).putExtra(BASE_PARCELABLE, messageBodyBean), ChatInfoActivity.CHAT_INFO_REQUEST);
-                                    ((PicVideoDisplayActivity) getActivity()).releaseBottomSheetDialog();
                                     break;
-                                case 1:
+                                case BaseMenuBean.PIC_MENU_SHARE:
                                     // TODO: 2022-02-28 分享
 //                                    ShareTool.shareForMob(mContext,
 //                                            "",
@@ -180,15 +268,49 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
 //                                                }
 //                                            });
                                     break;
-                                case 2:
+                                case BaseMenuBean.PIC_MENU_COLLECT:
                                     // : 2022-02-28 收藏图片
 
-                                    mPresenter.collectFile(mContext,messageBodyBean,FileCacheUtils.getAppImagePath(false));
+                                    mPresenter.collectFile(mContext, messageBodyBean, FileCacheUtils.getAppImagePath(false));
 
                                     break;
-                                case 3:
+                                case BaseMenuBean.PIC_MENU_SAVE:
                                     // : 2022-02-28 下载图片
                                     downloadImage();
+                                    break;
+
+                                case BaseMenuBean.PIC_MENU_SPOT_QRCODE:
+                                    // : 2022/4/6 识别二维码
+                                    if (finalResult.contains("=") && finalResult.contains("&")) {
+                                        String uuid = finalResult.substring(finalResult.indexOf("=") + 1, finalResult.indexOf("&"));
+                                        String type = finalResult.substring(finalResult.lastIndexOf("=") + 1, finalResult.length());
+                                        if ("1".equals(type)) {
+                                            //好友
+                                            if (UserInfoManager.getUserUUID().equals(uuid)) {
+                                                ToastUtils.error(mContext, "不能添加自己为好友");
+                                                return;
+                                            }
+
+                                            mPresenter.addFriendByUuid(getBaseAppActivity().getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.ADD_FRIEND_BY_UUID);
+                                        } else if ("2".equals(type)) {
+                                            //群聊
+                                            // : 2022-01-18 群信息
+                                            if (!getBaseAppActivity().isHaveGroup(uuid)) {
+                                                //如果不是群成员
+                                                startActivity(new Intent(mContext, JoinGroupByUuidActivity.class).putExtra(BASE_STRING, uuid));
+                                            } else {
+                                                //是群成员  获取群信息 然后跳转到群聊天界面
+                                                mPresenter.joinGroupByUuid(getBaseAppActivity().getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.JOIN_GROUP_BY_UUID);
+                                            }
+                                        }else {
+                                            startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", finalResult));
+                                        }
+                                    } else {
+                                        startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", finalResult));
+
+                                    }
+
+
                                     break;
                                 default:
                                     break;
@@ -212,13 +334,14 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
             //自己发的图片 本地有记录
             oldFilePath = messageBodyBean.getLocalCatchPath();
             File oldFile = new File(oldFilePath);
-            newFilePath =FileCacheUtils.getAppImagePath(false)+oldFile.getName();
+            newFilePath = FileCacheUtils.getAppImagePath(false) + oldFile.getName();
         } else {
             oldFilePath = FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean);
-            newFilePath =  FileCacheUtils.getAppImagePath(false) + getSavedFileName(messageBodyBean);
+            newFilePath = FileCacheUtils.getAppImagePath(false) + getSavedFileName(messageBodyBean);
         }
         FileCacheUtils.copyFile((PicVideoDisplayActivity) getActivity(), oldFilePath, newFilePath, false);
 
     }
+
 
 }

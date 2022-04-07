@@ -189,10 +189,15 @@ public class FriendInfoSetActivity extends BaseRecyclerviewActivity<ChatPresent>
         List<MultipleItem> menuBeans = new ArrayList<>();
         menuBeans.add(new MultipleItem(MultipleItem.ITEM_KEY_VALUE, new TextKeyValueBean(MultipleItem.SET_REMARK, null)));
         menuBeans.add(new MultipleItem(MultipleItem.ITEM_DIVIDER, ""));
-        menuBeans.add(new MultipleItem(MultipleItem.ITEM_KEY_VALUE, new TextKeyValueBean(MultipleItem.SHARE_TO_FRIENDS, null)));
+        if (contactBean.isFriend()) {
+            menuBeans.add(new MultipleItem(MultipleItem.ITEM_KEY_VALUE, new TextKeyValueBean(MultipleItem.SHARE_TO_FRIENDS, null)));
+        }
         menuBeans.add(new MultipleItem(MultipleItem.ITEM_KEY_VALUE_WITH_SWITCH, new TextKeyValueBean(MultipleItem.ADD_TO_BLACK_LIST, null, HawkProperty.isInBlockList(contactBean.getId()) ? true : false)));
-        menuBeans.add(new MultipleItem(MultipleItem.ITEM_DIVIDER, ""));
-        menuBeans.add(new MultipleItem(MultipleItem.ITEM_PIC_TEXT_MENUS, new TextKeyValueBean(MultipleItem.DELETE, null)));
+        if (contactBean.isFriend()) {
+            menuBeans.add(new MultipleItem(MultipleItem.ITEM_DIVIDER, ""));
+            menuBeans.add(new MultipleItem(MultipleItem.ITEM_PIC_TEXT_MENUS, new TextKeyValueBean(MultipleItem.DELETE, null)));
+        }
+
         return menuBeans;
     }
 

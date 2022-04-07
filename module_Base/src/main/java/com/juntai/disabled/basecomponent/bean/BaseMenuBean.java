@@ -10,6 +10,12 @@ package com.juntai.disabled.basecomponent.bean;
 public class BaseMenuBean {
 
 
+    public final static String  PIC_MENU_FORWARD = "转发";
+    public final static String  PIC_MENU_SHARE = "分享";
+    public final static String  PIC_MENU_COLLECT = "收藏";
+    public final static String  PIC_MENU_SAVE = "保存到本地";
+    public final static String  PIC_MENU_SPOT_QRCODE = "识别二维码";
+
     private String name;
     private int  res;
 
