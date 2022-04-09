@@ -301,25 +301,29 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                     ArrayMap<String, MultipleItem> hashMap = new ArrayMap<>();
                     MessageBodyBean messageBodyBean = null;
 
-                        //没有@数据
+                        //有@数据
+                    if (!mPresenter.isGroupChatRecordUnreadHasNoAtMsg(group.getGroupId())) {
+                        if (mPresenter != null) {
+                            messageBodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
+                            if (!mPresenter.isGroupChatRecordUnreadHasNoAtMsg(group.getGroupId())) {
+                                messageBodyBean.setAtUserId(String.valueOf(UserInfoManager.getUserId()));
+                            }
+                        }
+                    }else {
                         if (Hawk.contains(HawkProperty.getDraftKey(group.getGroupId(),false))) {
                             messageBodyBean = Hawk.get(HawkProperty.getDraftKey(group.getGroupId(),false));
                             if (mPresenter != null) {
                                 MessageBodyBean bodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
                                 messageBodyBean.setRead(bodyBean == null || bodyBean.isRead());
-                                if (!mPresenter.isGroupChatRecordUnreadHasNoAtMsg(group.getGroupId())) {
-                                    messageBodyBean.setAtUserId(String.valueOf(UserInfoManager.getUserId()));
-                                }
                             }
 
                         }else {
                             if (mPresenter != null) {
                                 messageBodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
-                                if (!mPresenter.isGroupChatRecordUnreadHasNoAtMsg(group.getGroupId())) {
-                                    messageBodyBean.setAtUserId(String.valueOf(UserInfoManager.getUserId()));
-                                }
                             }
                         }
+                    }
+
 
 
                     if (messageBodyBean != null) {

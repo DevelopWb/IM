@@ -139,14 +139,16 @@ public class HomepageChatListAdapter extends BaseMultiItemQuickAdapter<MultipleI
                             if (String.valueOf(UserInfoManager.getUserId()).equals(atUserId.trim()) && !groupMsgBean.isRead()) {
                                 message = String.format("[有人@我]%s:%s", name, groupContent);
                             }
-                        }
-
-                        if (groupMsgBean.isDraft()) {
-                            EmojiUtils.showEmojiTextView(mContext, helper.getView(R.id.item_content_tv), "[草稿] "+message, 14,true);
-                        }else {
                             EmojiUtils.showEmojiTextView(mContext, helper.getView(R.id.item_content_tv), message, 14);
-
+                        }else {
+                            if (groupMsgBean.isDraft()) {
+                                EmojiUtils.showEmojiTextView(mContext, helper.getView(R.id.item_content_tv), "[草稿] "+message, 14,true);
+                            }else {
+                                EmojiUtils.showEmojiTextView(mContext, helper.getView(R.id.item_content_tv), message, 14);
+                            }
                         }
+
+
                         break;
                     case 1:
                         helper.setText(R.id.item_content_tv, String.format("%s:%s", name, "[图片]"));
