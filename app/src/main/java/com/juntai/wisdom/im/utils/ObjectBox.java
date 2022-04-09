@@ -122,9 +122,8 @@ public class ObjectBox {
         QueryBuilder<GroupDetailInfoBean> builder = ObjectBox.get().boxFor(GroupDetailInfoBean.class).query(
                 GroupDetailInfoBean_.groupId.equal(groupId)
                         .and(GroupDetailInfoBean_.owner.equal(UserInfoManager.getUserUUID())));
-        return builder
-                .build()
-                .find().size()>0;
+        List<GroupDetailInfoBean> arrays = builder.build().find();
+        return !arrays.isEmpty();
     }
 
     /**
@@ -134,11 +133,10 @@ public class ObjectBox {
      */
     public static boolean checkGroupIsExist(String uuid) {
         QueryBuilder<GroupDetailInfoBean> builder = ObjectBox.get().boxFor(GroupDetailInfoBean.class).query(
-                GroupDetailInfoBean_.uuid.equal(uuid)
+                GroupDetailInfoBean_.groupUuid.equal(uuid)
                         .and(GroupDetailInfoBean_.owner.equal(UserInfoManager.getUserUUID())));
-        return builder
-                .build()
-                .find().size()>0;
+        List<GroupDetailInfoBean> arrays = builder.build().find();
+        return !arrays.isEmpty();
     }
 
 }

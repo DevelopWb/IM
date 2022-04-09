@@ -32,6 +32,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
     public long id;
     private int fromUserId;
     private String fromAccount;
+    private String atUserId;
     /**
      * 此条消息的拥有者   主要用于解决切换账号后  数据紊乱的问题  存储用户的account就可以
      */
@@ -229,6 +230,14 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
 
     public void setCollectionCreateTime(String collectionCreateTime) {
         this.collectionCreateTime = collectionCreateTime == null ? "" : collectionCreateTime;
+    }
+
+    public String getAtUserId() {
+        return atUserId == null ? "" : atUserId;
+    }
+
+    public void setAtUserId(String atUserId) {
+        this.atUserId = atUserId == null ? "" : atUserId;
     }
 
     public String getOtherAccount() {
@@ -510,6 +519,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         dest.writeLong(this.id);
         dest.writeInt(this.fromUserId);
         dest.writeString(this.fromAccount);
+        dest.writeString(this.atUserId);
         dest.writeString(this.owner);
         dest.writeString(this.fromNickname);
         dest.writeString(this.hwPushIntentUrl);
@@ -560,6 +570,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         this.id = in.readLong();
         this.fromUserId = in.readInt();
         this.fromAccount = in.readString();
+        this.atUserId = in.readString();
         this.owner = in.readString();
         this.fromNickname = in.readString();
         this.hwPushIntentUrl = in.readString();
@@ -606,7 +617,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         this.lng = in.readString();
     }
 
-    public static final Parcelable.Creator<MessageBodyBean> CREATOR = new Parcelable.Creator<MessageBodyBean>() {
+    public static final Creator<MessageBodyBean> CREATOR = new Creator<MessageBodyBean>() {
         @Override
         public MessageBodyBean createFromParcel(Parcel source) {
             return new MessageBodyBean(source);

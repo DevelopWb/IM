@@ -179,8 +179,12 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
      * 所有的图片和视频
      */
     ArrayList<MessageBodyBean> allPicVideoPath = new ArrayList<>();
+    //@的成员
+    List<Integer> atUsers = new ArrayList<>();
+
 
     @Override
+
     public int getLayoutView() {
         return R.layout.activity_chat;
     }
@@ -280,13 +284,13 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     groupId = mMessageBodyBean.getGroupId();
                     if (ObjectBox.checkGroupIsExist(groupId)) {
                         //存在群组信息 加载群组聊天记录
-                        groupBean =ObjectBox.getGroup(groupId);
+                        groupBean = ObjectBox.getGroup(groupId);
                         getGruopRecord();
                     }
                 } else {
                     groupId = intent.getIntExtra(BASE_ID, 0);
                     //加载群组聊天记录
-                    groupBean =ObjectBox.getGroup(groupId);
+                    groupBean = ObjectBox.getGroup(groupId);
                     getGruopRecord();
                 }
                 mPresenter.getGroupInfo(getBaseBuilder().add("groupId", String.valueOf(groupId)).build(),
@@ -796,6 +800,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                         switch (chatType) {
                             case 1:
                                 if (operateingMsgBean.getFromUserId() != UserInfoManager.getUserId()) {
+                                    atUsers.add(operateingMsgBean.getFromUserId());
                                     mContentEt.append(String.format("@%s\u3000", operateingMsgBean.getFromNickname()));
                                     //光标移动到最后面
                                     mContentEt.setSelection(getTextViewValue(mContentEt).length());
@@ -1107,6 +1112,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 }
                 break;
             case R.id.tvSend:
+                //发送普通消息的逻辑
                 switch (chatType) {
                     case 0:
                         if (privateContactBean == null) {
@@ -1117,6 +1123,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                         break;
                     case 1:
                         // : 2022-01-13 群聊 发送群消息
+
                         sendGroupNormalMsg(getTextViewValue(mContentEt));
                         Hawk.delete(HawkProperty.getDraftKey(groupId, false));
                         break;
@@ -1154,11 +1161,18 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
     private void sendGroupNormalMsg(String content) {
         MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(0, groupId, groupBean.getGroupCreateUserId(),
                 groupBean.getUserNickname(), content);
+        if (!atUsers.isEmpty()) {
+            //有@的成员
+            messageBody.setAtUserId(atUsers.toString().substring(1,atUsers.toString().length()-1));
+        }else {
+            messageBody.setAtUserId(null);
+        }
         mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), messageBody);
         chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_TEXT_MSG, messageBody));
         ObjectBox.addMessage(messageBody);
         mRecyclerview.scrollToPosition(chatAdapter.getData().size() - 1);
+        atUsers.clear();
     }
 
     @Override
@@ -1565,7 +1579,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             case AppHttpPath.GET_GROUP_INFO:
                 GroupDetailBean groupDetailBean = (GroupDetailBean) o;
                 groupBean = groupDetailBean.getData();
-                if (chatAdapter.getData().size()==0) {
+                if (chatAdapter.getData().size() == 0) {
                     getGruopRecord();
                 }
 
@@ -1645,6 +1659,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
      * 获取群组的聊天记录
      */
     private void getGruopRecord() {
+        if (groupBean == null) {
+            return;
+        }
         setTitleName(groupBean.getGroupName());
         //获取历史数据
         List<MessageBodyBean> arrays = mPresenter.findGroupChatRecord(groupId);
@@ -1732,6 +1749,45 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
 
     @Override
     public void onBackPressed() {
+        if (!TextUtils.isEmpty(getTextViewValue(mContentEt))) {
+            switch (chatType) {
+                case 0:
+                    MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(0, privateContactId,
+                            privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
+                            privateContactBean.getHeadPortrait(), getTextViewValue(mContentEt));
+                    messageBody.setDraft(true);
+                    Hawk.put(HawkProperty.getDraftKey(privateContactId, true), messageBody);
+                    break;
+                case 1:
+                    MessageBodyBean groupMsgBean = SendMsgUtil.getGroupMsg(0, groupId, 0, null, getTextViewValue(mContentEt));
+                    groupMsgBean.setDraft(true);
+                    Hawk.put(HawkProperty.getDraftKey(groupId, false), groupMsgBean);
+                    break;
+                case 2:
+                    // TODO: 2022/3/22 密聊
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (chatType) {
+                case 0:
+                    if (Hawk.contains(HawkProperty.getDraftKey(privateContactId, true))) {
+                        Hawk.delete(HawkProperty.getDraftKey(privateContactId, true));
+                    }
+                    break;
+                case 1:
+                    if (Hawk.contains(HawkProperty.getDraftKey(groupId, false))) {
+                        Hawk.delete(HawkProperty.getDraftKey(groupId, false));
+                    }
+                    break;
+                case 2:
+                    // TODO: 2022/3/22 密聊
+                    break;
+                default:
+                    break;
+            }
+        }
         if (initAdapterSelectStatus()) {
             return;
         }
@@ -1770,15 +1826,39 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
     @SuppressLint("ClickableViewAccessibility")
     public void initListener() {
         mContentEt.addTextChangedListener(new TextWatcher() {
+            boolean isAt = false;//是否是@
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                String content = s.toString();
+                if (after == 0) {
+                    if (isAt) {
+                        return;
+                    }
+                    if (content.endsWith("\u3000")) {
+                        //删除@的成员
+                        if (!atUsers.isEmpty()) {
+                            atUsers.remove(atUsers.size()-1);
+                        }
+                        isAt = true;
+                        content = content.substring(0, content.lastIndexOf("@"));
+                        mContentEt.setText(content);
+                        mContentEt.setSelection(content.length());
+                    } else {
+                        isAt = false;
+                    }
+                }
 
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // : 2022-02-08 这个地方添加@对应的逻辑
-                String content = s.toString().substring(start, s.length());
+                String content = s.toString().trim();
+                if (TextUtils.isEmpty(content) || !content.endsWith("\u3000")) {
+                    isAt = false;
+                }
+                content = content.substring(start, s.length());
                 if ("@".equals(content)) {
                     if (noticePeopleDialog == null) {
                         View view = LayoutInflater.from(mContext).inflate(R.layout.select_notice_people, null);
@@ -1795,13 +1875,19 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     }
                     SelectGroupNoticePeopleFragment selectContactFragment =
                             (SelectGroupNoticePeopleFragment) getSupportFragmentManager().findFragmentById(R.id.select_contact_fg);
-                    if (groupBean != null&&groupBean.getUserInfoVoList()!=null&&!groupBean.getUserInfoVoList().isEmpty()) {
+                    if (groupBean != null && groupBean.getUserInfoVoList() != null && !groupBean.getUserInfoVoList().isEmpty()) {
                         selectContactFragment.getGroupInfo(groupBean,
                                 new SelectGroupNoticePeopleFragment.OnContactClick() {
                                     @Override
                                     public void contactClicked(ContactBean contactBean) {
                                         noticePeopleDialog.dismiss();
-                                        mContentEt.append(contactBean.getNickname() + " ");
+                                        String nickName = contactBean.getNickname();
+                                        if ("所有人".equals(nickName)) {
+                                            atUsers.clear();
+                                            //如果是所有人  就传 -1
+                                            atUsers.add(-1);
+                                        }
+                                        mContentEt.append(contactBean.getNickname() + "\u3000");
                                     }
                                 });
 
@@ -1816,47 +1902,10 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             @Override
             public void afterTextChanged(Editable s) {
                 String content = s.toString();
-
                 if (!TextUtils.isEmpty(content)) {
                     mTvSend.setVisibility(View.VISIBLE);
                     mIvMore.setVisibility(View.GONE);
-                    switch (chatType) {
-                        case 0:
-                            MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(0, privateContactId,
-                                    privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
-                                    privateContactBean.getHeadPortrait(), content);
-                            messageBody.setDraft(true);
-                            Hawk.put(HawkProperty.getDraftKey(privateContactId, true), messageBody);
-                            break;
-                        case 1:
-                            MessageBodyBean groupMsgBean = SendMsgUtil.getGroupMsg(0, groupId, 0, null, content);
-                            groupMsgBean.setDraft(true);
-                            Hawk.put(HawkProperty.getDraftKey(groupId, false), groupMsgBean);
-                            break;
-                        case 2:
-                            // TODO: 2022/3/22 密聊
-                            break;
-                        default:
-                            break;
-                    }
                 } else {
-                    switch (chatType) {
-                        case 0:
-                            if (Hawk.contains(HawkProperty.getDraftKey(privateContactId, true))) {
-                                Hawk.delete(HawkProperty.getDraftKey(privateContactId, true));
-                            }
-                            break;
-                        case 1:
-                            if (Hawk.contains(HawkProperty.getDraftKey(groupId, false))) {
-                                Hawk.delete(HawkProperty.getDraftKey(groupId, false));
-                            }
-                            break;
-                        case 2:
-                            // TODO: 2022/3/22 密聊
-                            break;
-                        default:
-                            break;
-                    }
                     mTvSend.setVisibility(View.GONE);
                     mIvMore.setVisibility(View.VISIBLE);
                 }

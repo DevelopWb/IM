@@ -26,6 +26,7 @@ import com.juntai.wisdom.im.entrance.main.MainPresent;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.NotificationTool;
 import com.juntai.wisdom.im.utils.ObjectBox;
+import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -299,18 +300,28 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                 for (GroupDetailInfoBean group : groups) {
                     ArrayMap<String, MultipleItem> hashMap = new ArrayMap<>();
                     MessageBodyBean messageBodyBean = null;
-                    if (Hawk.contains(HawkProperty.getDraftKey(group.getGroupId(),false))) {
-                        messageBodyBean = Hawk.get(HawkProperty.getDraftKey(group.getGroupId(),false));
-                        if (mPresenter != null) {
-                            MessageBodyBean bodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
-                            messageBodyBean.setRead(bodyBean == null || bodyBean.isRead());
+
+                        //没有@数据
+                        if (Hawk.contains(HawkProperty.getDraftKey(group.getGroupId(),false))) {
+                            messageBodyBean = Hawk.get(HawkProperty.getDraftKey(group.getGroupId(),false));
+                            if (mPresenter != null) {
+                                MessageBodyBean bodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
+                                messageBodyBean.setRead(bodyBean == null || bodyBean.isRead());
+                                if (!mPresenter.isGroupChatRecordUnreadHasNoAtMsg(group.getGroupId())) {
+                                    messageBodyBean.setAtUserId(String.valueOf(UserInfoManager.getUserId()));
+                                }
+                            }
+
+                        }else {
+                            if (mPresenter != null) {
+                                messageBodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
+                                if (!mPresenter.isGroupChatRecordUnreadHasNoAtMsg(group.getGroupId())) {
+                                    messageBodyBean.setAtUserId(String.valueOf(UserInfoManager.getUserId()));
+                                }
+                            }
                         }
 
-                    }else {
-                        if (mPresenter != null) {
-                            messageBodyBean = mPresenter.findGroupChatRecordLastMessage(group.getGroupId());
-                        }
-                    }
+
                     if (messageBodyBean != null) {
                         group.setLastMessage(messageBodyBean);
                         hashMap.put(messageBodyBean.getCreateTime(), new MultipleItem(MultipleItem.ITEM_CHAT_LIST_GROUP, group));

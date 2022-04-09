@@ -271,6 +271,22 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
         return arrays.get(arrays.size() - 1);
     }
     /**
+     * 查找群的未读消息中是否有@信息
+     *
+     * @param groupId
+     * @return
+     */
+    public boolean isGroupChatRecordUnreadHasNoAtMsg(int groupId) {
+        List<MessageBodyBean> arrays = ObjectBox.get().boxFor(MessageBodyBean.class).query(
+                MessageBodyBean_.groupId.equal(groupId)
+                        .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
+                                .and(MessageBodyBean_.isRead.equal(false))
+                                .and(MessageBodyBean_.atUserId.oneOf(new String[]{"-1",String.valueOf(UserInfoManager.getUserId())}))
+                        )).build().find();
+
+        return arrays.isEmpty();
+    }
+    /**
      * 安装APK
      */
     public void installApk(Context mContext,String filePath) {

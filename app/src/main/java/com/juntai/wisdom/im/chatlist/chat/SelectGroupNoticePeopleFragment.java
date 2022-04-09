@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.BaseAppFragment;
@@ -77,8 +76,11 @@ public class SelectGroupNoticePeopleFragment extends BaseAppFragment<MainPresent
         HashMap<Integer, String> remarkMap = HawkProperty.getGlobleMap();
 
         for (UserInfoVoListBean dataBean : dataBeans) {
-            ContactBean contactBean = GsonTools.modelA2B(dataBean, ContactBean.class);
-            assert contactBean != null;
+            ContactBean contactBean = new ContactBean();
+            contactBean.setId(dataBean.getId());
+            contactBean.setNickname(dataBean.getNickname());
+            contactBean.setAccountNumber(dataBean.getAccountNumber());
+            contactBean.setHeadPortrait(dataBean.getHeadPortrait());
             if (remarkMap.containsKey(contactBean.getId())) {
                 contactBean.setRemarksNickname(remarkMap.get(contactBean.getId()));
             }else {

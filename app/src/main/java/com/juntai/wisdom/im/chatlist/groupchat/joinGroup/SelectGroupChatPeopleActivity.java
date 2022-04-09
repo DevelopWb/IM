@@ -82,7 +82,7 @@ public class SelectGroupChatPeopleActivity extends BaseAppActivity<ChatPresent> 
 
                 switch (joinGroupType) {
                     case 0:
-                        ids.add(UserInfoManager.getUserId());
+                        ids.add(0,UserInfoManager.getUserId());
                         if (ids.size() > 2) {
                             mPresenter.creatGroup(ids, AppHttpPath.CREAT_GROUP);
                         } else {
@@ -152,6 +152,7 @@ public class SelectGroupChatPeopleActivity extends BaseAppActivity<ChatPresent> 
                     //本地添加一条群聊消息
                     MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(10, dataBean.getGroupId(), 0,null, "你已成功创建群聊");
                     ObjectBox.addMessage(messageBody);
+                    ObjectBox.addGroup(dataBean);
                     //跳转到群聊界面
                     startActivity(new Intent(mContext, GroupChatActivity.class)
                             .putExtra(BaseActivity.BASE_ID, dataBean.getGroupId()));

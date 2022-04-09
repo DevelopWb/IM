@@ -260,6 +260,10 @@ public class SendMsgUtil {
         if (2 == messageBodyBean.getChatType()) {
             builder.addFormDataPart("groupId", String.valueOf(messageBodyBean.getGroupId()));
             builder.addFormDataPart("isGroupCreater", String.valueOf(messageBodyBean.getIsGroupCreater()));
+            if (!TextUtils.isEmpty(messageBodyBean.getAtUserId())) {
+               builder.addFormDataPart("atUserId",messageBodyBean.getAtUserId());
+            }
+
         }
         if (6 == messageBodyBean.getMsgType()) {
             builder.addFormDataPart("lat", messageBodyBean.getLat())

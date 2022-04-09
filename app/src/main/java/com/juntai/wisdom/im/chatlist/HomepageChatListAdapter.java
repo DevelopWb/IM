@@ -1,5 +1,7 @@
 package com.juntai.wisdom.im.chatlist;
 
+import android.text.TextUtils;
+
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.Gson;
@@ -130,23 +132,15 @@ public class HomepageChatListAdapter extends BaseMultiItemQuickAdapter<MultipleI
                     case 0:
                         String groupContent = groupMsgBean.getContent();
                         String message = String.format("%s:%s", name, groupContent);
-                        if (groupContent.contains("@")) {
-                            String[] contents = groupContent.split(" ");
-                            for (String content : contents) {
-                                if (content.contains("@")) {
-                                    if (content.contains("所有人")) {
-                                        //是群主发的@所有人
-                                        if (1 == groupMsgBean.getIsGroupCreater() && !groupMsgBean.isRead()) {
-                                            message = String.format("[有人@我]%s:%s", name, groupContent);
-                                            break;
-                                        }
-                                    } else if (content.contains(UserInfoManager.getUserNickName()) && !groupMsgBean.isRead()) {
-                                        message = String.format("[有人@我]%s:%s", name, groupContent);
-                                        break;
-                                    }
-                                }
+
+                        String atUserId = groupMsgBean.getAtUserId();
+                        if (!TextUtils.isEmpty(atUserId)) {
+                            //有@
+                            if (String.valueOf(UserInfoManager.getUserId()).equals(atUserId.trim()) && !groupMsgBean.isRead()) {
+                                message = String.format("[有人@我]%s:%s", name, groupContent);
                             }
                         }
+
                         if (groupMsgBean.isDraft()) {
                             EmojiUtils.showEmojiTextView(mContext, helper.getView(R.id.item_content_tv), "[草稿] "+message, 14,true);
                         }else {
