@@ -184,9 +184,9 @@ public abstract class BaseWithSmsActivity extends SmsCheckCodeActivity implement
         if (resultCode == BASE_REQUEST_RESULT) {
             if (data != null) {
                 headPicPath = data.getStringExtra(HeadCropActivity.CROPED_HEAD_PIC);
-                ImageLoadUtil.loadCirImgNoCrash(getApplicationContext(), headPicPath,
+                ImageLoadUtil.loadHeadPic(getApplicationContext(), headPicPath,
                         mHeadIv,
-                        R.mipmap.default_user_head_icon, R.mipmap.default_user_head_icon);
+                        true);
             }
         }
     }

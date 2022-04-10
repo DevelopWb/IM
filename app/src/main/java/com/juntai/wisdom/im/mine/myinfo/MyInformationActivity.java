@@ -170,9 +170,9 @@ public class MyInformationActivity extends BaseRecyclerviewActivity<MyCenterPres
         if (resultCode == BASE_REQUEST_RESULT) {
             if (data != null) {
                 String path = data.getStringExtra(HeadCropActivity.CROPED_HEAD_PIC);
-                ImageLoadUtil.loadCirImgNoCrash(getApplicationContext(), path,
+                ImageLoadUtil.loadHeadPic(getApplicationContext(), path,
                         imageView,
-                        R.mipmap.default_user_head_icon, R.mipmap.default_user_head_icon);
+                      true);
                 //  调用上传图片的接口
 
                mPresenter.uploadFile(AppHttpPath.UPLOAD_FILES,path);

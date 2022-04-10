@@ -257,7 +257,7 @@ public class ContactorInfoActivity extends BaseRecyclerviewActivity<MainPresent>
                     } else {
                         mSexTagIv.setVisibility(View.GONE);
                     }
-                    ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(contactBean.getHeadPortrait()), R.mipmap.default_user_head_icon, mHeardPic);
+                    ImageLoadUtil.loadHeadPic(mContext, UrlFormatUtil.getImageThumUrl(contactBean.getHeadPortrait()), mHeardPic,true);
                     mContactorNameTv.setText(contactBean.getRemarksNickname());
                     mContactorAccountTv.setText("超视距号:"+contactBean.getAccountNumber());
                     mContactorNickNameTv.setText("昵称:"+contactBean.getNickname());

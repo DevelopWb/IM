@@ -1,6 +1,7 @@
 package com.juntai.wisdom.im.mine;
 
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
@@ -210,6 +211,7 @@ public class MyCenterFragment extends BaseAppFragment<MyCenterPresent> implement
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onSuccess(String tag, Object o) {
         switch (tag) {
@@ -235,14 +237,6 @@ public class MyCenterFragment extends BaseAppFragment<MyCenterPresent> implement
                 ActivityManagerTool.getInstance().finishApp();
                 HawkProperty.clearRedPoint(mContext.getApplicationContext());
                 startActivity(new Intent(mContext, LoginActivity.class));
-                //重置界面
-//                mNickname.setText("点击登录");
-//                mNickname.setAlpha(0.3f);
-//                mTelNumber.setVisibility(View.GONE);
-//                mLoginOut.setVisibility(View.GONE);
-//                mPresenter.initList();
-//                headUrl = "";
-//                mHeadImage.setImageResource(R.mipmap-xxhdpi.default_user_head_icon);
                 break;
             default:
                 break;

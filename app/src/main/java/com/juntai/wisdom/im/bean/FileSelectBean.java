@@ -3,8 +3,6 @@ package com.juntai.wisdom.im.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.File;
-
 /**
  * @Author: tobato
  * @Description: 作用描述
@@ -19,6 +17,10 @@ public class FileSelectBean implements Parcelable {
     private boolean  select;
     private long fileSize;
     private int fileChilds;
+    //谁发的
+    private  String from;
+    //发送时间
+    private  String createTime;
 
     public FileSelectBean(String fileName, String filePath, boolean select, long fileSize, int fileChilds) {
         this.fileName = fileName;

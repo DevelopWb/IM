@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contact_cl"
     android:layout_width="match_parent"
-    android:layout_height="65dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/text_tag_iv"
@@ -48,15 +48,22 @@
         app:layout_constraintTop_toBottomOf="@+id/text_name_tv" />
 
     <TextView
+        android:id="@+id/from_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="dfadf"
+        app:layout_constraintLeft_toLeftOf="@+id/text_size_tv"
+        app:layout_constraintTop_toBottomOf="@+id/text_size_tv"></TextView>
+    <TextView
         android:id="@+id/creat_time_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:text="dfadf"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/text_size_tv"
-        app:layout_constraintLeft_toRightOf="@+id/text_size_tv"
-        app:layout_constraintTop_toTopOf="@+id/text_size_tv"></TextView>
+        app:layout_constraintBottom_toBottomOf="@+id/from_tv"
+        app:layout_constraintLeft_toRightOf="@+id/from_tv"
+        app:layout_constraintTop_toTopOf="@+id/from_tv"></TextView>
 
     <ImageView
         android:id="@+id/select_status_iv"
