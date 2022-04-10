@@ -294,13 +294,13 @@ public class FileCacheUtils {
      * @param bmp
      * @return
      */
-    public static String saveBitmap(Bitmap bmp, String picName) {
+    public static String saveBitmap(Bitmap bmp, String picName,boolean isCatch) {
         FileOutputStream out;
         File file;
         String path = null;
         try {
             // 获取SDCard指定目录下
-            String sdCardDir = getAppImagePath(false);
+            String sdCardDir = getAppImagePath(isCatch);
             File dirFile = new File(sdCardDir);  //目录转化成文件夹
             if (!dirFile.exists()) {              //如果不存在，那就建立这个文件夹
                 dirFile.mkdirs();

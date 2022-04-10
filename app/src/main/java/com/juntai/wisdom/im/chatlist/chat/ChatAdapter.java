@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,10 +38,6 @@ import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.negier.emojifragment.util.EmojiUtils;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import anet.channel.util.StringUtils;
 
 /**
  * @Author: tobato
@@ -362,7 +357,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 ConstraintLayout.LayoutParams receiverlayoutParams =
                         (ConstraintLayout.LayoutParams) receiveIv.getLayoutParams();
                 if ("0".equals(messageBodyBean.getRotation()) || "180".equals(messageBodyBean.getRotation())) {
-                    senderlayoutParams.width =(dip2px(200));
+                    senderlayoutParams.width = (dip2px(200));
                     receiverlayoutParams.width = (dip2px(200));
                     sendIv.setMaxHeight(dip2px(150));
                     receiveIv.setMaxHeight(dip2px(150));
@@ -396,36 +391,35 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     }
 
                     if (1 == messageBodyBean.getMsgType()) {
-                        //有可能是转发的网络图片
                         if (TextUtils.isEmpty(messageBodyBean.getLocalCatchPath())) {
-                            ImageLoadUtil.loadImage(mContext, messageBodyBean.getContent(),
-                                    helper.getView(R.id.sender_pic_video_iv));
+                            //有可能是转发的网络图片 或者本地文件删除了
+                            if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getContent()))) {
+                                //本地缓存存在图片
+                                ImageLoadUtil.loadImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getContent()),
+                                        helper.getView(R.id.sender_pic_video_iv));
+                            } else {
+                                //加载网络图片
+                                ImageLoadUtil.loadImage(mContext, messageBodyBean.getContent(),
+                                        helper.getView(R.id.sender_pic_video_iv));
+                                ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, messageBodyBean.getContent(), true);
+
+                            }
+
                         } else {
                             ImageLoadUtil.loadImage(mContext, messageBodyBean.getLocalCatchPath(), helper.getView(R.id.sender_pic_video_iv));
                         }
                     } else {
-                        if (TextUtils.isEmpty(messageBodyBean.getLocalCatchPath())) {
-                            ImageLoadUtil.loadVideoScreenshot(mContext, UrlFormatUtil.getImageOriginalUrl(picVideoContent), helper.getView(R.id.sender_pic_video_iv), new ImageLoadUtil.OnImageLoadSuccess() {
-                                @Override
-                                public void loadSuccess(int width, int height) {
-                                    helper.setGone(R.id.sender_play_iv, true);
-                                    helper.setGone(R.id.sender_video_duration_tv, true);
-                                    helper.setText(R.id.sender_video_duration_tv, messageBodyBean.getDuration());
-
-                                }
-                            });
+                        //自己发的视频文件
+                        helper.setGone(R.id.sender_play_iv, true);
+                        helper.setGone(R.id.sender_video_duration_tv, true);
+                        helper.setText(R.id.sender_video_duration_tv, messageBodyBean.getDuration());
+                        if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getVideoCover()))) {
+                            //本地缩略图存在
+                            ImageLoadUtil.loadImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getVideoCover()), helper.getView(R.id.sender_pic_video_iv));
                         } else {
-                            helper.setGone(R.id.sender_play_iv, true);
-                            helper.setGone(R.id.sender_video_duration_tv, true);
-                            helper.setText(R.id.sender_video_duration_tv, messageBodyBean.getDuration());
-                            ImageLoadUtil.loadVideoScreenshot(mContext, messageBodyBean.getLocalCatchPath(), helper.getView(R.id.sender_pic_video_iv), new ImageLoadUtil.OnImageLoadSuccess() {
-                                @Override
-                                public void loadSuccess(int width, int height) {
-
-                                }
-                            });
+                            ImageLoadUtil.loadImage(mContext, messageBodyBean.getVideoCover(), helper.getView(R.id.sender_pic_video_iv));
+                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, messageBodyBean.getVideoCover(), true);
                         }
-
 
                     }
                     initNickName(helper, messageBodyBean, 0);
@@ -441,7 +435,8 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                         if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean))) {
                             ImageLoadUtil.loadImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
                         } else {
-                            ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageThumUrl(picVideoContent), helper.getView(R.id.receiver_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, picVideoContent, helper.getView(R.id.receiver_pic_video_iv));
+                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, picVideoContent, true);
 
                         }
                     } else {
@@ -451,41 +446,12 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                         helper.setGone(R.id.receiver_play_iv, true);
                         helper.setGone(R.id.receiver_video_duration_tv, true);
                         helper.setText(R.id.receiver_video_duration_tv, messageBodyBean.getDuration());
-                        //这种方式不靠谱
-//                        String base64Str = messageBodyBean.getVideoCover();
-//                        if (!TextUtils.isEmpty(base64Str)) {
-//                            /**
-//                             *base64转为bitmap
-//                             */
-//                            byte[] bytes = Base64.decode(base64Str , Base64.DEFAULT);
-//                            Bitmap myBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//
-//                            ImageLoadUtil.loadImage(mContext, myBitmap, helper.getView(R.id.receiver_pic_video_iv));
-//                        }else {
-//
-//                        }
-                        if (!TextUtils.isEmpty(FileCacheUtils.isVideoFileExistsInDir(getSavedFileName(messageBodyBean), true))) {
-                            //本地已经缓存
-                            helper.setGone(R.id.receiver_play_iv, true);
-                            helper.setGone(R.id.receiver_video_duration_tv, true);
-                            helper.setText(R.id.receiver_video_duration_tv, messageBodyBean.getDuration());
-                            ImageLoadUtil.loadVideoScreenshot(mContext, FileCacheUtils.getVideoFileInDir(getSavedFileName(messageBodyBean), true), helper.getView(R.id.receiver_pic_video_iv), new ImageLoadUtil.OnImageLoadSuccess() {
-                                @Override
-                                public void loadSuccess(int width, int height) {
-
-
-                                }
-                            });
+                        if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getVideoCover()))) {
+                            //本地缩略图存在
+                            ImageLoadUtil.loadImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getVideoCover()), helper.getView(R.id.receiver_pic_video_iv));
                         } else {
-                            ImageLoadUtil.loadVideoScreenshot(mContext, UrlFormatUtil.getImageOriginalUrl(picVideoContent), helper.getView(R.id.receiver_pic_video_iv), new ImageLoadUtil.OnImageLoadSuccess() {
-                                @Override
-                                public void loadSuccess(int width, int height) {
-                                    helper.setGone(R.id.receiver_play_iv, true);
-                                    helper.setGone(R.id.receiver_video_duration_tv, true);
-                                    helper.setText(R.id.receiver_video_duration_tv, messageBodyBean.getDuration());
-
-                                }
-                            });
+                            ImageLoadUtil.loadImage(mContext, messageBodyBean.getVideoCover(), helper.getView(R.id.receiver_pic_video_iv));
+                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, messageBodyBean.getVideoCover(), true);
                         }
 
 
@@ -603,10 +569,23 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
             content = content.substring(content.lastIndexOf("/") + 1, content.length());
         }
         return content;
-//        return messageBodyBean.getFileName().substring(0,messageBodyBean.getFileName().lastIndexOf("."))+content;
     }
 
+    /**
+     * 获取文件名称
+     *
+     * @return
+     */
+    public String getSavedFileName(String content) {
+        if (TextUtils.isEmpty(content)) {
+            return null;
+        }
 
+        if (content.contains("/")) {
+            content = content.substring(content.lastIndexOf("/") + 1, content.length());
+        }
+        return content;
+    }
 
 
 }

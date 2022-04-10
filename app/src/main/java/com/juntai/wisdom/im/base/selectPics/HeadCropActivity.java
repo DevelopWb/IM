@@ -13,7 +13,6 @@ import com.juntai.disabled.basecomponent.utils.RxTask;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.utils.MyFileProvider;
-import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.oginotihiro.cropview.CropView;
 
 import java.io.File;
@@ -90,7 +89,7 @@ public class HeadCropActivity extends BaseAppActivity implements View.OnClickLis
                     @Override
                     public String doOnIoThread() {
                         croppedBitmap = mHeadCropCv.getOutput();
-                        return FileCacheUtils.saveBitmap(croppedBitmap, HEAD_PIC_NAME);
+                        return FileCacheUtils.saveBitmap(croppedBitmap, HEAD_PIC_NAME,false);
                     }
 
                     @Override

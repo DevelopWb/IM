@@ -7,7 +7,6 @@ import android.media.MediaMetadataRetriever;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -25,7 +24,6 @@ import com.juntai.disabled.basecomponent.R;
 import com.juntai.disabled.basecomponent.bean.FileBaseInfoBean;
 import com.juntai.disabled.basecomponent.mvp.IView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
@@ -38,6 +36,8 @@ import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
  * @date 2019/3/5
  */
 public class ImageLoadUtil {
+
+    public static String  IMAGE_TYPE_VIDEO_THUM = "videoThum_";
 
     /**
      * 加载本地图片
@@ -449,20 +449,17 @@ public class ImageLoadUtil {
      * 将本地视频的封面图转成base64
      * @param videoPath
      */
-    public static String getVideoThumbnailOfBase64(String videoPath) {
+    public static Bitmap getVideoThumbnail(String videoPath) {
         MediaMetadataRetriever media = new MediaMetadataRetriever();
         media.setDataSource(videoPath);// videoPath 本地视频的路径
-        Bitmap bitmap = media.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-        /**
-         *bitmap转为base64
-         */
-//先将bitmap转为byte[]
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,80,baos);
-        byte[] bytes = baos.toByteArray();
+        return media.getFrameAtTime((1000 + 1L), MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+    }
+    /**
+     * 将本地视频的封面图名称
+     */
+    public static String getVideoThumbnailName(String fileCreatTime) {
 
-//将byte[]转为base64
-        return Base64.encodeToString(bytes,Base64.DEFAULT);
+        return String.format("%s%s.png",ImageLoadUtil.IMAGE_TYPE_VIDEO_THUM, fileCreatTime);
     }
 
 

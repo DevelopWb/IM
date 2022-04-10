@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -38,6 +39,9 @@ import com.juntai.disabled.basecomponent.utils.DisplayUtil;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
 import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
+import com.juntai.disabled.basecomponent.utils.LogUtil;
+import com.juntai.disabled.basecomponent.utils.RxScheduler;
+import com.juntai.disabled.basecomponent.utils.RxTask;
 import com.juntai.disabled.basecomponent.utils.ScreenUtils;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.basecomponent.widght.BaseBottomDialog;
@@ -54,7 +58,6 @@ import com.juntai.wisdom.im.bean.GroupDetailBean;
 import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.HomePageMenuBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
-import com.juntai.wisdom.im.bean.MessageBodyBean_;
 import com.juntai.wisdom.im.bean.MessageListBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.bean.MyMenuBean;
@@ -1163,8 +1166,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 groupBean.getUserNickname(), content);
         if (!atUsers.isEmpty()) {
             //有@的成员
-            messageBody.setAtUserId(atUsers.toString().substring(1,atUsers.toString().length()-1));
-        }else {
+            messageBody.setAtUserId(atUsers.toString().substring(1, atUsers.toString().length() - 1));
+        } else {
             messageBody.setAtUserId(null);
         }
         mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
@@ -1508,38 +1511,54 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
      */
     private void uploadVideoFile(String picPath) {
         hideBottomAndKeyboard();
-        FileBaseInfoBean fileBaseInfoBean = ImageLoadUtil.getVideoFileBaseInfo(picPath);
+
         //发送视频文件
         switch (chatType) {
             case 0:
+
+                // TODO: 2022/4/10 先上传一张视频的缩略图
                 MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(2, privateContactId,
                         privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                         privateContactBean.getHeadPortrait(), "");
-                messageBodyBean.setRotation(fileBaseInfoBean.getRotation());
-                messageBodyBean.setDuration(fileBaseInfoBean.getDuration());
-                addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()),
-                        messageBodyBean);
-                chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, messageBodyBean));
-                allPicVideoPath.add(messageBodyBean);
                 messageBodyBean.setLocalCatchPath(picPath);
-                messageBodyBean.setAdapterPosition(chatAdapter.getData().size() - 1);
-                mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(picPath, messageBodyBean));
-                ObjectBox.addMessage(messageBodyBean);
+                RxScheduler.doTask(this, new RxTask<String>() {
+                    @Override
+                    public String doOnIoThread() {
+                        Bitmap videoBitmap = ImageLoadUtil.getVideoThumbnail(picPath);
+                        return FileCacheUtils.saveBitmap(videoBitmap, ImageLoadUtil.getVideoThumbnailName(messageBodyBean.getCreateTime()), true);
+                    }
+
+                    @Override
+                    public void doOnUIThread(String str) {
+                        //封面图保存到本地之后上传到后台
+                        mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(str, messageBodyBean));
+
+                    }
+                });
+
 
                 break;
             case 1:
                 // : 2022-01-13 群聊 发送视频文件
                 MessageBodyBean groupVideoFileBean = SendMsgUtil.getGroupMsg(2, groupId, groupBean.getUserNickname(),
                         picPath);
-                groupVideoFileBean.setRotation(fileBaseInfoBean.getRotation());
-                groupVideoFileBean.setDuration(fileBaseInfoBean.getDuration());
-                addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), groupVideoFileBean);
-                chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, groupVideoFileBean));
                 groupVideoFileBean.setLocalCatchPath(picPath);
-                groupVideoFileBean.setAdapterPosition(chatAdapter.getData().size() - 1);
-                mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(picPath, groupVideoFileBean));
-                ObjectBox.addMessage(groupVideoFileBean);
-                allPicVideoPath.add(groupVideoFileBean);
+                // TODO: 2022/4/10 先上传一张视频的缩略图
+                RxScheduler.doTask(this, new RxTask<String>() {
+                    @Override
+                    public String doOnIoThread() {
+                        Bitmap videoBitmap = ImageLoadUtil.getVideoThumbnail(picPath);
+                        return FileCacheUtils.saveBitmap(videoBitmap, ImageLoadUtil.getVideoThumbnailName(groupVideoFileBean.getCreateTime()), true);
+                    }
+
+                    @Override
+                    public void doOnUIThread(String str) {
+                        //封面图保存到本地之后上传到后台
+                        mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(str, groupVideoFileBean));
+
+                    }
+                });
+
 
                 break;
             case 2:
@@ -1548,7 +1567,6 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             default:
                 break;
         }
-        mRecyclerview.scrollToPosition(chatAdapter.getData().size() - 1);
 
     }
 
@@ -1838,7 +1856,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     if (content.endsWith("\u3000")) {
                         //删除@的成员
                         if (!atUsers.isEmpty()) {
-                            atUsers.remove(atUsers.size()-1);
+                            atUsers.remove(atUsers.size() - 1);
                         }
                         isAt = true;
                         content = content.substring(0, content.lastIndexOf("@"));
@@ -2253,43 +2271,64 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             return;
         }
         MessageBodyBean messageBodyBean = uploadFileBean.getMessageBodyBean();
-        MessageBodyBean bodyBean = ObjectBox.get().boxFor(MessageBodyBean.class).query(
-                MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
-                        .and(MessageBodyBean_.fromUserId.equal(messageBodyBean.getFromUserId()))
-                        .and(MessageBodyBean_.createTime.equal(messageBodyBean.getCreateTime()))
-        ).build().findFirst();
         List<String> filePaths = uploadFileBean.getFilePaths();
         if (filePaths != null && filePaths.size() > 0) {
-            switch (bodyBean.getMsgType()) {
+            // TODO: 2022/4/10 获取返回文件的文件名
+
+            switch (messageBodyBean.getMsgType()) {
                 case 2:
-                    //视频
-                    bodyBean.setContent(filePaths.get(0));
-                    //                    String videoCover = ImageLoadUtil.getVideoThumbnailOfBase64(bodyBean
-                    //                    .getLocalCatchPath());
-                    //                    bodyBean.setVideoCover(videoCover);
+                    //视频文件
+                    String fileName = getSavedFileName(filePaths.get(0));
+                    if (fileName.startsWith(ImageLoadUtil.IMAGE_TYPE_VIDEO_THUM)) {
+                        LogUtil.d("视频缩略图"+messageBodyBean.getContent());
+                        //视频缩略图
+                        messageBodyBean.setVideoCover(filePaths.get(0));
+                        messageBodyBean.setContent(null);
+                        ImageLoadUtil.getExifOrientation(mContext, FileCacheUtils.getAppImagePath(true)+fileName, new ImageLoadUtil.OnImageLoadSuccess() {
+                            @Override
+                            public void loadSuccess(int width, int height) {
+                                FileBaseInfoBean fileBaseInfoBean = ImageLoadUtil.getVideoFileBaseInfo(messageBodyBean.getLocalCatchPath());
+                                messageBodyBean.setRotation(width > height ? "0" : "90");
+                                messageBodyBean.setDuration(fileBaseInfoBean.getDuration());
+                                addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()),
+                                        messageBodyBean);
+                                chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, messageBodyBean));
+                                allPicVideoPath.add(messageBodyBean);
+                                messageBodyBean.setAdapterPosition(chatAdapter.getData().size() - 1);
+                                ObjectBox.addMessage(messageBodyBean);
+                                mRecyclerview.scrollToPosition(chatAdapter.getData().size() - 1);
+                                //上传视频文件
+                                mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(messageBodyBean.getLocalCatchPath(), messageBodyBean));
+                            }
+                        });
+                    } else {
+                        LogUtil.d("视频原图"+messageBodyBean.getContent());
+                        //视频内容
+                        messageBodyBean.setContent(filePaths.get(0));
+                    }
                     break;
                 case 6:
                     //位置
                 default:
-                    bodyBean.setContent(filePaths.get(0));
+                    messageBodyBean.setContent(filePaths.get(0));
                     break;
             }
-            ObjectBox.addMessage(bodyBean);
-        } else {
-            return;
-        }
-        if (bodyBean != null) {
-            switch (chatType) {
-                case 0:
-                    mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(bodyBean).build(), AppHttpPath.SEND_MSG);
-                    break;
-                case 1:
-                    mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(bodyBean).build(), AppHttpPath.SEND_MSG);
-                    break;
-                default:
-                    break;
+            ObjectBox.addMessage(messageBodyBean);
+            if (!TextUtils.isEmpty(messageBodyBean.getContent())) {
+                switch (chatType) {
+                    case 0:
+                        mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.SEND_MSG);
+                        break;
+                    case 1:
+                        mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.SEND_MSG);
+                        break;
+                    default:
+                        break;
+                }
             }
+
         }
+
 
     }
 

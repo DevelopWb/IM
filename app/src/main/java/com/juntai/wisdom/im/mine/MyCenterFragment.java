@@ -169,6 +169,7 @@ public class MyCenterFragment extends BaseAppFragment<MyCenterPresent> implement
             mPresenter.getUserInfo(((MainActivity) getActivity()).getBaseBuilder()
                     .add("toUserId", String.valueOf(UserInfoManager.getUserId()))
                     .build(), MyCenterContract.USER_DATA_TAG);
+            initBaseInfo(UserInfoManager.getUser());
         } else {
             mLoginOut.setVisibility(View.GONE);
         }
@@ -217,17 +218,8 @@ public class MyCenterFragment extends BaseAppFragment<MyCenterPresent> implement
         switch (tag) {
             case MyCenterContract.USER_DATA_TAG:
                 userBean = (UserBean) o;
-                ContactBean dataBean = userBean.getData();
-                if (dataBean != null) {
-                    mLoginOut.setVisibility(View.VISIBLE);
-                    mNickname.setText(dataBean.getNickname());
-                    mNickname.setAlpha(0.8f);
-                    mTelNumber.setText("超视距号:" + userBean.getData().getAccountNumber());
-                    mTelNumber.setVisibility(View.VISIBLE);
-                    if (!headUrl.equals(userBean.getData().getHeadPortrait())) {
-                        headUrl = userBean.getData().getHeadPortrait();
-                        ImageLoadUtil.loadHeadPic(mContext,headUrl,mHeadImage,true);
-                    }
+                if (userBean != null) {
+                    initBaseInfo(userBean);
                     Hawk.put(HawkProperty.SP_KEY_USER, userBean);
                 }
                 break;
@@ -241,6 +233,17 @@ public class MyCenterFragment extends BaseAppFragment<MyCenterPresent> implement
             default:
                 break;
         }
+    }
+
+    private void initBaseInfo(UserBean userBean) {
+        ContactBean dataBean = userBean.getData();
+        mLoginOut.setVisibility(View.VISIBLE);
+        mNickname.setText(dataBean.getNickname());
+        mNickname.setAlpha(0.8f);
+        mTelNumber.setText("超视距号:" + userBean.getData().getAccountNumber());
+        mTelNumber.setVisibility(View.VISIBLE);
+        headUrl = userBean.getData().getHeadPortrait();
+        ImageLoadUtil.loadHeadPic(mContext,headUrl,mHeadImage,true);
     }
 
     @Override
