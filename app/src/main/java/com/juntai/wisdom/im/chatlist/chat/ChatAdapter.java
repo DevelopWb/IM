@@ -31,7 +31,6 @@ import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.chatlist.chat.chatRecord.ChatRecordAdapter;
 import com.juntai.wisdom.im.chatlist.chat.chatRecord.ChatRecordDetailActivity;
 import com.juntai.wisdom.im.utils.CalendarUtil;
-import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.MyFileProvider;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
@@ -329,8 +328,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     if (2 == messageBodyBean.getChatType()) {
                         helper.setGone(R.id.receiver_nick_name_tv, true);
                         //如果是好友 并且有好友备注 就显示好友备注
-                        String nickname = HawkProperty.getGlobleMap().containsKey(messageBodyBean.getFromUserId()) ? HawkProperty.getGlobleMap().get(messageBodyBean.getFromUserId()) : messageBodyBean.getFromNickname();
-                        helper.setText(R.id.receiver_nick_name_tv, nickname);
+                        helper.setText(R.id.receiver_nick_name_tv, UserInfoManager.getContactRemarkName(messageBodyBean));
 
                     }
                     ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(messageBodyBean.getFromHead()), helper.getView(R.id.audio_head_iv));
@@ -491,7 +489,8 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
      * @param nickNameType    0代表sender 1代表 receiver
      */
     private void initNickName(BaseViewHolder helper, MessageBodyBean messageBodyBean, int nickNameType) {
-        String nickname = HawkProperty.getGlobleMap().containsKey(messageBodyBean.getFromUserId()) ? HawkProperty.getGlobleMap().get(messageBodyBean.getFromUserId()) : messageBodyBean.getFromNickname();
+        String nickname = UserInfoManager.getContactRemarkName(messageBodyBean);
+
         switch (nickNameType) {
             case 0:
                 helper.setGone(R.id.receiver_g, false);

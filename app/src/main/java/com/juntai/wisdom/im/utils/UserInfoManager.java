@@ -1,5 +1,6 @@
 package com.juntai.wisdom.im.utils;
 
+import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.UserBean;
 import com.juntai.wisdom.im.utils.aliPush.AliPushManager;
 import com.juntai.wisdom.im.webSocket.MyWsManager;
@@ -79,14 +80,27 @@ public class UserInfoManager {
     public static String getPhoneNumber() {
         return getUser() != null && getUser().getData() != null ? getUser().getData().getPhoneNumber() : "";
     }
+
+
+    /**
+     * 获取用户的备注信息
+     * @return
+     */
+    public static String getContactRemarkName(MessageBodyBean messageBodyBean) {
+        return  HawkProperty.getGlobleMap().containsKey(messageBodyBean.getFromUserId()) ? HawkProperty.getGlobleMap().get(messageBodyBean.getFromUserId()) : messageBodyBean.getFromNickname();
+    }
+    /**
+     * 获取用户的备注信息
+     * @return
+     */
+    public static String getContactRemarkName(int userId,String remarkName) {
+        return  HawkProperty.getGlobleMap().containsKey(userId) ? HawkProperty.getGlobleMap().get(userId) : remarkName;
+    }
     /**
      * 获取用户信息
      *
      * @return
      */
-    public static String getRemarkName() {
-        return getUser() != null && getUser().getData() != null ? getUser().getData().getRemarksNickname() : "";
-    }
     public static String getAddr() {
         return getUser() != null && getUser().getData() != null ? getUser().getData().getAddress() : "";
     }

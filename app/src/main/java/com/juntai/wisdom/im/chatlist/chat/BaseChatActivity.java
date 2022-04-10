@@ -247,9 +247,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 }
 
                 if (privateContactBean != null) {
-                    setTitleName(TextUtils.isEmpty(HawkProperty.getGlobleMap().get(privateContactId)) ?
-                            privateContactBean.getRemarksNickname() :
-                            HawkProperty.getGlobleMap().get(privateContactId));
+                    setTitleName(UserInfoManager.getContactRemarkName(privateContactId,privateContactBean.getRemarksNickname()));
                     //获取历史数据
                     List<MessageBodyBean> arrays = mPresenter.findPrivateChatRecordList(privateContactId);
                     if (arrays != null && arrays.size() > 0) {
@@ -1410,7 +1408,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             case ContactorInfoActivity.CONTACT_INFO_RESULT:
                 switch (chatType) {
                     case 0:
-                        setTitleName(HawkProperty.getGlobleMap().get(privateContactId));
+                        setTitleName(UserInfoManager.getContactRemarkName(privateContactId,privateContactBean.getRemarksNickname()));
                         break;
                     case 1:
 

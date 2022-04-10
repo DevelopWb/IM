@@ -8,62 +8,14 @@
 
     <ImageView
         android:id="@+id/text_tag_iv"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginLeft="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_size_tv"
         android:src="@mipmap/my_hint_head"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/text_name_tv" />
 
-
-    <TextView
-        android:id="@+id/text_name_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:ellipsize="end"
-        android:lines="1"
-        android:text="dfadsfa"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/text_size_tv"
-        app:layout_constraintLeft_toRightOf="@+id/text_tag_iv"
-        app:layout_constraintRight_toLeftOf="@+id/select_status_iv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/text_size_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ellipsize="end"
-        android:lines="1"
-        android:text="dfafasd"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/text_name_tv"
-        app:layout_constraintTop_toBottomOf="@+id/text_name_tv" />
-
-    <TextView
-        android:id="@+id/from_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="dfadf"
-        app:layout_constraintLeft_toLeftOf="@+id/text_size_tv"
-        app:layout_constraintTop_toBottomOf="@+id/text_size_tv"></TextView>
-    <TextView
-        android:id="@+id/creat_time_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="dfadf"
-        app:layout_constraintBottom_toBottomOf="@+id/from_tv"
-        app:layout_constraintLeft_toRightOf="@+id/from_tv"
-        app:layout_constraintTop_toTopOf="@+id/from_tv"></TextView>
 
     <ImageView
         android:id="@+id/select_status_iv"
@@ -74,6 +26,61 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    <TextView
+        android:id="@+id/text_size_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/gray1"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="dfafasd"
+        android:textSize="12dp"
+        app:layout_constraintLeft_toLeftOf="@+id/text_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/text_name_tv" />
+
+    <TextView
+        android:id="@+id/from_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:text="dfadf"
+        android:textSize="10dp"
+        android:textColor="@color/gray3"
+        app:layout_constraintLeft_toLeftOf="@+id/text_size_tv"
+        app:layout_constraintTop_toBottomOf="@+id/text_size_tv"></TextView>
+
+    <TextView
+        android:id="@+id/creat_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:paddingBottom="10dp"
+        android:text="dfadf"
+        android:textSize="10dp"
+        android:textColor="@color/gray3"
+        app:layout_constraintBottom_toBottomOf="@+id/from_tv"
+        app:layout_constraintLeft_toRightOf="@+id/from_tv"
+        app:layout_constraintTop_toTopOf="@+id/from_tv"></TextView>
+
+    <TextView
+        android:id="@+id/text_name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:paddingTop="10dp"
+        android:text="dfadsfa"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/text_tag_iv"
+        app:layout_constraintRight_toLeftOf="@+id/select_status_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <View
         android:id="@+id/item_divider_v"

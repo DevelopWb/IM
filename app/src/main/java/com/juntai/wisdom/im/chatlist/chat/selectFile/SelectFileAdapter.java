@@ -1,11 +1,14 @@
 package com.juntai.wisdom.im.chatlist.chat.selectFile;
 
+import android.text.TextUtils;
+
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.FileSelectBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
+import com.juntai.wisdom.im.utils.CalendarUtil;
 import com.juntai.wisdom.im.utils.MyFileProvider;
 
 import java.util.List;
@@ -55,6 +58,10 @@ public class SelectFileAdapter extends BaseMultiItemQuickAdapter<MultipleItem, B
                     helper.setImageResource(R.id.select_status_iv,R.mipmap.unselect_icon);
                 }
 
+                helper.setGone(R.id.from_tv, !TextUtils.isEmpty(fileBean.getFrom()));
+                helper.setGone(R.id.creat_time_tv, !TextUtils.isEmpty(fileBean.getFrom()));
+                helper.setText(R.id.from_tv,fileBean.getFrom()!=null?fileBean.getFrom():"");
+                helper.setText(R.id.creat_time_tv, fileBean.getCreateTime()!=null?CalendarUtil.formatDataOfChatList(fileBean.getCreateTime()):"");
                 break;
             default:
                 break;

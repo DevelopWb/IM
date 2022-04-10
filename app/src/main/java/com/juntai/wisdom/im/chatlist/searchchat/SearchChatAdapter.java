@@ -6,7 +6,6 @@ import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.utils.CalendarUtil;
-import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.negier.emojifragment.util.EmojiUtils;
@@ -53,7 +52,7 @@ public class SearchChatAdapter extends BaseQuickAdapter<MessageBodyBean, BaseVie
                 if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
                     helper.setText(R.id.item_content_tv, String.format("你向%s推荐了%s", messageBodyBean.getToNickname(), messageBodyBean.getOtherNickname()));
                 } else {
-                    helper.setText(R.id.item_content_tv, HawkProperty.getGlobleMap().get(messageBodyBean.getFromUserId()) + "向你推荐了" + messageBodyBean.getOtherNickname());
+                    helper.setText(R.id.item_content_tv, UserInfoManager.getContactRemarkName(messageBodyBean) + "向你推荐了" + messageBodyBean.getOtherNickname());
 
                 }
                 break;

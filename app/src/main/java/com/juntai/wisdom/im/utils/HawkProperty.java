@@ -23,9 +23,8 @@ public class HawkProperty {
     public static String DEV_REGID = "dev_regid";
 
 
-
     //联系人列表
-    public static String CONTACT_LIST = "contactlist"+UserInfoManager.getUserId();
+    public static String CONTACT_LIST = "contactlist" + UserInfoManager.getUserId();
     /**
      * 好友请求
      */
@@ -66,16 +65,16 @@ public class HawkProperty {
 
     /**
      * 草稿  draft
-     * @param id  联系人ID  或者群ID
+     *
+     * @param id 联系人ID  或者群ID
      * @return
      */
-    public static String getDraftKey(int id,boolean isContact) {
+    public static String getDraftKey(int id, boolean isContact) {
         if (isContact) {
-            return UserInfoManager.getUserUUID() +"Contact"+ id;
+            return UserInfoManager.getUserUUID() + "Contact" + id;
         }
-        return UserInfoManager.getUserUUID() +"Group"+ id;
+        return UserInfoManager.getUserUUID() + "Group" + id;
     }
-
 
 
 
@@ -91,21 +90,24 @@ public class HawkProperty {
 
     /**
      * 配置小红点
+     *
      * @param mContext
      * @param badgeCount
      */
     public static void setRedPoint(Context mContext, int badgeCount) {
         int unread = Hawk.get(UNREAD, 0);
         unread += badgeCount;
-        Hawk.put(UNREAD,unread);
+        Hawk.put(UNREAD, unread);
         ShortcutBadger.applyCount(mContext.getApplicationContext(), unread);
     }
+
     /**
      * 配置小红点
+     *
      * @param mContext
      */
     public static void clearRedPoint(Context mContext) {
-        Hawk.put(UNREAD,0);
+        Hawk.put(UNREAD, 0);
         ShortcutBadger.applyCount(mContext.getApplicationContext(), 0);
     }
 }

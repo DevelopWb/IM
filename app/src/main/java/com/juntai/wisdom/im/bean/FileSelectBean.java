@@ -22,12 +22,30 @@ public class FileSelectBean implements Parcelable {
     //发送时间
     private  String createTime;
 
-    public FileSelectBean(String fileName, String filePath, boolean select, long fileSize, int fileChilds) {
+    public FileSelectBean(String fileName, String filePath, boolean select, long fileSize, int fileChilds, String from, String createTime) {
         this.fileName = fileName;
         this.filePath = filePath;
         this.select = select;
         this.fileSize = fileSize;
         this.fileChilds = fileChilds;
+        this.from = from;
+        this.createTime = createTime;
+    }
+
+    public String getFrom() {
+        return from == null ? "" : from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from == null ? "" : from;
+    }
+
+    public String getCreateTime() {
+        return createTime == null ? "" : createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime == null ? "" : createTime;
     }
 
     public int getFileChilds() {
@@ -82,6 +100,8 @@ public class FileSelectBean implements Parcelable {
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
         dest.writeLong(this.fileSize);
         dest.writeInt(this.fileChilds);
+        dest.writeString(this.from);
+        dest.writeString(this.createTime);
     }
 
     protected FileSelectBean(Parcel in) {
@@ -90,9 +110,11 @@ public class FileSelectBean implements Parcelable {
         this.select = in.readByte() != 0;
         this.fileSize = in.readLong();
         this.fileChilds = in.readInt();
+        this.from = in.readString();
+        this.createTime = in.readString();
     }
 
-    public static final Parcelable.Creator<FileSelectBean> CREATOR = new Parcelable.Creator<FileSelectBean>() {
+    public static final Creator<FileSelectBean> CREATOR = new Creator<FileSelectBean>() {
         @Override
         public FileSelectBean createFromParcel(Parcel source) {
             return new FileSelectBean(source);

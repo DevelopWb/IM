@@ -243,7 +243,7 @@ public class SelectFileActivity extends BaseRecyclerviewActivity<ChatPresent> im
                             if (FileCacheUtils.isFileExists(messageBodyBean.getLocalCatchPath())) {
                                 File file = new File(messageBodyBean.getLocalCatchPath());
                                 try {
-                                    baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0)));
+                                    baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0,"来自自己",messageBodyBean.getCreateTime())));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -253,7 +253,7 @@ public class SelectFileActivity extends BaseRecyclerviewActivity<ChatPresent> im
                             if (FileCacheUtils.isFileExists(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean))) {
                                 File file = new File(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean));
                                 try {
-                                    baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0)));
+                                    baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0,String.format("来自%s", UserInfoManager.getContactRemarkName(messageBodyBean)),messageBodyBean.getCreateTime())));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -276,7 +276,7 @@ public class SelectFileActivity extends BaseRecyclerviewActivity<ChatPresent> im
                             if (FileCacheUtils.isFileExists(messageBodyBean.getLocalCatchPath())) {
                                 File file = new File(messageBodyBean.getLocalCatchPath());
                                 try {
-                                    baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0)));
+                                    baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0,"来自自己",messageBodyBean.getCreateTime())));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -286,7 +286,7 @@ public class SelectFileActivity extends BaseRecyclerviewActivity<ChatPresent> im
                             if (FileCacheUtils.isFileExists(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean))) {
                                 File file = new File(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean));
                                 try {
-                                    baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0)));
+                                    baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0,String.format("来自%s", UserInfoManager.getContactRemarkName(messageBodyBean)),messageBodyBean.getCreateTime())));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -302,10 +302,10 @@ public class SelectFileActivity extends BaseRecyclerviewActivity<ChatPresent> im
                 List<File> files = FileCacheUtils.getFiles(filePath);
                 for (File file : files) {
                     if (file.isDirectory()) {
-                        baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_DIR, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, 0, file.list().length)));
+                        baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_DIR, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, 0, file.list().length,null,null)));
                     } else {
                         try {
-                            baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0)));
+                            baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0,null,null)));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -318,7 +318,7 @@ public class SelectFileActivity extends BaseRecyclerviewActivity<ChatPresent> im
                 for (File file : photoFiles) {
                     if (!file.isDirectory()) {
                         try {
-                            baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0)));
+                            baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE_TEXT, new FileSelectBean(file.getName(), file.getAbsolutePath(), false, FileCacheUtils.getFileSize(file), 0,null,null)));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

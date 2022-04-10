@@ -210,7 +210,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
                                 .and(MessageBodyBean_.msgType.equal(8))
                                 .and(MessageBodyBean_.toUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
                                 .and(MessageBodyBean_.fromUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
-                        ));
+                        )).orderDesc(MessageBodyBean_.createTime);
         return builder
                 .build()
                 .find();
@@ -227,7 +227,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
                         .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
                                 .and(MessageBodyBean_.isCollected.equal(true)
                                 )
-                        ));
+                        )).orderDesc(MessageBodyBean_.createTime);
         return builder
                 .build()
                 .find();
@@ -335,7 +335,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
                 MessageBodyBean_.groupId.equal(groupId)
                         .and(MessageBodyBean_.msgType.equal(8))
                         .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
-                        )).build().find();
+                        )).orderDesc(MessageBodyBean_.createTime).build().find();
     }
 
     /**

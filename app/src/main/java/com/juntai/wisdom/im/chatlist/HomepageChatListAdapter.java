@@ -13,7 +13,6 @@ import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.utils.CalendarUtil;
-import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.negier.emojifragment.util.EmojiUtils;
@@ -99,7 +98,7 @@ public class HomepageChatListAdapter extends BaseMultiItemQuickAdapter<MultipleI
                         if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
                             helper.setText(R.id.item_content_tv, String.format("你向%s推荐了%s", messageBodyBean.getToNickname(), messageBodyBean.getOtherNickname()));
                         } else {
-                            helper.setText(R.id.item_content_tv, HawkProperty.getGlobleMap().get(messageBodyBean.getFromUserId()) + "向你推荐了" + messageBodyBean.getOtherNickname());
+                            helper.setText(R.id.item_content_tv, UserInfoManager.getContactRemarkName(messageBodyBean) + "向你推荐了" + messageBodyBean.getOtherNickname());
                         }
                         break;
 
@@ -125,7 +124,7 @@ public class HomepageChatListAdapter extends BaseMultiItemQuickAdapter<MultipleI
                 helper.setText(R.id.item_name_tv, groupBean.getGroupName());
                 ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(groupBean.getGroupPicture()), helper.getView(R.id.contact_name_iv));
                 MessageBodyBean groupMsgBean = groupBean.getLastMessage();
-                String name = HawkProperty.getGlobleMap().containsKey(groupMsgBean.getFromUserId()) ? HawkProperty.getGlobleMap().get(groupMsgBean.getFromUserId()) : groupMsgBean.getFromNickname();
+                String name = UserInfoManager.getContactRemarkName(groupMsgBean);
 
 
                 switch (groupMsgBean.getMsgType()) {

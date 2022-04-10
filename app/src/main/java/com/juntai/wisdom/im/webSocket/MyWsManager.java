@@ -36,7 +36,6 @@ import com.rabtman.wsmanager.WsManager;
 import com.rabtman.wsmanager.listener.WsStatusListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -263,8 +262,7 @@ public class MyWsManager {
         }
 
         // : 2021-12-08   这个地方需要获取到发送方在本地的备注名
-        HashMap<Integer, String> remarkMap = HawkProperty.getGlobleMap();
-        NotificationTool.sendNotifMessage(messageBody.getMsgType(), mContext, messageBody.getFromUserId(), remarkMap.get(messageBody.getFromUserId()), content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
+        NotificationTool.sendNotifMessage(messageBody.getMsgType(), mContext, messageBody.getFromUserId(),UserInfoManager.getContactRemarkName(messageBody), content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
     }
 
     //发送ws数据
