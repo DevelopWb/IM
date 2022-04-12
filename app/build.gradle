@@ -87,7 +87,8 @@ dependencies {
     implementation project(':module_Map')
     implementation project(':banner')
     implementation project(':EmojiLib')
-    implementation project(':chathelp')
+    //发送语音相关
+    implementation project(':chatAudioFile')
     implementation project(':module_Video')
     implementation project(':zhihu_matisse')
     implementation project(':indexlib')
