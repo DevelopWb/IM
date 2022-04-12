@@ -24,7 +24,7 @@ import com.baidu.location.BDLocation;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.disabled.basecomponent.base.BaseActivity;
 import com.juntai.disabled.basecomponent.base.BaseResult;
-import com.juntai.disabled.basecomponent.base.WebViewActivity;
+import com.juntai.disabled.basecomponent.base.BaseWebViewActivity;
 import com.juntai.disabled.basecomponent.utils.ActionConfig;
 import com.juntai.disabled.basecomponent.utils.ActivityManagerTool;
 import com.juntai.disabled.basecomponent.utils.DisplayUtil;
@@ -47,10 +47,11 @@ import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.PeopleBean;
 import com.juntai.wisdom.im.bean.UnReadMsgsBean;
 import com.juntai.wisdom.im.bean.UserInfoByUUIDBean;
-import com.juntai.wisdom.im.chatlist.ChatListFragment;
-import com.juntai.wisdom.im.chatlist.QRScanActivity;
-import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
-import com.juntai.wisdom.im.chatlist.groupchat.joinGroup.SelectGroupChatPeopleActivity;
+import com.juntai.wisdom.im.chat_module.ChatListFragment;
+import com.juntai.wisdom.im.chat_module.OutSideShareActivity;
+import com.juntai.wisdom.im.chat_module.QRScanActivity;
+import com.juntai.wisdom.im.chat_module.groupchat.GroupChatActivity;
+import com.juntai.wisdom.im.chat_module.groupchat.joinGroup.SelectGroupChatPeopleActivity;
 import com.juntai.wisdom.im.contact.ContactFragment;
 import com.juntai.wisdom.im.contact.ContactorInfoActivity;
 import com.juntai.wisdom.im.contact.addFriend.AddFriendActivity;
@@ -74,7 +75,7 @@ import java.util.List;
 
 
 public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPager.OnPageChangeListener,
-        View.OnClickListener, MainContract.IBaseView{
+        View.OnClickListener, MainContract.IBaseView {
     private MainPagerAdapter adapter;
     private LinearLayout mainLayout;
     private CustomViewPager mainViewpager;
@@ -98,12 +99,14 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        initThirdShareLogic(intent, mContext,OutSideShareActivity.class);
         startWebSocket();
         chatListFragment.initAdapterData();
     }
 
     @Override
     public void initView() {
+        initThirdShareLogic(getIntent(), mContext,OutSideShareActivity.class);
         //更新聊天列表
         HawkProperty.clearRedPoint(mContext.getApplicationContext());
         setTitleName("聊天");
@@ -129,9 +132,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
         registerReceiver(broadcastReceiver, intentFilter);
         startWebSocket();
         mPresenter.getUnreadFriendApply(getBaseBuilder().build(), AppHttpPath.UNREAD_APPLY_FRIEND);
-
     }
-
 
 
     private void startWebSocket() {
@@ -210,7 +211,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
             @Override
             public void onClick(View v) {
                 // : 2021-11-24  首页搜索
-               startActivity(new Intent(mContext, SearchActivity.class));
+                startActivity(new Intent(mContext, SearchActivity.class));
             }
         });
     }
@@ -229,7 +230,6 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
 
         }
     }
-
 
 
     /**
@@ -403,13 +403,12 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
 
 
     /**
-     *
      * @param messageBodyBean
      */
     @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行
     public void receiveMessage(MessageBodyBean messageBodyBean) {
         int chatType = messageBodyBean.getChatType();
-        Log.d(TAG, "onMessage消息类型"+chatType);
+        Log.d(TAG, "onMessage消息类型" + chatType);
 
         if (4 == chatType) {
             //好友申请
@@ -423,6 +422,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
 
     /**
      * 当收到本地还没有存储的联系人或者群 发送消息的时候 更新联系人库 或者 群库
+     *
      * @param addContractOrGroupMsgBean
      */
     @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行
@@ -445,7 +445,8 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
     }
 
     /**
-     *  未读消息  socket连接之后 服务端主动推送的消息
+     * 未读消息  socket连接之后 服务端主动推送的消息
+     *
      * @param unReadMsgsBean
      */
     @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行
@@ -529,7 +530,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
 
     @Override
     public void onBackPressed() {
-        setAlertDialogHeightWidth( new AlertDialog.Builder(mContext)
+        setAlertDialogHeightWidth(new AlertDialog.Builder(mContext)
                 .setMessage("请选择退出方式")
                 .setPositiveButton("退出", new DialogInterface.OnClickListener() {
                     @Override
@@ -551,7 +552,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
                         intent.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent);
                     }
-                }).show(),-1,0);
+                }).show(), -1, 0);
 
     }
 
@@ -560,8 +561,10 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
         super.onPause();
         NotificationTool.SHOW_NOTIFICATION = true;
     }
+
     /**
      * 解析二维码
+     *
      * @param result
      */
     public void resolveQrcode(String result) {
@@ -572,7 +575,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
             if ("1".equals(type)) {
                 //好友
                 if (UserInfoManager.getUserUUID().equals(uuid)) {
-                    ToastUtils.error(mContext,"不能添加自己为好友");
+                    ToastUtils.error(mContext, "不能添加自己为好友");
                     return;
                 }
 
@@ -588,8 +591,8 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
                     mPresenter.joinGroupByUuid(getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.JOIN_GROUP_BY_UUID);
                 }
             }
-        }else {
-            startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", result));
+        } else {
+            startActivity(new Intent(mContext, BaseWebViewActivity.class).putExtra("url", result));
         }
     }
 

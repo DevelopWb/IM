@@ -6,8 +6,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
-import com.juntai.wisdom.im.chatlist.chat.displayFile.FileDetailActivity;
-import com.juntai.wisdom.im.chatlist.searchchat.BaseSearchActivity;
+import com.juntai.wisdom.im.chat_module.chat.displayFile.FileDetailActivity;
+import com.juntai.wisdom.im.chat_module.searchchat.BaseSearchActivity;
 
 /**
  * @aouther tobato

@@ -24,7 +24,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
      * content : 消息内容
      * date : 2021-09-29 09:35:00
      * "faceTimeType":"音视频通话状态（1发起通话；2接听；3结束）",
-     * "msgType":"消息类型（0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息，7分享名片，8文件，9合并消息）",
+     * "msgType":"消息类型（0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息，7分享名片，8文件，9合并消息 10 外部分享的链接）",
      * "chatType":"聊天类型（1：私聊；2公聊；4好友添加）",
      * groupId : 群组id；仅chat_type为2时需要
      */
@@ -65,7 +65,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
      */
     private int faceTimeType;
     /**
-     * 0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息，7分享名片，8文件9合并消息 10 群聊创建成功的通知消息 100  消息时间
+     * 0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息，7分享名片，8文件9合并消息 10 通知提示消息  11 外部分享的链接 100  消息时间
      */
     private int msgType;
     /**
@@ -104,6 +104,15 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
     //图片 视频的旋转角度
     private String rotation;//
     private String videoCover;//
+    private String shareTitle;//
+    private String shareContent;//
+    private String shareUrl;//
+    private String sharePic;//
+    private String shareAppName;//
+
+
+
+
 
     public String getHwPushIntentUrl() {
         return hwPushIntentUrl == null ? "" : hwPushIntentUrl;
@@ -158,6 +167,46 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
 
     public void setLocalCatchPath(String localCatchPath) {
         this.localCatchPath = localCatchPath == null ? "" : localCatchPath;
+    }
+
+    public String getShareTitle() {
+        return shareTitle == null ? "" : shareTitle;
+    }
+
+    public void setShareTitle(String shareTitle) {
+        this.shareTitle = shareTitle == null ? "" : shareTitle;
+    }
+
+    public String getShareContent() {
+        return shareContent == null ? "" : shareContent;
+    }
+
+    public void setShareContent(String shareContent) {
+        this.shareContent = shareContent == null ? "" : shareContent;
+    }
+
+    public String getShareUrl() {
+        return shareUrl == null ? "" : shareUrl;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        this.shareUrl = shareUrl == null ? "" : shareUrl;
+    }
+
+    public String getSharePic() {
+        return sharePic == null ? "" : sharePic;
+    }
+
+    public void setSharePic(String sharePic) {
+        this.sharePic = sharePic == null ? "" : sharePic;
+    }
+
+    public String getShareAppName() {
+        return shareAppName == null ? "" : shareAppName;
+    }
+
+    public void setShareAppName(String shareAppName) {
+        this.shareAppName = shareAppName == null ? "" : shareAppName;
     }
 
     public String getVideoCover() {
@@ -560,6 +609,11 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         dest.writeString(this.sdpMid);
         dest.writeString(this.rotation);
         dest.writeString(this.videoCover);
+        dest.writeString(this.shareTitle);
+        dest.writeString(this.shareContent);
+        dest.writeString(this.shareUrl);
+        dest.writeString(this.sharePic);
+        dest.writeString(this.shareAppName);
         dest.writeString(this.addrName);
         dest.writeString(this.addrDes);
         dest.writeString(this.lat);
@@ -611,6 +665,11 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         this.sdpMid = in.readString();
         this.rotation = in.readString();
         this.videoCover = in.readString();
+        this.shareTitle = in.readString();
+        this.shareContent = in.readString();
+        this.shareUrl = in.readString();
+        this.sharePic = in.readString();
+        this.shareAppName = in.readString();
         this.addrName = in.readString();
         this.addrDes = in.readString();
         this.lat = in.readString();

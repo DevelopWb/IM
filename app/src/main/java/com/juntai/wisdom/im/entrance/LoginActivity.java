@@ -123,13 +123,12 @@ public class LoginActivity extends BaseAppActivity<EntrancePresent> implements E
                 UserBean loginBean = (UserBean) o;
                 if (loginBean != null) {
                     if (loginBean.code == 0) {
-                        ToastUtils.success(mContext, "登录成功");
                         MyApp.isReLoadWarn = true;
                         Hawk.put(HawkProperty.SP_KEY_USER, loginBean);
                         Hawk.put(HawkProperty.SP_KEY_TOKEN, loginBean.getData().getToken());
                         //ws连接
                         EventManager.sendStringMsg(ActionConfig.BROAD_LOGIN_AFTER);
-                        startActivity(new Intent(mContext,MainActivity.class));
+                        initThirdShareLogic(getIntent(), mContext, MainActivity.class);
                         onBackPressed();
                     } else {
                         ToastUtils.error(mContext, loginBean.msg == null ? PubUtil.ERROR_NOTICE :

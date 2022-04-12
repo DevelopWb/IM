@@ -13,7 +13,7 @@ import com.huawei.hms.hmsscankit.ScanUtil;
 import com.huawei.hms.ml.scan.HmsScan;
 import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions;
 import com.juntai.disabled.basecomponent.base.BaseActivity;
-import com.juntai.disabled.basecomponent.base.WebViewActivity;
+import com.juntai.disabled.basecomponent.base.BaseWebViewActivity;
 import com.juntai.disabled.basecomponent.bean.BaseMenuBean;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
 import com.juntai.disabled.basecomponent.utils.GsonTools;
@@ -28,10 +28,10 @@ import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.GroupInfoByUuidBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.UserInfoByUUIDBean;
-import com.juntai.wisdom.im.chatlist.chat.ChatPresent;
-import com.juntai.wisdom.im.chatlist.chat.chatInfo.ChatInfoActivity;
-import com.juntai.wisdom.im.chatlist.chat.forwardMsg.ForwardMsgActivity;
-import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
+import com.juntai.wisdom.im.chat_module.chat.ChatPresent;
+import com.juntai.wisdom.im.chat_module.chat.chatInfo.ChatInfoActivity;
+import com.juntai.wisdom.im.chat_module.chat.forwardMsg.ForwardMsgActivity;
+import com.juntai.wisdom.im.chat_module.groupchat.GroupChatActivity;
 import com.juntai.wisdom.im.contact.ContactorInfoActivity;
 import com.juntai.wisdom.im.contact.group.JoinGroupByUuidActivity;
 import com.juntai.wisdom.im.entrance.main.MainContract;
@@ -328,7 +328,7 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
                 }
             }
         }else {
-            startActivity(new Intent(mContext, WebViewActivity.class).putExtra("url", result));
+            startActivity(new Intent(mContext, BaseWebViewActivity.class).putExtra("url", result));
         }
     }
 

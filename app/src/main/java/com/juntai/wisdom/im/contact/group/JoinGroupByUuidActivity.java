@@ -13,7 +13,7 @@ import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.GroupInfoByUuidBean;
-import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
+import com.juntai.wisdom.im.chat_module.groupchat.GroupChatActivity;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.entrance.main.MainPresent;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;

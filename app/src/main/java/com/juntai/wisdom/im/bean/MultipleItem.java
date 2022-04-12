@@ -66,6 +66,10 @@ public class MultipleItem implements MultiItemEntity {
     public static final int ITEM_CHAT_RECORD = 20;//
     //提醒类消息  群创建成功 等
     public static final int ITEM_CHAT_NOTICE = 21;//
+    /**
+     * 外部分享
+     */
+    public static final int ITEM_CHAT_OUTSIDE_SHARE = 22;//
 
 
 

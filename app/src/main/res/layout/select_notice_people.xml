@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/select_contact_fg"
-        class="com.juntai.wisdom.im.chatlist.chat.SelectGroupNoticePeopleFragment"
+        class="com.juntai.wisdom.im.chat_module.chat.SelectGroupNoticePeopleFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

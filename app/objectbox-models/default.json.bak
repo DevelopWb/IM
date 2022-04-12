@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:2013781812913044834",
-      "lastPropertyId": "50:3824231346909759317",
+      "lastPropertyId": "56:2327199460545579482",
       "name": "MessageBodyBean",
       "properties": [
         {
@@ -242,6 +242,36 @@
         {
           "id": "50:3824231346909759317",
           "name": "videoCover",
+          "type": 9
+        },
+        {
+          "id": "51:3154592954357111453",
+          "name": "atUserId",
+          "type": 9
+        },
+        {
+          "id": "52:4726486401709745025",
+          "name": "shareTitle",
+          "type": 9
+        },
+        {
+          "id": "53:7408649769881782763",
+          "name": "shareContent",
+          "type": 9
+        },
+        {
+          "id": "54:4493067966931643595",
+          "name": "shareUrl",
+          "type": 9
+        },
+        {
+          "id": "55:1864809858097978858",
+          "name": "sharePic",
+          "type": 9
+        },
+        {
+          "id": "56:2327199460545579482",
+          "name": "shareSourceApp",
           "type": 9
         }
       ],

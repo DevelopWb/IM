@@ -2,6 +2,7 @@ package com.juntai.disabled.basecomponent.base;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -240,6 +242,10 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Toolba
      * @param height
      */
     public void setAlertDialogHeightWidth(AlertDialog dialog, int width, int height) {
+
+//        shareMsgDialog.getWindow().setBackgroundDrawableResource(R.drawable.sp_filled_white_10dp);
+//        shareMsgDialog.getWindow().setLayout(ScreenUtils.getInstance(mContext).getScreenWidth() - DisplayUtil.dp2px(mContext, 80), LinearLayout.LayoutParams.WRAP_CONTENT);
+//
         // 设置dialog的宽度
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         if (-1 == width) {
@@ -259,6 +265,16 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Toolba
         dialog.getWindow().setAttributes(params);
     }
 
+    /**
+     * 倍数
+     * @param dialog
+     */
+    public static void setDialog(Dialog dialog,double mult) {
+        Display display = dialog.getWindow().getWindowManager().getDefaultDisplay();
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int)(display.getWidth() * mult);
+        dialog.getWindow().setAttributes(params);
+    }
     /**
      * 获取屏幕宽度(px)
      *

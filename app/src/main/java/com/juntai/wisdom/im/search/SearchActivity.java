@@ -10,9 +10,9 @@ import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
-import com.juntai.wisdom.im.chatlist.chat.displayFile.FileDetailActivity;
-import com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity;
-import com.juntai.wisdom.im.chatlist.searchchat.BaseSearchActivity;
+import com.juntai.wisdom.im.chat_module.chat.displayFile.FileDetailActivity;
+import com.juntai.wisdom.im.chat_module.groupchat.GroupChatActivity;
+import com.juntai.wisdom.im.chat_module.searchchat.BaseSearchActivity;
 import com.juntai.wisdom.im.contact.ContactorInfoActivity;
 
 import java.util.ArrayList;

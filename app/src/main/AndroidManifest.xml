@@ -3,29 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.juntai.disabled.federation">
 
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!--9.0 勿扰权限-->
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 华为小红点权限 -->
-    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE " />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission
-        android:name="android.permission.READ_LOGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-
     <application
         android:name="com.juntai.wisdom.im.MyApp"
         android:allowBackup="true"
@@ -35,19 +12,21 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.juntai.wisdom.im.chatlist.chat.displayFile.FileDetailActivity"></activity>
+        <activity
+            android:name="com.juntai.wisdom.im.chat_module.OutSideShareActivity"
+            android:exported="true"></activity>
+        <activity android:name="com.juntai.wisdom.im.chat_module.chat.displayFile.FileDetailActivity" />
         <activity android:name="com.juntai.wisdom.im.mine.myCollect.CollectionDetailActivity" />
         <activity android:name="com.juntai.wisdom.im.mine.myCollect.SearchCollectActivity" />
         <activity android:name="com.juntai.wisdom.im.mine.myCollect.MyCollectActivity" />
-
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.chat.chatRecord.ChatRecordDetailActivity"
+            android:name="com.juntai.wisdom.im.chat_module.chat.chatRecord.ChatRecordDetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.chat.forwardMsg.ForwardMsgActivity"
+            android:name="com.juntai.wisdom.im.chat_module.chat.forwardMsg.ForwardMsgActivity"
             android:launchMode="singleTop" />
         <activity
             android:name="com.juntai.wisdom.im.mine.SuggestionActivity"
@@ -56,16 +35,16 @@
             android:name="com.juntai.wisdom.im.search.SearchActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.chat.forwardMsg.SearchGroupAndContactActivity"
+            android:name="com.juntai.wisdom.im.chat_module.chat.forwardMsg.SearchGroupAndContactActivity"
             android:launchMode="singleTop" />
         <activity
             android:name="com.juntai.wisdom.im.contact.searchContact.SearchContactActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.searchchat.SearchGroupChatActivity"
+            android:name="com.juntai.wisdom.im.chat_module.searchchat.SearchGroupChatActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.searchchat.SearchPrivateMsgRecordActivity"
+            android:name="com.juntai.wisdom.im.chat_module.searchchat.SearchPrivateMsgRecordActivity"
             android:launchMode="singleTop" />
         <activity
             android:name="com.juntai.wisdom.im.contact.addFriend.MobileContactsActivity"
@@ -74,19 +53,19 @@
             android:name="com.juntai.wisdom.im.contact.group.JoinGroupByUuidActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.groupchat.ModifyNickNameOfGroupActivity"
+            android:name="com.juntai.wisdom.im.chat_module.groupchat.ModifyNickNameOfGroupActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.groupchat.ModifyGroupNameActivity"
+            android:name="com.juntai.wisdom.im.chat_module.groupchat.ModifyGroupNameActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.groupchat.GroupQrcodeActivity"
+            android:name="com.juntai.wisdom.im.chat_module.groupchat.GroupQrcodeActivity"
             android:launchMode="singleTop" />
         <activity
             android:name="com.juntai.wisdom.im.contact.group.GroupListActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity"
+            android:name="com.juntai.wisdom.im.chat_module.groupchat.GroupChatActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -101,7 +80,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.chat.PrivateChatActivity"
+            android:name="com.juntai.wisdom.im.chat_module.chat.PrivateChatActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -116,10 +95,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.groupchat.joinGroup.SelectGroupChatPeopleActivity"
+            android:name="com.juntai.wisdom.im.chat_module.groupchat.joinGroup.SelectGroupChatPeopleActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.chat.selectFile.SelectFileActivity"
+            android:name="com.juntai.wisdom.im.chat_module.chat.selectFile.SelectFileActivity"
             android:launchMode="singleTop" />
         <activity
             android:name="com.juntai.wisdom.im.mine.secret.BlockFriendsActivity"
@@ -128,13 +107,13 @@
             android:name="com.juntai.wisdom.im.mine.secret.SecrecyActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.chat.chatInfo.FriendInfoSetActivity"
+            android:name="com.juntai.wisdom.im.chat_module.chat.chatInfo.FriendInfoSetActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.chat.chatInfo.ChatInfoActivity"
+            android:name="com.juntai.wisdom.im.chat_module.chat.chatInfo.ChatInfoActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.groupchat.GroupInfoActivity"
+            android:name="com.juntai.wisdom.im.chat_module.groupchat.GroupInfoActivity"
             android:launchMode="singleTop" />
         <activity
             android:name="com.juntai.wisdom.im.contact.ModifyRemarkNameActivity"
@@ -164,7 +143,7 @@
             android:name="com.juntai.wisdom.im.contact.newfriends.NewFriendsApplyActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.chat.videocall.VideoRequestActivity"
+            android:name="com.juntai.wisdom.im.chat_module.chat.videocall.VideoRequestActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -197,7 +176,7 @@
             android:name="com.juntai.wisdom.im.mine.ModifyPwdActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.juntai.wisdom.im.chatlist.QRScanActivity"
+            android:name="com.juntai.wisdom.im.chat_module.QRScanActivity"
             android:launchMode="singleTop" />
         <activity
             android:name="com.juntai.wisdom.im.mine.myinfo.MyInformationActivity"
@@ -207,12 +186,57 @@
             android:launchMode="singleTop" />
         <activity
             android:name="com.juntai.wisdom.im.entrance.LoginActivity"
+            android:exported="true"
             android:launchMode="singleTop" />
-        <service
-            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
-            android:label="dexopt"
-            android:process=":dexopt" >
-        </service>
+
+        <activity
+            android:name="com.juntai.wisdom.im.entrance.SplashActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.juntai.wisdom.im.entrance.main.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" /> <!-- 阿里推送 -->
+        <activity
+            android:name="com.juntai.wisdom.im.mine.AboutActivity"
+            android:launchMode="singleTop" /> <!-- 请填写你自己的- appKey -->
+        <activity android:name="com.juntai.wisdom.im.base.BaseAppActivity" /> <!-- 请填写你自己的appSecret -->
+        <meta-data
+            android:name="com.alibaba.app.appkey"
+            android:value="333625246" />
+
+        <meta-data
+            android:name="com.alibaba.app.appsecret"
+            android:value="e1a57800697b428790fc54ddb637cc49" /> <!-- 适配华为（huawei）刘海屏 -->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" /> <!-- 适配小米（xiaomi）刘海屏 -->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" /> <!-- 百度地图 -->
+        <!-- Ma - debug-Release-key : A2hxzsrCO3VOXGXBzVjP3zKKYBsNhi1A -->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" /> <!-- 百度地图 -->
+        <!--  -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="4ryeN6PKVrZdWeNglqjg24WyROXhD4jx" /> <!--  -->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="799103f7f302428baa622042b50754ab" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="105509462" /> <!-- 关于 -->
         <provider
             android:name="com.juntai.wisdom.im.utils.MyFileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -223,13 +247,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"
                 tools:replace="android:name,android:resource" />
-        </provider> <!-- 阿里推送 -->
-        <meta-data
-            android:name="com.alibaba.app.appkey"
-            android:value="333625246" /> <!-- 请填写你自己的- appKey -->
-        <meta-data
-            android:name="com.alibaba.app.appsecret"
-            android:value="e1a57800697b428790fc54ddb637cc49" /> <!-- 请填写你自己的appSecret -->
+        </provider> <!-- 个人信息 -->
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt"></service> <!-- vivo appid和appkey    不能在lib中注册 -->
         <service
             android:name="com.juntai.wisdom.im.utils.aliPush.MyMessageIntentService"
             android:exported="false">
@@ -243,47 +265,31 @@
                 <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
             </intent-filter>
         </service>
-
-        <meta-data
-            android:name="android.max_aspect"
-            android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
-        <meta-data
-            android:name="android.notch_support"
-            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
-        <meta-data
-            android:name="notch.config"
-            android:value="portrait|landscape" /> <!-- 百度地图 -->
-        <!-- Ma - debug-Release-key : A2hxzsrCO3VOXGXBzVjP3zKKYBsNhi1A -->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="4ryeN6PKVrZdWeNglqjg24WyROXhD4jx" /> <!-- 百度地图 -->
-        <!--  -->
-        <service android:name="com.juntai.disabled.bdmap.service.LocateAndUpload" /> <!--  -->
-        <activity
-            android:name="com.juntai.wisdom.im.entrance.StartActivity"
-            android:theme="@style/AppTheme.Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.juntai.wisdom.im.entrance.main.MainActivity"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" /> <!-- 关于 -->
-        <activity
-            android:name="com.juntai.wisdom.im.mine.AboutActivity"
-            android:launchMode="singleTop" /> <!-- 个人信息 -->
-        <activity android:name="com.juntai.wisdom.im.base.BaseAppActivity" /> <!-- vivo appid和appkey    不能在lib中注册 -->
-        <meta-data
-            android:name="com.vivo.push.api_key"
-            android:value="799103f7f302428baa622042b50754ab" />
-        <meta-data
-            android:name="com.vivo.push.app_id"
-            android:value="105509462" />
+        <service android:name="com.juntai.disabled.bdmap.service.LocateAndUpload" />
     </application>
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 9.0 勿扰权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 华为小红点权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE " />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest>

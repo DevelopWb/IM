@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/select_contact_fg"
-        class="com.juntai.wisdom.im.chatlist.groupchat.joinGroup.SelectGroupPeoplesFragment"
+        class="com.juntai.wisdom.im.chat_module.groupchat.joinGroup.SelectGroupPeoplesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"></fragment>

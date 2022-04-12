@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.chatlist.searchchat.BaseSearchActivity;
+import com.juntai.wisdom.im.chat_module.searchchat.BaseSearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;

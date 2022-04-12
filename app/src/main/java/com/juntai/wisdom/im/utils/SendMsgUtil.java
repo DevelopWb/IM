@@ -9,7 +9,7 @@ import com.juntai.disabled.basecomponent.base.BaseActivity;
 import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
-import com.juntai.wisdom.im.chatlist.chat.videocall.VideoRequestActivity;
+import com.juntai.wisdom.im.chat_module.chat.videocall.VideoRequestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +115,7 @@ public class SendMsgUtil {
      * @param toUserAccout
      * @param toNickName
      * @param content
-     * @param msgType      msgType":"消息类型（0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息 7分享名片 8 文件",
+     * @param msgType      msgType":"消息类型（0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息 7分享名片 8 文件9 合并群消息 10 外部分享链接",
      * @return
      */
     public static MessageBodyBean getPrivateMsg(int msgType, int toUserId, String toUserAccout, String toNickName, String toHead, String content) {
@@ -265,11 +265,23 @@ public class SendMsgUtil {
             }
 
         }
-        if (6 == messageBodyBean.getMsgType()) {
-            builder.addFormDataPart("lat", messageBodyBean.getLat())
-                    .addFormDataPart("lng", messageBodyBean.getLng())
-                    .addFormDataPart("addrName", messageBodyBean.getAddrName())
-                    .addFormDataPart("addrDes", messageBodyBean.getAddrDes());
+        switch (messageBodyBean.getMsgType()) {
+            case 6:
+                builder.addFormDataPart("lat", messageBodyBean.getLat())
+                        .addFormDataPart("lng", messageBodyBean.getLng())
+                        .addFormDataPart("addrName", messageBodyBean.getAddrName())
+                        .addFormDataPart("addrDes", messageBodyBean.getAddrDes());
+                break;
+            case 11:
+                //外部分享的链接
+                builder.addFormDataPart("shareTitle", messageBodyBean.getShareTitle())
+                        .addFormDataPart("shareContent", messageBodyBean.getShareContent())
+                        .addFormDataPart("shareUrl", messageBodyBean.getShareUrl())
+                        .addFormDataPart("shareAppName", messageBodyBean.getShareAppName())
+                        .addFormDataPart("sharePic", messageBodyBean.getSharePic());
+                break;
+            default:
+                break;
         }
         return builder;
 

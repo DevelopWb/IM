@@ -11,7 +11,7 @@ import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseRecyclerviewActivity;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.bean.TextKeyValueBean;
-import com.juntai.wisdom.im.chatlist.chat.chatInfo.ChatInfoAdapter;
+import com.juntai.wisdom.im.chat_module.chat.chatInfo.ChatInfoAdapter;
 import com.juntai.wisdom.im.mine.MyCenterContract;
 import com.juntai.wisdom.im.mine.MyCenterPresent;
 import com.juntai.wisdom.im.utils.UserInfoManager;

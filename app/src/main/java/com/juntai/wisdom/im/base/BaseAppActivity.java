@@ -27,7 +27,7 @@ import com.juntai.wisdom.im.base.uploadFile.UploadUtil;
 import com.juntai.wisdom.im.base.uploadFile.listener.OnUploadListener;
 import com.juntai.wisdom.im.bean.FinishVideoActivityMsgBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
-import com.juntai.wisdom.im.chatlist.chat.PrivateChatActivity;
+import com.juntai.wisdom.im.chat_module.chat.PrivateChatActivity;
 import com.juntai.wisdom.im.utils.NotificationTool;
 import com.juntai.wisdom.im.utils.ObjectBox;
 import com.juntai.wisdom.im.utils.StringTools;
@@ -129,7 +129,32 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
         void onUploadFinish(UploadFileBean uploadFileBean);
 
     }
-
+    /**
+     * 第三方分享
+     *
+     * @return
+     */
+    public boolean initThirdShareLogic(Intent intent,Context context,Class cls) {
+        if (intent != null) {
+            String shareTitle = intent.getStringExtra("title");
+            String shareUrl = intent.getStringExtra("shareUrl");
+            String sharePic = intent.getStringExtra("picPath");
+            String shareContent = intent.getStringExtra("content");
+            String shareFromApp = intent.getStringExtra("shareFromApp");
+            if (!TextUtils.isEmpty(shareUrl) && !TextUtils.isEmpty(shareTitle)) {
+                Intent toIntent = new Intent();
+                toIntent.putExtra("title", shareTitle);
+                toIntent.putExtra("shareUrl", shareUrl);
+                toIntent.putExtra("picPath", sharePic);
+                toIntent.putExtra("content", shareContent);
+                toIntent.putExtra("shareFromApp", shareFromApp);
+                toIntent.setClass(context, cls);
+                startActivity(toIntent);
+                return true;
+            }
+        }
+        return false;
+    }
     protected void registFileDownloadListener() {
 
 
@@ -536,6 +561,7 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
 
     @Override
     public void onBackPressed() {
+        hideKeyboard(mBaseRootCol);
         super.onBackPressed();
     }
 

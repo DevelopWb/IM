@@ -13,7 +13,7 @@ import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseSearchAndListActivity;
 import com.juntai.wisdom.im.bean.AddFriendMenuBean;
 import com.juntai.wisdom.im.bean.ContactBean;
-import com.juntai.wisdom.im.chatlist.QRScanActivity;
+import com.juntai.wisdom.im.chat_module.QRScanActivity;
 import com.juntai.wisdom.im.contact.ContactorInfoActivity;
 import com.juntai.wisdom.im.contact.group.JoinGroupByUuidActivity;
 import com.juntai.wisdom.im.mine.myinfo.QRCodeCardActivity;
