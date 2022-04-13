@@ -1,3 +1,3 @@
 include ':module_Base', ':module_Map', ':module_Video',
         ':app', ':banner',
-        ':zXingLiteLib', ':jjdxm-ijkplayer', ':oscvpush', ':indexlib', ':EmojiLib', ':chatAudioFile', ':zhihu_matisse', ':libwebrtc', ':rtc-chat'
+        ':zXingLiteLib', ':jjdxm-ijkplayer', ':oscvpush', ':indexlib', ':EmojiLib', ':chatAudioFile', ':zhihu_matisse', ':rtc-chat'

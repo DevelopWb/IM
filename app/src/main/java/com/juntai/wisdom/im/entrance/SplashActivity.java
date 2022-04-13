@@ -7,8 +7,10 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.juntai.disabled.basecomponent.mvp.BasePresenter;
+import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.entrance.main.MainActivity;
+import com.juntai.wisdom.im.socket.SocketManager;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -56,7 +58,9 @@ public class SplashActivity extends BaseAppActivity {
                         } else {
                             //有一个权限没通过
                         }
+                        // 连接socket:登录
                         if (UserInfoManager.isLogin()) {
+                            SocketManager.getInstance().connect(AppHttpPath.BASE_SOCKET + UserInfoManager.getUserUUID() + "/" + UserInfoManager.getUserId());
                             if (!initThirdShareLogic(getIntent(),SplashActivity.this,MainActivity.class)) {
                                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
                             }

@@ -69,6 +69,7 @@ import com.juntai.wisdom.im.chat_module.chat.forwardMsg.ForwardMsgActivity;
 import com.juntai.wisdom.im.chat_module.chat.selectFile.SelectFileActivity;
 import com.juntai.wisdom.im.chat_module.chat.videocall.VideoRequestActivity;
 import com.juntai.wisdom.im.chat_module.groupchat.GroupInfoActivity;
+import com.juntai.wisdom.im.chat_module.voip.singleCall.SingleCallActivity;
 import com.juntai.wisdom.im.contact.ContactorInfoActivity;
 import com.juntai.wisdom.im.contact.SelectContactActivity;
 import com.juntai.wisdom.im.entrance.main.MainActivity;
@@ -567,17 +568,19 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                 releaseDialog();
                                 // : 2021-11-23 视频通话
-                                MessageBodyBean videoMsg = SendMsgUtil.getPrivateMsg(0 == position ? 4 : 5,
-                                        privateContactId, privateContactBean.getUuid(),
-                                        privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), "");
-                                //跳转到等待接听界面
-                                Intent intent =
-                                        new Intent(mContext, VideoRequestActivity.class)
-                                                .putExtra(VideoRequestActivity.IS_SENDER, true)
-                                                .putExtra(BASE_PARCELABLE,
-                                                        videoMsg);
+//                                MessageBodyBean videoMsg = SendMsgUtil.getPrivateMsg(0 == position ? 4 : 5,
+//                                        privateContactId, privateContactBean.getUuid(),
+//                                        privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), "");
+//                                //跳转到等待接听界面
+//                                Intent intent =
+//                                        new Intent(mContext, VideoRequestActivity.class)
+//                                                .putExtra(VideoRequestActivity.IS_SENDER, true)
+//                                                .putExtra(BASE_PARCELABLE,
+//                                                        videoMsg);
+//
+//                                startActivity(intent);
+                                SingleCallActivity.openActivity(mContext, String.valueOf(privateContactId), true, privateContactBean.getNickname(), false, false);
 
-                                startActivity(intent);
 
                             }
                         };

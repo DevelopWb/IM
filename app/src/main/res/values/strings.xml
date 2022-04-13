@@ -15,4 +15,10 @@
     <string name="location">位置</string>
     <string name="red_pack">红包</string>
     <string name="album">相册</string>
+
+
+    <!--视频通话-->
+    <string name="av_waiting">正在等待对方接受邀请.</string>
+    <string name="av_audio_invite">邀请你进行语音通话</string>
+    <string name="av_video_invite">邀请你进行视频通话</string>
 </resources>

@@ -17,10 +17,10 @@ import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.disabled.basecomponent.utils.RomUtil;
 import com.juntai.disabled.video.ModuleVideo_Init;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
+import com.juntai.wisdom.im.socket.MyWebSocket;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.NotificationTool;
 import com.juntai.wisdom.im.utils.ObjectBox;
-import com.juntai.wisdom.im.webSocket.MyWsManager;
 import com.mob.MobSDK;
 import com.orhanobut.hawk.Hawk;
 import com.siyee.oscvpush.PushConstants;
@@ -85,7 +85,7 @@ public class MyApp extends BaseApplication {
                 messageBody.setRead(false);
                 HawkProperty.setRedPoint(getApplicationContext(), 1);
                 EventManager.getEventBus().post(messageBody);
-                MyWsManager.getInstance().showNotification(messageBody);
+                MyWebSocket.showNotification(app,messageBody);
             }
         }
 

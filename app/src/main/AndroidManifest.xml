@@ -248,6 +248,29 @@
                 android:resource="@xml/file_paths"
                 tools:replace="android:name,android:resource" />
         </provider> <!-- 个人信息 -->
+
+        <!--视频通话相关-->
+        <receiver android:name="com.juntai.wisdom.im.chat_module.voip.VoipReceiver">
+            <intent-filter>
+                <action android:name="${applicationId}.voip.Receiver" />
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name="com.juntai.wisdom.im.chat_module.voip.singleCall.SingleCallActivity"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true"
+            tools:ignore="UnusedAttribute">
+            <intent-filter>
+                <action android:name="${applicationId}.kit.voip.single" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 悬浮窗 -->
+        <service
+            android:name="com.juntai.wisdom.im.chat_module.voip.singleCall.FloatingVoipService"
+            android:enabled="true"
+            android:exported="true" />
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
             android:label="dexopt"
@@ -266,6 +289,9 @@
             </intent-filter>
         </service>
         <service android:name="com.juntai.disabled.bdmap.service.LocateAndUpload" />
+
+
+
     </application>
 
     <uses-feature android:name="android.hardware.camera" />

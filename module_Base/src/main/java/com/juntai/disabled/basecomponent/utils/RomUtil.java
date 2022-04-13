@@ -9,72 +9,80 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * @Author: tobato
- * @Description: 作用描述  判断手机ROM,检测ROM是MIUI、EMUI还是Flyme
- * @CreateDate: 2020/5/25 9:46
- * @UpdateUser: 更新者
- * @UpdateDate: 2020/5/25 9:46
+ * Created by dds on 2018/3/20.
  */
-public class RomUtil {
 
-    private static final String TAG = "Rom";
-    //小米
+public class RomUtil {
+    private static final String TAG = "RomUtil";
+
     public static final String ROM_MIUI = "MIUI";
-    //华为
     public static final String ROM_EMUI = "EMUI";
-    //魅族
     public static final String ROM_FLYME = "FLYME";
-    //oppo
     public static final String ROM_OPPO = "OPPO";
-    //锤子
     public static final String ROM_SMARTISAN = "SMARTISAN";
-    //vivo
+
     public static final String ROM_VIVO = "VIVO";
-    //奇酷
     public static final String ROM_QIKU = "QIKU";
+
+    public static final String ROM_LENOVO = "LENOVO";
+    public static final String ROM_SAMSUNG = "SAMSUNG";
 
     private static final String KEY_VERSION_MIUI = "ro.miui.ui.version.name";
     private static final String KEY_VERSION_EMUI = "ro.build.version.emui";
     private static final String KEY_VERSION_OPPO = "ro.build.version.opporom";
     private static final String KEY_VERSION_SMARTISAN = "ro.smartisan.version";
     private static final String KEY_VERSION_VIVO = "ro.vivo.os.version";
+    private static final String KEY_VERSION_GIONEE = "ro.gn.sv.version";
+    private static final String KEY_VERSION_LENOVO = "ro.lenovo.lvp.version";
+    private static final String KEY_VERSION_FLYME = "ro.build.display.id";
 
-    private static String sName;
-    private static String sVersion;
 
-    //华为
+    private static final String KEY_EMUI_VERSION_CODE = "ro.build.hw_emui_api_level";
+
+    private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
+    private static final String KEY_MIUI_HANDY_MODE_SF = "ro.miui.has_handy_mode_sf";
+    private static final String KEY_MIUI_REAL_BLUR = "ro.miui.has_real_blur";
+
+    private static final String KEY_FLYME_PUBLISHED = "ro.flyme.published";
+    private static final String KEY_FLYME_FLYME = "ro.meizu.setupwizard.flyme";
+
+    private static final String KEY_FLYME_ICON_FALG = "persist.sys.use.flyme.icon";
+    private static final String KEY_FLYME_SETUP_FALG = "ro.meizu.setupwizard.flyme";
+    private static final String KEY_FLYME_PUBLISH_FALG = "ro.flyme.published";
+
+    private static final String KEY_VIVO_OS_NAME = "ro.vivo.os.name";
+    private static final String KEY_VIVO_OS_VERSION = "ro.vivo.os.version";
+    private static final String KEY_VIVO_ROM_VERSION = "ro.vivo.rom.version";
+
     public static boolean isEmui() {
         return check(ROM_EMUI);
     }
 
-    //小米
     public static boolean isMiui() {
         return check(ROM_MIUI);
     }
 
-    //vivo
     public static boolean isVivo() {
         return check(ROM_VIVO);
     }
 
-    //oppo
     public static boolean isOppo() {
         return check(ROM_OPPO);
     }
 
-    //魅族
     public static boolean isFlyme() {
         return check(ROM_FLYME);
     }
 
-    //360手机
-    public static boolean is360() {
+    public static boolean isQiku() {
         return check(ROM_QIKU) || check("360");
     }
 
     public static boolean isSmartisan() {
         return check(ROM_SMARTISAN);
     }
+
+    private static String sName;
 
     public static String getName() {
         if (sName == null) {
@@ -83,6 +91,8 @@ public class RomUtil {
         return sName;
     }
 
+    private static String sVersion;
+
     public static String getVersion() {
         if (sVersion == null) {
             check("");
@@ -90,7 +100,7 @@ public class RomUtil {
         return sVersion;
     }
 
-    private static boolean check(String rom) {
+    public static boolean check(String rom) {
         if (sName != null) {
             return sName.equals(rom);
         }
@@ -117,7 +127,7 @@ public class RomUtil {
         return sName.equals(rom);
     }
 
-    private static String getProp(String name) {
+    public static String getProp(String name) {
         String line = null;
         BufferedReader input = null;
         try {
@@ -139,7 +149,5 @@ public class RomUtil {
         }
         return line;
     }
-
-
 
 }

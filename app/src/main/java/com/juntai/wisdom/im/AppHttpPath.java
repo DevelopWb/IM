@@ -5,7 +5,7 @@ public class AppHttpPath {
 
 //    public static final String BASE = "http://192.168.124.148/server";
         public static final String BASE = "http://www.juntaikeji.com:21213/server";
-//    public static final String BASE_SOCKET = "ws://192.168.124.148/webSocket/";
+//    public static final String BASE_SOCKET = "ws://42.192.40.58:5000/ws/";
         public static final String BASE_SOCKET = "ws://www.juntaikeji.com:21213/webSocket/";
 //    public static final String BASE_IMAGE = "http://192.168.124.148:9598";
     public static final String BASE_IMAGE = "http://www.juntaikeji.com:19170";

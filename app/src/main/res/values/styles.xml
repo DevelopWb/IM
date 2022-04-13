@@ -15,7 +15,12 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@mipmap/splash_bg</item>
     </style>
-
+    <style name="AlertButtonBgWhite" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/bg_btn_white</item>
+        <!--        <item name="minHeight">45dip</item>-->
+        <!--        <item name="minWidth">70dip</item>-->
+        <item name="android:layout_marginStart">15dip</item>
+    </style>
 
     <!--我的text-->
 

@@ -11,19 +11,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juntai.disabled.basecomponent.utils.ActionConfig;
-import com.juntai.disabled.basecomponent.utils.EventManager;
 import com.juntai.disabled.basecomponent.utils.MD5;
 import com.juntai.disabled.basecomponent.utils.PubUtil;
 import com.juntai.disabled.basecomponent.utils.RomUtil;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
+import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.MyApp;
 import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.base.sendcode.SendCodeModel;
 import com.juntai.wisdom.im.bean.UserBean;
 import com.juntai.wisdom.im.entrance.main.MainActivity;
 import com.juntai.wisdom.im.entrance.regist.RegistActivity;
+import com.juntai.wisdom.im.socket.SocketManager;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.orhanobut.hawk.Hawk;
@@ -126,8 +126,7 @@ public class LoginActivity extends BaseAppActivity<EntrancePresent> implements E
                         MyApp.isReLoadWarn = true;
                         Hawk.put(HawkProperty.SP_KEY_USER, loginBean);
                         Hawk.put(HawkProperty.SP_KEY_TOKEN, loginBean.getData().getToken());
-                        //ws连接
-                        EventManager.sendStringMsg(ActionConfig.BROAD_LOGIN_AFTER);
+                        SocketManager.getInstance().connect(AppHttpPath.BASE_SOCKET + UserInfoManager.getUserUUID() + "/" + UserInfoManager.getUserId());
                         initThirdShareLogic(getIntent(), mContext, MainActivity.class);
                         onBackPressed();
                     } else {

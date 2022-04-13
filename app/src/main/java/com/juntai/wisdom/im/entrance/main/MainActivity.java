@@ -60,11 +60,11 @@ import com.juntai.wisdom.im.entrance.LoginActivity;
 import com.juntai.wisdom.im.mine.MyCenterFragment;
 import com.juntai.wisdom.im.mine.SuggestionActivity;
 import com.juntai.wisdom.im.search.SearchActivity;
+import com.juntai.wisdom.im.socket.SocketManager;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.NotificationTool;
 import com.juntai.wisdom.im.utils.ObjectBox;
 import com.juntai.wisdom.im.utils.UserInfoManager;
-import com.juntai.wisdom.im.webSocket.MyWsManager;
 import com.orhanobut.hawk.Hawk;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -100,7 +100,6 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         initThirdShareLogic(intent, mContext,OutSideShareActivity.class);
-        startWebSocket();
         chatListFragment.initAdapterData();
     }
 
@@ -130,17 +129,17 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
         intentFilter.addAction(ActionConfig.BROAD_LOGIN);
         intentFilter.addAction(ActionConfig.BROAD_CASE_DETAILS);
         registerReceiver(broadcastReceiver, intentFilter);
-        startWebSocket();
+//        startWebSocket();
         mPresenter.getUnreadFriendApply(getBaseBuilder().build(), AppHttpPath.UNREAD_APPLY_FRIEND);
     }
 
 
-    private void startWebSocket() {
-        MyWsManager.getInstance()
-                .init(mContext.getApplicationContext())
-                .setWsUrl(AppHttpPath.BASE_SOCKET + UserInfoManager.getUserUUID() + "/" + UserInfoManager.getUserId())
-                .startConnect();
-    }
+//    private void startWebSocket() {
+//        MyWsManager.getInstance()
+//                .init(mContext.getApplicationContext())
+//                .setWsUrl(AppHttpPath.BASE_SOCKET + UserInfoManager.getUserUUID() + "/" + UserInfoManager.getUserId())
+//                .startConnect();
+//    }
 
 
     /**
@@ -489,7 +488,6 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
         super.onResume();
         Log.d(TAG, "MyWsManager-----onResume---Mainactivity");
         mPresenter.getContactList(getBaseBuilder().build(), AppHttpPath.GET_CONTACT_LISTE);
-        MyWsManager.getInstance().startConnect();
         //先获取通讯录列表 再获取群聊列表
 
         switch (mainViewpager.getCurrentItem()) {
@@ -523,7 +521,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
         }
 
         super.onDestroy();
-        MyWsManager.getInstance().disconnect();
+        SocketManager.getInstance().unConnect();
         HawkProperty.releaseGlobleMap();
 
     }

@@ -22,10 +22,10 @@ import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.VideoActivityMsgBean;
 import com.juntai.wisdom.im.chat_module.chat.ChatPresent;
 import com.juntai.wisdom.im.entrance.main.MainContract;
+import com.juntai.wisdom.im.socket.SocketManager;
 import com.juntai.wisdom.im.utils.SendMsgUtil;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
-import com.juntai.wisdom.im.webSocket.MyWsManager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -562,10 +562,7 @@ public class VideoRequestActivity extends SoundManagerActivity<ChatPresent> impl
         if (!TextUtils.isEmpty(msgStr)) {
             //离线消息跳转进来
             mMessageBodyBean = GsonTools.changeGsonToBean(msgStr,MessageBodyBean.class);
-            MyWsManager.getInstance()
-                    .init(mContext.getApplicationContext())
-                    .setWsUrl(AppHttpPath.BASE_SOCKET + UserInfoManager.getUserUUID() + "/" + UserInfoManager.getUserId())
-                    .startConnect();
+            SocketManager.getInstance().connect(AppHttpPath.BASE_SOCKET + UserInfoManager.getUserUUID() + "/" + UserInfoManager.getUserId());
             LogUtil.e("离线消息跳转进来"+isSender);
         }else {
             mMessageBodyBean = intent.getParcelableExtra(BASE_PARCELABLE);

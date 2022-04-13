@@ -4,6 +4,7 @@ package com.juntai.wisdom.im.utils;
  * Created by littlejie on 2017/2/26.
  */
 public class Constant {
+    public static String ACTION_VOIP_RECEIVER ="com.juntai.wisdom.im.voip.Receiver";
 
     public static final boolean ANTI_ALIAS = true;
 

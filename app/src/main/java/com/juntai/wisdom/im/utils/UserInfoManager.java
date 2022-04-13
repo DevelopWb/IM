@@ -2,8 +2,8 @@ package com.juntai.wisdom.im.utils;
 
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.UserBean;
+import com.juntai.wisdom.im.socket.SocketManager;
 import com.juntai.wisdom.im.utils.aliPush.AliPushManager;
-import com.juntai.wisdom.im.webSocket.MyWsManager;
 import com.orhanobut.hawk.Hawk;
 
 /**
@@ -45,7 +45,7 @@ public class UserInfoManager {
         Hawk.delete(HawkProperty.SP_KEY_TOKEN);
 //        Hawk.delete(HawkProperty.SP_KEY_UNREAD_COUNT);
         //ws退出连接
-        MyWsManager.getInstance().disconnect();
+        SocketManager.getInstance().unConnect();
         AliPushManager.getInstance().unbindAccount(UserInfoManager.getUserUUID());
 
     }
