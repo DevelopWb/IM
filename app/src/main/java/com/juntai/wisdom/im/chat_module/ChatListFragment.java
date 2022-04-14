@@ -300,7 +300,9 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                 for (GroupDetailInfoBean group : groups) {
                     ArrayMap<String, MultipleItem> hashMap = new ArrayMap<>();
                     MessageBodyBean messageBodyBean = null;
-
+                    if (mPresenter==null||group==null) {
+                        return;
+                    }
                         //有@数据
                     if (!mPresenter.isGroupChatRecordUnreadHasNoAtMsg(group.getGroupId())) {
                         if (mPresenter != null) {

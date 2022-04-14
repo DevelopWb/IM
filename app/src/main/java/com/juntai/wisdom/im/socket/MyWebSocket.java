@@ -131,7 +131,26 @@ public class MyWebSocket extends WebSocketClient {
                     //发起视频
                     String event = messageBody.getEvent();
                     switch (event) {
+//                        case "__create":
+//                            //接收方
+//                            // 创建房间  收到对方创建房间后 直接给回复 __peers
+//                            handleCreatRoom(messageBody);
+//                            break;
+//                        case "__peers":
+//                            // 发送方
+//                            //收到接收方发送的消息
+//                            handlePeers(messageBody);
+//                            //处理完之后会发送邀请
+//                            break;
+//
+//                        case "__invite":
+//                            // 接收方  被邀请
+//                            //私聊的时候 接收到邀请
+//                            handleInvite(messageBody);
+//                            return;
+//                            break;
                         case EVENT_CAMERA_REQUEST:
+                            //接收到邀请视频通话的请求
                             handleInvite(messageBody);
                             break;
                         case EVENT_CAMERA_FINISH_SENDER:
@@ -153,10 +172,7 @@ public class MyWebSocket extends WebSocketClient {
                             // 响铃
                             handleRing(messageBody);
                             break;
-                        case "__peers":
-                            // 进入房间  创建房间__create  服务器返回  加入房间也走这个指令
-                            handlePeers(messageBody);
-                            break;
+
 //                        case "__new_peer":
 //                            // 新人入房间  别人加入自己创建的房间
 //                            handleNewPeer(map);
@@ -368,6 +384,10 @@ public class MyWebSocket extends WebSocketClient {
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
         Log.d(TAG, "send-->" + jsonString);
+
+//        MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(4,)
+
+
         send(jsonString);
     }
 
