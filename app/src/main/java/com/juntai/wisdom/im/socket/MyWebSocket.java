@@ -10,6 +10,7 @@ import com.juntai.disabled.basecomponent.base.BaseActivity;
 import com.juntai.disabled.basecomponent.utils.EventManager;
 import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.disabled.federation.R;
+import com.juntai.wisdom.im.bean.AddContractOrGroupMsgBean;
 import com.juntai.wisdom.im.bean.BaseWsMessageBean;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
@@ -20,6 +21,7 @@ import com.juntai.wisdom.im.chat_module.groupchat.GroupChatActivity;
 import com.juntai.wisdom.im.contact.newfriends.NewFriendsApplyActivity;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.NotificationTool;
+import com.juntai.wisdom.im.utils.ObjectBox;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.orhanobut.hawk.Hawk;
 
@@ -197,9 +199,35 @@ public class MyWebSocket extends WebSocketClient {
                             break;
                     }
 
+                }else {
+                    //未读
+                    messageBody.setRead(false);
+//                    HawkProperty.setRedPoint(mContext, 1);
+                    switch (messageBody.getChatType()) {
+                        case 1:
+                            if (checkLocalContact(messageBody)) {
+                                EventManager.getEventBus().post(messageBody);
+                            } else {
+                                EventManager.getEventBus().post(new AddContractOrGroupMsgBean(messageBody));
+                            }
+                            break;
+                        case 2:
+                            if (ObjectBox.checkGroupIsExist(messageBody.getGroupId())) {
+                                EventManager.getEventBus().post(messageBody);
+                            } else {
+                                EventManager.getEventBus().post(new AddContractOrGroupMsgBean(messageBody));
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    if (NotificationTool.SHOW_NOTIFICATION) {
+                        // TODO: 2022/4/13 暂时注释掉
+//                    showNotification(messageBody);
+                    }
                 }
 
-//
+
 //                //视频通话相关
 //                if (!TextUtils.isEmpty(messageBody.getEvent())) {
 //                    if (VideoRequestActivity.EVENT_CAMERA_REQUEST.equals(messageBody.getEvent())) {
@@ -216,31 +244,7 @@ public class MyWebSocket extends WebSocketClient {
 //                    }
 //                    return;
 //                }
-//                //未读
-//                messageBody.setRead(false);
-//                HawkProperty.setRedPoint(mContext, 1);
-//                switch (messageBody.getChatType()) {
-//                    case 1:
-//                        if (checkLocalContact(messageBody)) {
-//                            EventManager.getEventBus().post(messageBody);
-//                        } else {
-//                            EventManager.getEventBus().post(new AddContractOrGroupMsgBean(messageBody));
-//                        }
-//                        break;
-//                    case 2:
-//                        if (ObjectBox.checkGroupIsExist(messageBody.getGroupId())) {
-//                            EventManager.getEventBus().post(messageBody);
-//                        } else {
-//                            EventManager.getEventBus().post(new AddContractOrGroupMsgBean(messageBody));
-//                        }
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                if (NotificationTool.SHOW_NOTIFICATION) {
-//                    // TODO: 2022/4/13 暂时注释掉
-////                    showNotification(messageBody);
-//                }
+
             }
         }
 
