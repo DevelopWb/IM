@@ -73,7 +73,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
     @Override
     public void onError(String tag, Object o) {
         LogUtil.d("tag-->" +tag);
-        ToastUtils.error(this,(String)o);
+        ToastUtils.toast(this,(String)o);
 
     }
 }
