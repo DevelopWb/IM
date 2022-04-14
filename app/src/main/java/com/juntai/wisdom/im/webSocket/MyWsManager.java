@@ -235,9 +235,10 @@ public class MyWsManager {
         contactBean.setRemarksNickname(messageBody.getFromNickname());
         contactBean.setAccountNumber(messageBody.getFromAccount());
         contactBean.setHeadPortrait(messageBody.getFromHead());
-
+        String title = null;
         switch (messageBody.getChatType()) {
             case 1:
+                title = UserInfoManager.getContactRemarkName(messageBody);
                 if (4 == messageBody.getMsgType() || 5 == messageBody.getMsgType()) {
                     intent.setClass(mContext, VideoRequestActivity.class);
                     intent.putExtra(VideoRequestActivity.IS_SENDER, true)
@@ -249,12 +250,14 @@ public class MyWsManager {
 
                 break;
             case 2:
+                title = messageBody.getGroupName();
                 intent.setClass(mContext, GroupChatActivity.class);
                 // : 2022-01-22 群聊消息的跳转  这个地方的逻辑需要优化  请求群消息详情
                 intent.putExtra(BaseActivity.BASE_ID, messageBody.getGroupId());
                 break;
             case 4:
                 intent.setClass(mContext, NewFriendsApplyActivity.class);
+                title = "好友申请";
                 content = "您有新的好友申请";
                 break;
             default:
@@ -262,7 +265,7 @@ public class MyWsManager {
         }
 
         // : 2021-12-08   这个地方需要获取到发送方在本地的备注名
-        NotificationTool.sendNotifMessage(messageBody.getMsgType(), mContext, messageBody.getFromUserId(),UserInfoManager.getContactRemarkName(messageBody), content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
+        NotificationTool.sendNotifMessage(messageBody.getChatType(),messageBody.getGroupName(),messageBody.getMsgType(), mContext, messageBody.getFromUserId(), title, content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
     }
 
     //发送ws数据

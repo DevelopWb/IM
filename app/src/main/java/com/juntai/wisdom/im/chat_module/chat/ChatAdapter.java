@@ -117,7 +117,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     MessageBodyBean chatContentBean = chatRecords.get(0);
                     title = chatContentBean.getGroupId() > 0 ? "群聊的聊天记录" : String.format("%s与%s的聊天记录", chatContentBean.getFromNickname(), chatContentBean.getToNickname());
                     manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-                    chatRecordAdapter = new ChatRecordAdapter(R.layout.single_text_layout2);
+                    chatRecordAdapter = new ChatRecordAdapter(R.layout.single_text_layout2,false);
                     chatRecordAdapter.setOnItemClickListener(new OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

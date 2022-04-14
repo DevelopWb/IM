@@ -128,7 +128,9 @@ public class LoginActivity extends BaseAppActivity<EntrancePresent> implements E
                         Hawk.put(HawkProperty.SP_KEY_TOKEN, loginBean.getData().getToken());
                         //ws连接
                         EventManager.sendStringMsg(ActionConfig.BROAD_LOGIN_AFTER);
-                        initThirdShareLogic(getIntent(), mContext, MainActivity.class);
+                        if (!initThirdShareLogic(getIntent(), mContext, MainActivity.class)) {
+                            startActivity(new Intent(mContext,MainActivity.class));
+                        }
                         onBackPressed();
                     } else {
                         ToastUtils.error(mContext, loginBean.msg == null ? PubUtil.ERROR_NOTICE :

@@ -17,8 +17,10 @@ import com.negier.emojifragment.util.EmojiUtils;
  * @UpdateDate: 2022-02-19 15:08
  */
 public class ChatRecordAdapter extends BaseQuickAdapter<MessageBodyBean, BaseViewHolder> {
-    public ChatRecordAdapter(int layoutResId) {
+    boolean changeTextSize;
+    public ChatRecordAdapter(int layoutResId,boolean changeTextSize) {
         super(layoutResId);
+        this.changeTextSize = changeTextSize;
     }
 
     @Override
@@ -26,6 +28,11 @@ public class ChatRecordAdapter extends BaseQuickAdapter<MessageBodyBean, BaseVie
         TextView sigleTextTv = helper.getView(R.id.single_text_tv);
         sigleTextTv.setLines(1);
         sigleTextTv.setEllipsize(TextUtils.TruncateAt.END);
+        if (changeTextSize) {
+            sigleTextTv.setTextSize(10);
+        }else {
+            sigleTextTv.setTextSize(12);
+        }
         switch (messageBodyBean.getMsgType()) {
             case 0:
                 EmojiUtils.showEmojiTextView(mContext, helper.getView(R.id.single_text_tv), String.format("%s:%s",messageBodyBean.getFromNickname(),messageBodyBean.getContent()), 14);

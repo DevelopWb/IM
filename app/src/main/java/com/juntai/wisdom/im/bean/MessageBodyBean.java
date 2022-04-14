@@ -73,7 +73,8 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
      */
     private int chatType;
     private int groupId;
-    private String groupNickname;//群昵称（备注）;
+    private String groupUserNickname;//我在群里的昵称（备注）;
+    private String groupName;//群名;
     /**
      * 是否是群主发的  0不是  1是
      */
@@ -177,6 +178,14 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         this.shareTitle = shareTitle == null ? "" : shareTitle;
     }
 
+    public String getGroupName() {
+        return groupName == null ? "" : groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName == null ? "" : groupName;
+    }
+
     public String getShareContent() {
         return shareContent == null ? "" : shareContent;
     }
@@ -257,8 +266,8 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         this.otherUserId = otherUserId;
     }
 
-    public String getGroupNickname() {
-        return groupNickname == null ? "" : groupNickname;
+    public String getGroupUserNickname() {
+        return groupUserNickname == null ? "" : groupUserNickname;
     }
 
     public int getUploadProgress() {
@@ -269,8 +278,8 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         this.uploadProgress = uploadProgress;
     }
 
-    public void setGroupNickname(String groupNickname) {
-        this.groupNickname = groupNickname == null ? "" : groupNickname;
+    public void setGroupUserNickname(String groupUserNickname) {
+        this.groupUserNickname = groupUserNickname == null ? "" : groupUserNickname;
     }
 
     public String getCollectionCreateTime() {
@@ -591,7 +600,8 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         dest.writeInt(this.msgType);
         dest.writeInt(this.chatType);
         dest.writeInt(this.groupId);
-        dest.writeString(this.groupNickname);
+        dest.writeString(this.groupUserNickname);
+        dest.writeString(this.groupName);
         dest.writeInt(this.isGroupCreater);
         dest.writeInt(this.readBurn);
         dest.writeByte(this.isRead ? (byte) 1 : (byte) 0);
@@ -647,7 +657,8 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         this.msgType = in.readInt();
         this.chatType = in.readInt();
         this.groupId = in.readInt();
-        this.groupNickname = in.readString();
+        this.groupUserNickname = in.readString();
+        this.groupName = in.readString();
         this.isGroupCreater = in.readInt();
         this.readBurn = in.readInt();
         this.isRead = in.readByte() != 0;
