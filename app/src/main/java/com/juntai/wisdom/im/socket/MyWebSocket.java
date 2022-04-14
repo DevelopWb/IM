@@ -650,7 +650,7 @@ public class MyWebSocket extends WebSocketClient {
         }
 
         // : 2021-12-08   这个地方需要获取到发送方在本地的备注名
-        NotificationTool.sendNotifMessage(messageBody.getMsgType(), mContext, messageBody.getFromUserId(), UserInfoManager.getContactRemarkName(messageBody), content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
+        NotificationTool.sendNotifMessage(messageBody.getChatType(),messageBody.getGroupName(),messageBody.getMsgType(), mContext, messageBody.getFromUserId(), UserInfoManager.getContactRemarkName(messageBody), content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
     }
 
 
