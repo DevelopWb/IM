@@ -304,7 +304,7 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
      * @param result
      */
     public void resolveQrcode(String result) {
-        if (result.contains("juntaikeji")) {
+        if (result.contains("juntaikeji")&&result.contains("uuid=")&&result.contains("&type=")) {
             //内部二维码
             String uuid = result.substring(result.indexOf("=") + 1, result.indexOf("&"));
             String type = result.substring(result.lastIndexOf("=") + 1, result.length());
@@ -314,7 +314,6 @@ public class DisplayPhotoFragment extends BaseAppFragment<ChatPresent> implement
                     ToastUtils.error(mContext,"不能添加自己为好友");
                     return;
                 }
-
                 mPresenter.addFriendByUuid(getBaseAppActivity().getBaseBuilder().add("uuid", uuid).build(), AppHttpPath.ADD_FRIEND_BY_UUID);
             } else {
                 //群聊
