@@ -1,13 +1,20 @@
 package com.juntai.wisdom.im.chat_module.chat.chatRecord;
 
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
@@ -27,6 +34,12 @@ import java.util.List;
  */
 public class ChatRecordDeatilAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseViewHolder> {
 
+    public List<MessageBodyBean> changeGsonToList(String gsonString) {
+        Gson gson = new Gson();
+        List<MessageBodyBean> list = gson.fromJson(gsonString, new TypeToken<List<MessageBodyBean>>() {
+        }.getType());
+        return list;
+    }
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -44,6 +57,7 @@ public class ChatRecordDeatilAdapter extends BaseMultiItemQuickAdapter<MultipleI
         addItemType(MultipleItem.ITEM_CHAT_CARD, R.layout.item_chat_record_detail);
         addItemType(MultipleItem.ITEM_CHAT_FILE, R.layout.item_chat_record_detail);
         addItemType(MultipleItem.ITEM_CHAT_RECORD, R.layout.item_chat_record_detail);
+        addItemType(MultipleItem.ITEM_CHAT_OUTSIDE_SHARE, R.layout.item_chat_record_detail);
     }
 
     @Override
@@ -55,9 +69,48 @@ public class ChatRecordDeatilAdapter extends BaseMultiItemQuickAdapter<MultipleI
         FrameLayout frameLayout = helper.getView(R.id.msg_sender_content_fl);
         View view = null;
         switch (item.getItemType()) {
+            case MultipleItem.ITEM_CHAT_OUTSIDE_SHARE:
+                // : 2022-02-19 外部分享的链接
+                view = View.inflate(mContext, R.layout.chat_record_outside_share, null);
+                frameLayout.addView(view);
+                ((TextView)view.findViewById(R.id.shared_title_iv)).setText(messageBodyBean.getShareTitle());
+                ImageLoadUtil.loadSquareImage(mContext,messageBodyBean.getSharePic(),view.findViewById(R.id.shared_pic_iv));
+                break;
             case MultipleItem.ITEM_CHAT_RECORD:
                 // : 2022-02-19 聊天记录
+                view = View.inflate(mContext, R.layout.chat_record_multi_record, null);
+                TextView  chatrecordTitle = view.findViewById(R.id.chat_record_title_tv);
+                frameLayout.addView(view);
+                List<MessageBodyBean> chatRecords = null;
+                LinearLayoutManager manager = null;
+                ChatRecordAdapter chatRecordAdapter = null;
+                RecyclerView receiverRv =view.findViewById(R.id.recyclerview);
+                String title = null;
 
+                String chatRecord = messageBodyBean.getContent();
+                if (!TextUtils.isEmpty(chatRecord)) {
+                    chatRecords = changeGsonToList(chatRecord);
+                    if (chatRecords.size() > 5) {
+                        chatRecords = chatRecords.subList(0, 4);
+                    }
+                    MessageBodyBean chatContentBean = chatRecords.get(0);
+                    title = chatContentBean.getGroupId() > 0 ? "群聊的聊天记录" : String.format("%s与%s的聊天记录", chatContentBean.getFromNickname(), chatContentBean.getToNickname());
+                    chatrecordTitle.setText(title);
+                    manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+                    chatRecordAdapter = new ChatRecordAdapter(R.layout.single_text_layout2,true);
+                    chatRecordAdapter.setOnItemClickListener(new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                            响应父rv的item的点击事件
+                            helper.itemView.performClick();
+
+
+                        }
+                    });
+                }
+                receiverRv.setLayoutManager(manager);
+                receiverRv.setAdapter(chatRecordAdapter);
+                chatRecordAdapter.setNewData(chatRecords);
                 break;
             case MultipleItem.ITEM_CHAT_FILE:
                 view = View.inflate(mContext, R.layout.chat_record_file, null);
@@ -81,6 +134,8 @@ public class ChatRecordDeatilAdapter extends BaseMultiItemQuickAdapter<MultipleI
                 break;
             case MultipleItem.ITEM_CHAT_TEXT_MSG:
                 view = View.inflate(mContext, R.layout.single_text_layout2, null);
+                TextView sigleTextTv = view.findViewById(R.id.single_text_tv);
+                sigleTextTv.setAutoLinkMask(Linkify.WEB_URLS);
                 frameLayout.addView(view);
                 EmojiUtils.showEmojiTextView(mContext, (TextView) view.findViewById(R.id.single_text_tv), messageBodyBean.getContent(), 14);
 
@@ -97,7 +152,7 @@ public class ChatRecordDeatilAdapter extends BaseMultiItemQuickAdapter<MultipleI
                     //图片
                     view = View.inflate(mContext, R.layout.single_pic, null);
                     frameLayout.addView(view);
-                    ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageThumUrl(messageBodyBean.getContent()), view.findViewById(R.id.sigle_iv));
+                    ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageOriginalUrl(messageBodyBean.getContent()), view.findViewById(R.id.sigle_iv));
                 } else {
                     //视频
                     view = View.inflate(mContext, R.layout.chat_record_video, null);

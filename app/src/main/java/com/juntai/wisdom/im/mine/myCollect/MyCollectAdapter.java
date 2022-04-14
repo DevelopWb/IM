@@ -46,7 +46,7 @@ public class MyCollectAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
         MessageBodyBean messageBodyBean = (MessageBodyBean) multipleItem.getObject();
         if (2==messageBodyBean.getChatType()) {
             //群聊
-            helper.setText(R.id.collect_from_tv,messageBodyBean.getGroupNickname());
+            helper.setText(R.id.collect_from_tv,messageBodyBean.getGroupUserNickname());
         }else {
             helper.setText(R.id.collect_from_tv,messageBodyBean.getFromNickname());
         }

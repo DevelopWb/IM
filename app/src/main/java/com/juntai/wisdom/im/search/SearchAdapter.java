@@ -145,7 +145,7 @@ public class SearchAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseV
         MessageBodyBean messageBodyBean = (MessageBodyBean) item.getObject();
         if (2 == messageBodyBean.getChatType()) {
             //群聊
-            helper.setText(R.id.collect_from_tv, messageBodyBean.getGroupNickname());
+            helper.setText(R.id.collect_from_tv, messageBodyBean.getGroupUserNickname());
         } else {
             helper.setText(R.id.collect_from_tv, messageBodyBean.getFromNickname());
         }

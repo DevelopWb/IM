@@ -101,6 +101,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
 
                 ((TextView) view.findViewById(R.id.forward_title_tv)).setText(multipleItems.size() == 1 ? "发送给" : "分别发送给");
                 if (0 == forwardType) {
+                    String content = null;
                     switch (operatingMsgBean.getMsgType()) {
                         case 1:
                         case 2:
@@ -116,20 +117,45 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             if (1==operatingMsgBean.getMsgType()) {
                                 ImageLoadUtil.loadSquareImage(mContext,operatingMsgBean.getContent(),((ImageView) view.findViewById(R.id.msg_iv)));
                             }else {
-                                ImageLoadUtil.loadVideoScreenshot(mContext, operatingMsgBean.getContent(),(ImageView) view.findViewById(R.id.msg_iv), new ImageLoadUtil.OnImageLoadSuccess() {
-                                    @Override
-                                    public void loadSuccess(int width, int height) {
-
-                                    }
-                                });
+                                ImageLoadUtil.loadImage(mContext, operatingMsgBean.getVideoCover(), (ImageView) view.findViewById(R.id.msg_iv));
                             }
                             break;
-                        default:
-                            ((TextView) view.findViewById(R.id.card_name_tv)).setVisibility(View.VISIBLE);
-                            ((TextView) view.findViewById(R.id.card_name_tv)).setText(operatingMsgBean.getContent());
+                        case 0:
+                            content = operatingMsgBean.getContent();
                             break;
+                        case 3:
+                            content =  "[语音]";
+                            break;
+                        case 4:
+                            content = "[视频通话]";
+                            break;
+                        case 5:
+                            content = "[语音通话]";
+                            break;
+                        case 6:
+                            content =  "[位置]";
+                            break;
+                        case 7:
+                            content ="[名片]";
+                            break;
+
+                        case 8:
+                            content =  "[文件]";
+
+                            break;
+                        case 9:
+                            content =  "[聊天记录]";
+                            break;
+                        case 11:
+                            content =  "[链接]"+operatingMsgBean.getShareTitle();
+                            break;
+                        default:
+                            break;
+
                     }
 
+                    ((TextView) view.findViewById(R.id.card_name_tv)).setVisibility(View.VISIBLE);
+                    ((TextView) view.findViewById(R.id.card_name_tv)).setText(content);
                 } else if (1 == forwardType) {
                     ((TextView) view.findViewById(R.id.card_name_tv)).setText(String.format("[逐条转发]共%s条消息", SendMsgUtil.selectedToEditMsgItems.size()));
                 } else {
@@ -262,7 +288,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             }
                             String content = GsonTools.createGsonString(messageBodyBeanList);
                             MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(9, groupBean.getGroupId(), groupBean.getUserNickname(), content);
-                            mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+                            mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
                             ObjectBox.addMessage(messageBody);
                             break;
                         default:

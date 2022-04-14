@@ -128,7 +128,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
         return content;
 //        return messageBodyBean.getFileName().substring(0,messageBodyBean.getFileName().lastIndexOf("."))+content;
     }
-    
+
     /**
      * 收藏文件
      * @param appVideoPath
@@ -169,6 +169,13 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
      * @return
      */
     public List<MessageBodyBean> findPrivateChatRecordList(int contactId) {
+        ObjectBox.get().boxFor(MessageBodyBean.class).query(
+                MessageBodyBean_.groupId.equal(0)
+                        .and(MessageBodyBean_.canDelete.equal(true))
+                        .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
+                                .and(MessageBodyBean_.toUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
+                                .and(MessageBodyBean_.fromUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
+                        )).build().remove();
         QueryBuilder<MessageBodyBean> builder = ObjectBox.get().boxFor(MessageBodyBean.class).query(
                 MessageBodyBean_.groupId.equal(0)
                         .and(MessageBodyBean_.canDelete.equal(false))
@@ -317,6 +324,13 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
      * @return
      */
     public List<MessageBodyBean> findGroupChatRecord(int groupId) {
+      ObjectBox.get().boxFor(MessageBodyBean.class).query(
+                MessageBodyBean_.groupId.equal(groupId)
+                        .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
+                                .and(MessageBodyBean_.canDelete.equal(true))
+                        )).build().remove();
+
+
         return ObjectBox.get().boxFor(MessageBodyBean.class).query(
                 MessageBodyBean_.groupId.equal(groupId)
                         .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())

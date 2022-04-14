@@ -1,5 +1,8 @@
 package com.juntai.wisdom.im.chat_module.chat.chatRecord;
 
+import android.text.TextUtils;
+import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.juntai.disabled.federation.R;
@@ -14,12 +17,22 @@ import com.negier.emojifragment.util.EmojiUtils;
  * @UpdateDate: 2022-02-19 15:08
  */
 public class ChatRecordAdapter extends BaseQuickAdapter<MessageBodyBean, BaseViewHolder> {
-    public ChatRecordAdapter(int layoutResId) {
+    boolean changeTextSize;
+    public ChatRecordAdapter(int layoutResId,boolean changeTextSize) {
         super(layoutResId);
+        this.changeTextSize = changeTextSize;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, MessageBodyBean messageBodyBean) {
+        TextView sigleTextTv = helper.getView(R.id.single_text_tv);
+        sigleTextTv.setLines(1);
+        sigleTextTv.setEllipsize(TextUtils.TruncateAt.END);
+        if (changeTextSize) {
+            sigleTextTv.setTextSize(10);
+        }else {
+            sigleTextTv.setTextSize(12);
+        }
         switch (messageBodyBean.getMsgType()) {
             case 0:
                 EmojiUtils.showEmojiTextView(mContext, helper.getView(R.id.single_text_tv), String.format("%s:%s",messageBodyBean.getFromNickname(),messageBodyBean.getContent()), 14);
@@ -52,6 +65,10 @@ public class ChatRecordAdapter extends BaseQuickAdapter<MessageBodyBean, BaseVie
                 break;
             case 9:
                 helper.setText(R.id.single_text_tv, String.format("%s:%s",messageBodyBean.getFromNickname(),"[聊天记录]"));
+
+                break;
+            case 11:
+                helper.setText(R.id.single_text_tv, String.format("%s:%s%s",messageBodyBean.getFromNickname(),"[链接]",messageBodyBean.getShareTitle()));
 
                 break;
             default:

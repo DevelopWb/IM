@@ -40,7 +40,7 @@ public class CollectionDetailActivity extends BaseAppActivity implements View.On
         String timeTv = null;
         if (2 == messageBodyBean.getChatType()) {
             //群聊
-            fromNameTv = messageBodyBean.getGroupNickname();
+            fromNameTv = messageBodyBean.getGroupUserNickname();
         } else {
             fromNameTv = messageBodyBean.getFromNickname();
         }

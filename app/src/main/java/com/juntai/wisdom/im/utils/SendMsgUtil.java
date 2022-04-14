@@ -143,22 +143,23 @@ public class SendMsgUtil {
      *
      * @param msgType 消息类型
      * @param content
+     * @param groupUserNickName  应该是本地命名的群名
      * @return
      */
-    public static MessageBodyBean getGroupMsg(int msgType, int groupId, String groupNickName, String content) {
+    public static MessageBodyBean getGroupMsg(int msgType, int groupId, String groupUserNickName, String content) {
 
-        if (TextUtils.isEmpty(groupNickName)) {
-            groupNickName = UserInfoManager.getUserNickName();
+        if (TextUtils.isEmpty(groupUserNickName)) {
+            groupUserNickName = UserInfoManager.getUserNickName();
         }
-
         MessageBodyBean messageBody = new MessageBodyBean();
         messageBody.setContent(content);
         messageBody.setCreateTime(String.valueOf(System.currentTimeMillis()));
         messageBody.setFromAccount(UserInfoManager.getUserUUID());
-        messageBody.setFromNickname(groupNickName);
+        messageBody.setFromNickname(groupUserNickName);
         messageBody.setFromHead(UserInfoManager.getHeadPic());
         messageBody.setFromUserId(UserInfoManager.getUserId());
         messageBody.setRead(true);
+        messageBody.setGroupName(ObjectBox.getGroup(groupId)!=null?ObjectBox.getGroup(groupId).getGroupName():"");
         // TODO: 2021-11-19 阅后即焚  先默认1 否
         messageBody.setReadBurn(1);
         messageBody.setChatType(2);
@@ -250,7 +251,8 @@ public class SendMsgUtil {
                 .addFormDataPart("faceTimeType", String.valueOf(messageBodyBean.getFaceTimeType()))
                 .addFormDataPart("readBurn", String.valueOf(messageBodyBean.getReadBurn()))
                 .addFormDataPart("msgType", String.valueOf(messageBodyBean.getMsgType()))
-                .addFormDataPart("groupNickname", String.valueOf(messageBodyBean.getGroupNickname()))
+                .addFormDataPart("groupNickname", messageBodyBean.getGroupUserNickname())
+                .addFormDataPart("groupName", messageBodyBean.getGroupName())
                 .addFormDataPart("chatType", String.valueOf(messageBodyBean.getChatType()));
         if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
             //我发送的信息
