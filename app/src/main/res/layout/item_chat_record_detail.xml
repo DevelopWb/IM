@@ -21,7 +21,6 @@
         android:id="@+id/msg_sender_name_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_chainStyle="packed"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:ellipsize="end"

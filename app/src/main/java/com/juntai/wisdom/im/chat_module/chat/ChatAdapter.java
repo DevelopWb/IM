@@ -1,7 +1,6 @@
 package com.juntai.wisdom.im.chat_module.chat;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +19,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.juntai.disabled.basecomponent.base.BaseActivity;
 import com.juntai.disabled.basecomponent.utils.DisplayUtil;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
@@ -29,7 +27,6 @@ import com.juntai.wisdom.im.base.customview.WaveProgress;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.chat_module.chat.chatRecord.ChatRecordAdapter;
-import com.juntai.wisdom.im.chat_module.chat.chatRecord.ChatRecordDetailActivity;
 import com.juntai.wisdom.im.utils.CalendarUtil;
 import com.juntai.wisdom.im.utils.MyFileProvider;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
@@ -124,8 +121,26 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     chatRecordAdapter.setOnItemClickListener(new OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            mContext.startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BaseActivity.BASE_STRING, chatRecord));
+//                            响应父rv的item的点击事件
+                            if (UserInfoManager.getUserId() == messageBodyBean.getFromUserId()) {
+                                helper.getView(R.id.sender_chatrecord_cl).performClick();
+                            }else {
+                                helper.getView(R.id.receiver_chatrecord_cl).performClick();
+                            }
 
+
+
+                        }
+                    });
+                    chatRecordAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                            if (UserInfoManager.getUserId() == messageBodyBean.getFromUserId()) {
+                                helper.getView(R.id.sender_chatrecord_cl).performLongClick();
+                            }else {
+                                helper.getView(R.id.receiver_chatrecord_cl).performLongClick();
+                            }
+                            return true;
                         }
                     });
                 }

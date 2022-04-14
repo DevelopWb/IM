@@ -97,7 +97,7 @@ public class ChatRecordDeatilAdapter extends BaseMultiItemQuickAdapter<MultipleI
                     //图片
                     view = View.inflate(mContext, R.layout.single_pic, null);
                     frameLayout.addView(view);
-                    ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageThumUrl(messageBodyBean.getContent()), view.findViewById(R.id.sigle_iv));
+                    ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageOriginalUrl(messageBodyBean.getContent()), view.findViewById(R.id.sigle_iv));
                 } else {
                     //视频
                     view = View.inflate(mContext, R.layout.chat_record_video, null);

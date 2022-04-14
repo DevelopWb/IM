@@ -1,5 +1,8 @@
 package com.juntai.wisdom.im.chat_module.chat.chatRecord;
 
+import android.text.TextUtils;
+import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.juntai.disabled.federation.R;
@@ -20,6 +23,9 @@ public class ChatRecordAdapter extends BaseQuickAdapter<MessageBodyBean, BaseVie
 
     @Override
     protected void convert(BaseViewHolder helper, MessageBodyBean messageBodyBean) {
+        TextView sigleTextTv = helper.getView(R.id.single_text_tv);
+        sigleTextTv.setLines(1);
+        sigleTextTv.setEllipsize(TextUtils.TruncateAt.END);
         switch (messageBodyBean.getMsgType()) {
             case 0:
                 EmojiUtils.showEmojiTextView(mContext, helper.getView(R.id.single_text_tv), String.format("%s:%s",messageBodyBean.getFromNickname(),messageBodyBean.getContent()), 14);

@@ -116,12 +116,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             if (1==operatingMsgBean.getMsgType()) {
                                 ImageLoadUtil.loadSquareImage(mContext,operatingMsgBean.getContent(),((ImageView) view.findViewById(R.id.msg_iv)));
                             }else {
-                                ImageLoadUtil.loadVideoScreenshot(mContext, operatingMsgBean.getContent(),(ImageView) view.findViewById(R.id.msg_iv), new ImageLoadUtil.OnImageLoadSuccess() {
-                                    @Override
-                                    public void loadSuccess(int width, int height) {
-
-                                    }
-                                });
+                                ImageLoadUtil.loadImage(mContext, operatingMsgBean.getVideoCover(), (ImageView) view.findViewById(R.id.msg_iv));
                             }
                             break;
                         default:
@@ -262,7 +257,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             }
                             String content = GsonTools.createGsonString(messageBodyBeanList);
                             MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(9, groupBean.getGroupId(), groupBean.getUserNickname(), content);
-                            mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+                            mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
                             ObjectBox.addMessage(messageBody);
                             break;
                         default:
