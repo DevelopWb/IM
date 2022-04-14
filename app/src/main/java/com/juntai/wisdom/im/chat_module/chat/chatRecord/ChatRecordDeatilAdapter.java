@@ -57,6 +57,7 @@ public class ChatRecordDeatilAdapter extends BaseMultiItemQuickAdapter<MultipleI
         addItemType(MultipleItem.ITEM_CHAT_CARD, R.layout.item_chat_record_detail);
         addItemType(MultipleItem.ITEM_CHAT_FILE, R.layout.item_chat_record_detail);
         addItemType(MultipleItem.ITEM_CHAT_RECORD, R.layout.item_chat_record_detail);
+        addItemType(MultipleItem.ITEM_CHAT_OUTSIDE_SHARE, R.layout.item_chat_record_detail);
     }
 
     @Override
@@ -68,6 +69,13 @@ public class ChatRecordDeatilAdapter extends BaseMultiItemQuickAdapter<MultipleI
         FrameLayout frameLayout = helper.getView(R.id.msg_sender_content_fl);
         View view = null;
         switch (item.getItemType()) {
+            case MultipleItem.ITEM_CHAT_OUTSIDE_SHARE:
+                // : 2022-02-19 外部分享的链接
+                view = View.inflate(mContext, R.layout.chat_record_outside_share, null);
+                frameLayout.addView(view);
+                ((TextView)view.findViewById(R.id.shared_title_iv)).setText(messageBodyBean.getShareTitle());
+                ImageLoadUtil.loadSquareImage(mContext,messageBodyBean.getSharePic(),view.findViewById(R.id.shared_pic_iv));
+                break;
             case MultipleItem.ITEM_CHAT_RECORD:
                 // : 2022-02-19 聊天记录
                 view = View.inflate(mContext, R.layout.chat_record_multi_record, null);

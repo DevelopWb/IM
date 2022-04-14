@@ -67,6 +67,10 @@ public class ChatRecordAdapter extends BaseQuickAdapter<MessageBodyBean, BaseVie
                 helper.setText(R.id.single_text_tv, String.format("%s:%s",messageBodyBean.getFromNickname(),"[聊天记录]"));
 
                 break;
+            case 11:
+                helper.setText(R.id.single_text_tv, String.format("%s:%s%s",messageBodyBean.getFromNickname(),"[链接]",messageBodyBean.getShareTitle()));
+
+                break;
             default:
                 break;
         }

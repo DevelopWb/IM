@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.juntai.disabled.basecomponent.base.BaseWebViewActivity;
 import com.juntai.disabled.basecomponent.mvp.BasePresenter;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
@@ -144,6 +145,10 @@ public class ChatRecordDetailActivity extends BaseRecyclerviewActivity {
                     case MultipleItem.ITEM_CHAT_RECORD:
                         startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING,messageBodyBean.getContent()));
                         break;
+                    case MultipleItem.ITEM_CHAT_OUTSIDE_SHARE:
+                        startActivity(new Intent(mContext, BaseWebViewActivity.class).putExtra("url", messageBodyBean.getShareUrl()));
+
+                        break;
                     default:
                         break;
                 }
@@ -203,6 +208,10 @@ public class ChatRecordDetailActivity extends BaseRecyclerviewActivity {
             case 9:
                 //文件
                 baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_RECORD, messageBean));
+                break;
+            case 11:
+                //外部分享的链接
+                baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_OUTSIDE_SHARE, messageBean));
                 break;
             default:
                 break;
