@@ -64,7 +64,7 @@ public class ChatRecordDetailActivity extends BaseRecyclerviewActivity {
 //                    case MultipleItem.ITEM_CHAT_VIDEO_CALL:
 //                        //视频通话
 //                        if (messageBodyBean.getFromUserId() != UserInfoManager.getUserId()) {
-//                            messageBodyBean = SendMsgUtil.getPrivateMsg(messageBodyBean.getMsgType(), messageBodyBean.getFromUserId(), messageBodyBean.getFromAccount(), messageBodyBean.getFromNickname(), messageBodyBean.getFromHead(), "");
+//                            messageBodyBean = OperateMsgUtil.getPrivateMsg(messageBodyBean.getMsgType(), messageBodyBean.getFromUserId(), messageBodyBean.getFromAccount(), messageBodyBean.getFromNickname(), messageBodyBean.getFromHead(), "");
 //                        }
 //
 //                        Intent intent =
@@ -143,7 +143,7 @@ public class ChatRecordDetailActivity extends BaseRecyclerviewActivity {
                         break;
 
                     case MultipleItem.ITEM_CHAT_RECORD:
-                        startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING,messageBodyBean.getContent()));
+                        startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING,TextUtils.isEmpty(messageBodyBean.getQuoteMsg())?messageBodyBean.getContent():messageBodyBean.getQuoteMsg()));
                         break;
                     case MultipleItem.ITEM_CHAT_OUTSIDE_SHARE:
                         startActivity(new Intent(mContext, BaseWebViewActivity.class).putExtra("url", messageBodyBean.getShareUrl()));

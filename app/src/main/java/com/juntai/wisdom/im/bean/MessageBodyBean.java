@@ -111,6 +111,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
     private String sharePic;//
     private String shareAppName;//
 
+    private String quoteMsg;
 
 
 
@@ -136,6 +137,14 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
     public MessageBodyBean(String content, int msgType) {
         this.content = content;
         this.msgType = msgType;
+    }
+
+    public String getQuoteMsg() {
+        return quoteMsg == null ? "" : quoteMsg;
+    }
+
+    public void setQuoteMsg(String quoteMsg) {
+        this.quoteMsg = quoteMsg == null ? "" : quoteMsg;
     }
 
     public boolean isCollected() {
@@ -624,6 +633,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         dest.writeString(this.shareUrl);
         dest.writeString(this.sharePic);
         dest.writeString(this.shareAppName);
+        dest.writeString(this.quoteMsg);
         dest.writeString(this.addrName);
         dest.writeString(this.addrDes);
         dest.writeString(this.lat);
@@ -681,6 +691,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         this.shareUrl = in.readString();
         this.sharePic = in.readString();
         this.shareAppName = in.readString();
+        this.quoteMsg = in.readString();
         this.addrName = in.readString();
         this.addrDes = in.readString();
         this.lat = in.readString();

@@ -17,7 +17,7 @@ import com.juntai.wisdom.im.entrance.main.MainActivity;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.entrance.main.MainPresent;
 import com.juntai.wisdom.im.utils.ObjectBox;
-import com.juntai.wisdom.im.utils.SendMsgUtil;
+import com.juntai.wisdom.im.utils.OperateMsgUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 /**
  * @aouther tobato
@@ -74,7 +74,7 @@ public class ApplyAddFriendActivity extends BaseAppActivity<MainPresent> impleme
                 if (baseResult != null) {
                     String message = baseResult.getMessage();
                     if (!TextUtils.isEmpty(message)) {
-                        MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(10, contactBean.getId(), null,null,null, String.format("你已成功添加%s,现在可以开始聊天了",contactBean.getNickname()));
+                        MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(10, contactBean.getId(), null,null,null, String.format("你已成功添加%s,现在可以开始聊天了",contactBean.getNickname()));
                         ObjectBox.addMessage(messageBody);
                     }
                 }

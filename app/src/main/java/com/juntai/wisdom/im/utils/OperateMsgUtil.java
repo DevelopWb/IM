@@ -23,7 +23,7 @@ import okhttp3.MultipartBody;
  * @UpdateUser: 更新者
  * @UpdateDate: 2021-09-29 10:57
  */
-public class SendMsgUtil {
+public class OperateMsgUtil {
 
     /**
      * 跳转类型
@@ -141,9 +141,9 @@ public class SendMsgUtil {
     /**
      * 群聊消息
      *
-     * @param msgType 消息类型
+     * @param msgType           消息类型
      * @param content
-     * @param groupUserNickName  应该是本地命名的群名
+     * @param groupUserNickName 应该是本地命名的群名
      * @return
      */
     public static MessageBodyBean getGroupMsg(int msgType, int groupId, String groupUserNickName, String content) {
@@ -159,7 +159,7 @@ public class SendMsgUtil {
         messageBody.setFromHead(UserInfoManager.getHeadPic());
         messageBody.setFromUserId(UserInfoManager.getUserId());
         messageBody.setRead(true);
-        messageBody.setGroupName(ObjectBox.getGroup(groupId)!=null?ObjectBox.getGroup(groupId).getGroupName():"");
+        messageBody.setGroupName(ObjectBox.getGroup(groupId) != null ? ObjectBox.getGroup(groupId).getGroupName() : "");
         // TODO: 2021-11-19 阅后即焚  先默认1 否
         messageBody.setReadBurn(1);
         messageBody.setChatType(2);
@@ -246,13 +246,14 @@ public class SendMsgUtil {
                 .addFormDataPart("videoCover", messageBodyBean.getVideoCover())
                 .addFormDataPart("fileSize", messageBodyBean.getFileSize())
                 .addFormDataPart("fileName", messageBodyBean.getFileName())
-                .addFormDataPart("hwPushIntentUrl", SendMsgUtil.getHuaWeiPushIntentStr(messageBodyBean))
-                .addFormDataPart("xiaomiPushIntentUrl", SendMsgUtil.getXiaomiPushIntentStr(messageBodyBean))
+                .addFormDataPart("hwPushIntentUrl", OperateMsgUtil.getHuaWeiPushIntentStr(messageBodyBean))
+                .addFormDataPart("xiaomiPushIntentUrl", OperateMsgUtil.getXiaomiPushIntentStr(messageBodyBean))
                 .addFormDataPart("faceTimeType", String.valueOf(messageBodyBean.getFaceTimeType()))
                 .addFormDataPart("readBurn", String.valueOf(messageBodyBean.getReadBurn()))
                 .addFormDataPart("msgType", String.valueOf(messageBodyBean.getMsgType()))
                 .addFormDataPart("groupNickname", messageBodyBean.getGroupUserNickname())
                 .addFormDataPart("groupName", messageBodyBean.getGroupName())
+                .addFormDataPart("quoteMsg", messageBodyBean.getQuoteMsg())
                 .addFormDataPart("chatType", String.valueOf(messageBodyBean.getChatType()));
         if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
             //我发送的信息
@@ -263,7 +264,7 @@ public class SendMsgUtil {
             builder.addFormDataPart("groupId", String.valueOf(messageBodyBean.getGroupId()));
             builder.addFormDataPart("isGroupCreater", String.valueOf(messageBodyBean.getIsGroupCreater()));
             if (!TextUtils.isEmpty(messageBodyBean.getAtUserId())) {
-               builder.addFormDataPart("atUserId",messageBodyBean.getAtUserId());
+                builder.addFormDataPart("atUserId", messageBodyBean.getAtUserId());
             }
 
         }
@@ -289,4 +290,87 @@ public class SendMsgUtil {
 
     }
 
+    /**
+     * 获取各种消息类型展示的内容
+     *
+     * @param messageBodyBean
+     * @return
+     */
+    public static String getContent(MessageBodyBean messageBodyBean) {
+        switch (messageBodyBean.getMsgType()) {
+            case 0:
+                if (1 == messageBodyBean.getChatType()) {
+                    return String.format("%s", messageBodyBean.getContent());
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), messageBodyBean.getContent());
+                }
+            case 1:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s", "[图片]");
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[图片]");
+                }
+            case 2:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s", "[视频]");
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[视频]");
+                }
+            case 3:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s", "[语音]");
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[语音]");
+                }
+            case 4:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s", "[视频通话]");
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[视频通话]");
+                }
+            case 5:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s", "[语音通话]");
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[语音通话]");
+                }
+            case 6:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s", "[位置]");
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[位置]");
+                }
+            case 7:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s", "[名片]");
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[名片]");
+                }
+
+            case 8:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s", "[文件]");
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[文件]");
+                }
+
+            case 9:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s", "[聊天记录]");
+                } else {
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[聊天记录]");
+                }
+
+            case 11:
+                if (2 != messageBodyBean.getChatType()) {
+                    return String.format("%s%s", "[链接]", messageBodyBean.getShareTitle());
+                } else {
+                    return String.format("%s:%s%s", messageBodyBean.getFromNickname(), "[链接]", messageBodyBean.getShareTitle());
+                }
+
+            default:
+                break;
+        }
+        return null;
+    }
 }

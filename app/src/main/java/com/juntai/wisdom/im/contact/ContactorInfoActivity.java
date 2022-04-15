@@ -25,7 +25,7 @@ import com.juntai.wisdom.im.chat_module.chat.chatInfo.FriendInfoSetActivity;
 import com.juntai.wisdom.im.chat_module.chat.videocall.VideoRequestActivity;
 import com.juntai.wisdom.im.mine.MyMenuAdapter;
 import com.juntai.wisdom.im.mine.myinfo.BaseModifyActivity;
-import com.juntai.wisdom.im.utils.SendMsgUtil;
+import com.juntai.wisdom.im.utils.OperateMsgUtil;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 
@@ -191,7 +191,7 @@ public class ContactorInfoActivity extends BaseRecyclerviewActivity<MainPresent>
                                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                         releaseDialog();
                                         // : 2021-11-23 视频通话
-                                        MessageBodyBean videoMsg = SendMsgUtil.getPrivateMsg(0 == position ? 4 : 5, contactBean.getId(), contactBean.getUuid(), contactBean.getRemarksNickname(), contactBean.getHeadPortrait(), "");
+                                        MessageBodyBean videoMsg = OperateMsgUtil.getPrivateMsg(0 == position ? 4 : 5, contactBean.getId(), contactBean.getUuid(), contactBean.getRemarksNickname(), contactBean.getHeadPortrait(), "");
                                         //跳转到等待接听界面
                                         Intent intent =
                                                 new Intent(mContext, VideoRequestActivity.class)

@@ -28,7 +28,7 @@ import com.juntai.wisdom.im.chat_module.chat.ChatPresent;
 import com.juntai.wisdom.im.chat_module.chat.chatInfo.ChatInfoActivity;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.utils.ObjectBox;
-import com.juntai.wisdom.im.utils.SendMsgUtil;
+import com.juntai.wisdom.im.utils.OperateMsgUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,18 +105,18 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                     switch (operatingMsgBean.getMsgType()) {
                         case 1:
                         case 2:
-                            ImageView  msgIv = (ImageView) view.findViewById(R.id.msg_iv);
+                            ImageView msgIv = (ImageView) view.findViewById(R.id.msg_iv);
                             ((TextView) view.findViewById(R.id.card_name_tv)).setVisibility(View.GONE);
                             msgIv.setVisibility(View.VISIBLE);
-                            LinearLayout.LayoutParams  params = (LinearLayout.LayoutParams) msgIv.getLayoutParams();
+                            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) msgIv.getLayoutParams();
                             if ("0".equals(operatingMsgBean.getRotation()) || "180".equals(operatingMsgBean.getRotation())) {
                                 params.width = (view.getWidth() / 2);
                             } else {
-                                params.width = (DisplayUtil.dp2px(mContext,80));
+                                params.width = (DisplayUtil.dp2px(mContext, 80));
                             }
-                            if (1==operatingMsgBean.getMsgType()) {
-                                ImageLoadUtil.loadSquareImage(mContext,operatingMsgBean.getContent(),((ImageView) view.findViewById(R.id.msg_iv)));
-                            }else {
+                            if (1 == operatingMsgBean.getMsgType()) {
+                                ImageLoadUtil.loadSquareImage(mContext, operatingMsgBean.getContent(), ((ImageView) view.findViewById(R.id.msg_iv)));
+                            } else {
                                 ImageLoadUtil.loadImage(mContext, operatingMsgBean.getVideoCover(), (ImageView) view.findViewById(R.id.msg_iv));
                             }
                             break;
@@ -124,7 +124,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             content = operatingMsgBean.getContent();
                             break;
                         case 3:
-                            content =  "[语音]";
+                            content = "[语音]";
                             break;
                         case 4:
                             content = "[视频通话]";
@@ -133,21 +133,21 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             content = "[语音通话]";
                             break;
                         case 6:
-                            content =  "[位置]";
+                            content = "[位置]";
                             break;
                         case 7:
-                            content ="[名片]";
+                            content = "[名片]";
                             break;
 
                         case 8:
-                            content =  "[文件]";
+                            content = "[文件]";
 
                             break;
                         case 9:
-                            content =  "[聊天记录]";
+                            content = "[聊天记录]";
                             break;
                         case 11:
-                            content =  "[链接]"+operatingMsgBean.getShareTitle();
+                            content = "[链接]" + operatingMsgBean.getShareTitle();
                             break;
                         default:
                             break;
@@ -157,9 +157,9 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                     ((TextView) view.findViewById(R.id.card_name_tv)).setVisibility(View.VISIBLE);
                     ((TextView) view.findViewById(R.id.card_name_tv)).setText(content);
                 } else if (1 == forwardType) {
-                    ((TextView) view.findViewById(R.id.card_name_tv)).setText(String.format("[逐条转发]共%s条消息", SendMsgUtil.selectedToEditMsgItems.size()));
+                    ((TextView) view.findViewById(R.id.card_name_tv)).setText(String.format("[逐条转发]共%s条消息", OperateMsgUtil.selectedToEditMsgItems.size()));
                 } else {
-                    ((TextView) view.findViewById(R.id.card_name_tv)).setText(String.format("[合并转发]共%s条消息", SendMsgUtil.selectedToEditMsgItems.size()));
+                    ((TextView) view.findViewById(R.id.card_name_tv)).setText(String.format("[合并转发]共%s条消息", OperateMsgUtil.selectedToEditMsgItems.size()));
                 }
 
                 view.findViewById(R.id.close_dialog_tv).setOnClickListener(new View.OnClickListener() {
@@ -201,8 +201,8 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             sendPrivateMsg(contactBean, operatingMsgBean);
                             break;
                         case 1:
-                            if (SendMsgUtil.selectedToEditMsgItems != null && !SendMsgUtil.selectedToEditMsgItems.isEmpty()) {
-                                for (MultipleItem selectedMsge : SendMsgUtil.selectedToEditMsgItems) {
+                            if (OperateMsgUtil.selectedToEditMsgItems != null && !OperateMsgUtil.selectedToEditMsgItems.isEmpty()) {
+                                for (MultipleItem selectedMsge : OperateMsgUtil.selectedToEditMsgItems) {
                                     // : 2022-02-13 所有类型的消息(语音，语音通话，视频通话不能转发)
                                     //0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息，7分享名片，8文件
                                     MessageBodyBean messageBodyBean = (MessageBodyBean) selectedMsge.getObject();
@@ -229,16 +229,19 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             break;
                         case 2:
                             List<MessageBodyBean> messageBodyBeanList = new ArrayList<>();
-                            if (SendMsgUtil.selectedToEditMsgItems.size()>20) {
-                                ToastUtils.toast(mContext,"暂时只支持合并20条消息");
+                            if (OperateMsgUtil.selectedToEditMsgItems.size() > 20) {
+                                ToastUtils.toast(mContext, "暂时只支持合并20条消息");
                                 return;
                             }
-                            for (MultipleItem selectedToEditMsgItem : SendMsgUtil.selectedToEditMsgItems) {
-                                messageBodyBeanList.add((MessageBodyBean) selectedToEditMsgItem.getObject());
+                            for (MultipleItem selectedToEditMsgItem : OperateMsgUtil.selectedToEditMsgItems) {
+                                MessageBodyBean  messageBodyBean = (MessageBodyBean) selectedToEditMsgItem.getObject();
+                                messageBodyBean.setQuoteMsg(null);
+                                messageBodyBeanList.add(messageBodyBean);
                             }
                             String content = GsonTools.createGsonString(messageBodyBeanList);
-                            MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(9, contactBean.getId(), contactBean.getUuid(), contactBean.getRemarksNickname(), contactBean.getHeadPortrait(), content);
-                            mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+                            MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(9, contactBean.getId(), contactBean.getUuid(), contactBean.getRemarksNickname(), contactBean.getHeadPortrait(), "合并转发");
+                            messageBody.setQuoteMsg(content);
+                            mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
                             ObjectBox.addMessage(messageBody);
                             break;
                         default:
@@ -246,7 +249,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                     }
                     if (!TextUtils.isEmpty(getTextViewValue(mToReceiverMsgEt))) {
                         // : 2022-02-13  单独发一条信息
-                        sendPrivateMsg( contactBean, new MessageBodyBean(getTextViewValue(mToReceiverMsgEt),0));
+                        sendPrivateMsg(contactBean, new MessageBodyBean(getTextViewValue(mToReceiverMsgEt), 0));
                     }
                     break;
                 case MultipleItem.ITEM_SELECT_GROUP:
@@ -256,8 +259,8 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             sendGroupNormalMsg(groupBean, operatingMsgBean);
                             break;
                         case 1:
-                            if (SendMsgUtil.selectedToEditMsgItems != null && !SendMsgUtil.selectedToEditMsgItems.isEmpty()) {
-                                for (MultipleItem selectedMsge : SendMsgUtil.selectedToEditMsgItems) {
+                            if (OperateMsgUtil.selectedToEditMsgItems != null && !OperateMsgUtil.selectedToEditMsgItems.isEmpty()) {
+                                for (MultipleItem selectedMsge : OperateMsgUtil.selectedToEditMsgItems) {
                                     // : 2022-02-13 所有类型的消息
                                     MessageBodyBean messageBodyBean = (MessageBodyBean) selectedMsge.getObject();
                                     switch (messageBodyBean.getMsgType()) {
@@ -283,12 +286,13 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                             break;
                         case 2:
                             List<MessageBodyBean> messageBodyBeanList = new ArrayList<>();
-                            for (MultipleItem selectedToEditMsgItem : SendMsgUtil.selectedToEditMsgItems) {
+                            for (MultipleItem selectedToEditMsgItem : OperateMsgUtil.selectedToEditMsgItems) {
                                 messageBodyBeanList.add((MessageBodyBean) selectedToEditMsgItem.getObject());
                             }
                             String content = GsonTools.createGsonString(messageBodyBeanList);
-                            MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(9, groupBean.getGroupId(), groupBean.getUserNickname(), content);
-                            mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+                            MessageBodyBean messageBody = OperateMsgUtil.getGroupMsg(9, groupBean.getGroupId(), groupBean.getUserNickname(), "合并转发");
+                            messageBody.setQuoteMsg(content);
+                            mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
                             ObjectBox.addMessage(messageBody);
                             break;
                         default:
@@ -298,7 +302,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
 
                     if (!TextUtils.isEmpty(getTextViewValue(mToReceiverMsgEt))) {
                         // : 2022-02-13  单独发一条信息
-                        sendGroupNormalMsg(groupBean, new MessageBodyBean(getTextViewValue(mToReceiverMsgEt),0));
+                        sendGroupNormalMsg(groupBean, new MessageBodyBean(getTextViewValue(mToReceiverMsgEt), 0));
                     }
                     break;
                 default:
@@ -315,8 +319,8 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
      * 发送普通信息
      * //0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息，7分享名片，8文件 9合并消息
      */
-    private void sendPrivateMsg( ContactBean toContactBean, MessageBodyBean olderMessageBodyBean) {
-        MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(olderMessageBodyBean.getMsgType(), toContactBean.getId(), toContactBean.getUuid(), toContactBean.getRemarksNickname(), toContactBean.getHeadPortrait(), olderMessageBodyBean.getContent());
+    private void sendPrivateMsg(ContactBean toContactBean, MessageBodyBean olderMessageBodyBean) {
+        MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(olderMessageBodyBean.getMsgType(), toContactBean.getId(), toContactBean.getUuid(), toContactBean.getRemarksNickname(), toContactBean.getHeadPortrait(), olderMessageBodyBean.getContent());
         switch (olderMessageBodyBean.getMsgType()) {
             case 1:
                 messageBody.setRotation(olderMessageBodyBean.getRotation());
@@ -345,7 +349,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                 break;
         }
 
-        mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+        mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         ObjectBox.addMessage(messageBody);
     }
 
@@ -353,7 +357,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
      * 发送群聊普通信息
      */
     private void sendGroupNormalMsg(GroupDetailInfoBean groupBean, MessageBodyBean olderMessageBodyBean) {
-        MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(olderMessageBodyBean.getMsgType(), groupBean.getGroupId(), groupBean.getUserNickname(), olderMessageBodyBean.getContent());
+        MessageBodyBean messageBody = OperateMsgUtil.getGroupMsg(olderMessageBodyBean.getMsgType(), groupBean.getGroupId(), groupBean.getUserNickname(), olderMessageBodyBean.getContent());
         switch (olderMessageBodyBean.getMsgType()) {
             case 1:
                 messageBody.setRotation(olderMessageBodyBean.getRotation());
@@ -381,7 +385,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
             default:
                 break;
         }
-        mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+        mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         ObjectBox.addMessage(messageBody);
     }
 
@@ -405,7 +409,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
     protected void onDestroy() {
         super.onDestroy();
         releaseDialog();
-        SendMsgUtil.selectedToEditMsgItems.clear();
+        OperateMsgUtil.selectedToEditMsgItems.clear();
     }
 
     private void releaseDialog() {

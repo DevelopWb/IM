@@ -52,7 +52,21 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@+id/receiver_pic_iv"
         app:layout_constraintTop_toBottomOf="@+id/receiver_nick_name_tv"></EditText>
-
+    <TextView
+        android:id="@+id/receiver_quote_content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="0"
+        android:background="@drawable/sp_filled_white"
+        app:layout_constraintLeft_toLeftOf="@+id/receiver_content_tv"
+        app:layout_constraintTop_toBottomOf="@+id/receiver_content_tv"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="3dp"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:maxLines="2"
+        android:padding="5dp"
+        android:textSize="12sp"></TextView>
     <ImageView
         android:id="@+id/sender_pic_iv"
         style="@style/chat_head_iv_style"
@@ -91,7 +105,23 @@
         android:textSize="14sp"
         app:layout_constraintRight_toLeftOf="@+id/sender_pic_iv"
         app:layout_constraintTop_toBottomOf="@+id/sender_nick_name_tv"></EditText>
-
+    <TextView
+        android:id="@+id/sender_quote_content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="1"
+        android:background="@drawable/sp_filled_white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/sender_content_tv"
+        app:layout_constraintTop_toBottomOf="@+id/sender_content_tv"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="3dp"
+        android:text="1fdasfasddfasdfasdfasdfasdf"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:maxLines="2"
+        android:padding="5dp"
+        android:textSize="12sp"></TextView>
     <android.support.constraint.Group
         android:id="@+id/receiver_g"
         android:layout_width="wrap_content"
@@ -101,6 +131,7 @@
 
     <android.support.constraint.Group
         android:id="@+id/sender_g"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="sender_pic_iv,sender_content_tv"></android.support.constraint.Group>
