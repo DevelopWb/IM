@@ -265,7 +265,7 @@ public class MyWsManager {
         }
 
         // : 2021-12-08   这个地方需要获取到发送方在本地的备注名
-        NotificationTool.sendNotifMessage(messageBody.getChatType(),messageBody.getGroupName(),messageBody.getMsgType(), mContext, messageBody.getFromUserId(), title, content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
+        NotificationTool.sendNotifMessage(messageBody.getChatType(),messageBody.getFromNickname(),messageBody.getMsgType(), mContext, messageBody.getFromUserId(), title, content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
     }
 
     //发送ws数据
