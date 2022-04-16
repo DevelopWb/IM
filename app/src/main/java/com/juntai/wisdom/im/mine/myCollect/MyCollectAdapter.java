@@ -60,7 +60,8 @@ public class MyCollectAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
                     ImageLoadUtil.loadSquareImage(mContext,messageBodyBean.getLocalCatchPath(),helper.getView(R.id.collect_pic_iv));
 
                 }else {
-                    ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(messageBodyBean.getContent()),helper.getView(R.id.collect_pic_iv));
+                    //  图片收藏的前提是保存到本地
+                    ImageLoadUtil.loadSquareImage(mContext, FileCacheUtils.getAppImagePath(false)+getSavedFileName(messageBodyBean),helper.getView(R.id.collect_pic_iv));
 
                 }
                 break;
@@ -73,9 +74,10 @@ public class MyCollectAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
                         }
                     });
                 }else {
-                    if (!TextUtils.isEmpty(FileCacheUtils.isVideoFileExistsInDir(getSavedFileName(messageBodyBean),true))) {
+                    //视频收藏的前提是保存到本地
+                    if (FileCacheUtils.isFileExists(FileCacheUtils.getAppVideoPath(false)+ getSavedFileName(messageBodyBean))) {
                         //本地已经缓存
-                        ImageLoadUtil.loadVideoScreenshot(mContext, FileCacheUtils.getVideoFileInDir(getSavedFileName(messageBodyBean),true), helper.getView(R.id.receiver_pic_video_iv),   new ImageLoadUtil.OnImageLoadSuccess() {
+                        ImageLoadUtil.loadVideoScreenshot(mContext, FileCacheUtils.getAppVideoPath(false)+getSavedFileName(messageBodyBean), helper.getView(R.id.collect_video_iv),   new ImageLoadUtil.OnImageLoadSuccess() {
                             @Override
                             public void loadSuccess(int width, int height) {
 
