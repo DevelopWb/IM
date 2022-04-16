@@ -78,7 +78,7 @@ import com.juntai.wisdom.im.utils.CalendarUtil;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.NotificationTool;
 import com.juntai.wisdom.im.utils.ObjectBox;
-import com.juntai.wisdom.im.utils.SendMsgUtil;
+import com.juntai.wisdom.im.utils.OperateMsgUtil;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.negier.emojifragment.bean.Emoji;
@@ -444,7 +444,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                 releaseDialog();
-                                SendMsgUtil.selectedToEditMsgItems = getAllSelectedItem(false);
+                                OperateMsgUtil.selectedToEditMsgItems = getAllSelectedItem(false);
                                 startActivityForResult(new Intent(mContext, ForwardMsgActivity.class)
                                         .putExtra(BASE_ID, position + 1), ChatInfoActivity.CHAT_INFO_REQUEST);
                                 // : 2022-02-13  因为无法将selectedItem通过intent传递过去 所以 通过保存到本地的方式传递过去
@@ -568,7 +568,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                 releaseDialog();
                                 // : 2021-11-23 视频通话
-//                                MessageBodyBean videoMsg = SendMsgUtil.getPrivateMsg(0 == position ? 4 : 5,
+//                                MessageBodyBean videoMsg = OperateMsgUtil.getPrivateMsg(0 == position ? 4 : 5,
 //                                        privateContactId, privateContactBean.getUuid(),
 //                                        privateContactBean.getRemarksNickname(), privateContactBean.getHeadPortrait(), "");
 //                                //跳转到等待接听界面
@@ -688,7 +688,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             case R.id.sender_videocall_content_tv:
                                 //视频通话
                                 if (messageBodyBean.getFromUserId() != UserInfoManager.getUserId()) {
-                                    messageBodyBean = SendMsgUtil.getPrivateMsg(messageBodyBean.getMsgType(),
+                                    messageBodyBean = OperateMsgUtil.getPrivateMsg(messageBodyBean.getMsgType(),
                                             messageBodyBean.getFromUserId(), messageBodyBean.getFromAccount(),
                                             messageBodyBean.getFromNickname(), messageBodyBean.getFromHead(), "");
                                 }
@@ -964,7 +964,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
 
                                                 break;
                                             default:
-                                                mPresenter.collect(SendMsgUtil.getMsgBuilder(operateingMsgBean).build(), AppHttpPath.COLLECT);
+                                                mPresenter.collect(OperateMsgUtil.getMsgBuilder(operateingMsgBean).build(), AppHttpPath.COLLECT);
                                                 break;
                                         }
 
@@ -1166,9 +1166,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
      * 发送普通信息
      */
     private void sendNormalMsg(ContactBean toContactBean, String content) {
-        MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(0, toContactBean.getId(), toContactBean.getUuid(),
+        MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(0, toContactBean.getId(), toContactBean.getUuid(),
                 toContactBean.getRemarksNickname(), toContactBean.getHeadPortrait(), content);
-        mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+        mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         if (toContactBean.getId() == privateContactBean.getId()) {
             addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBody.getFromUserId()), messageBody);
             chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_TEXT_MSG, messageBody));
@@ -1181,7 +1181,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
      * 发送群聊普通信息
      */
     private void sendGroupNormalMsg(String content) {
-        MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(0, groupId, groupBean.getGroupCreateUserId(),
+        MessageBodyBean messageBody = OperateMsgUtil.getGroupMsg(0, groupId, groupBean.getGroupCreateUserId(),
                 groupBean.getUserNickname(), content);
         if (!atUsers.isEmpty()) {
             //有@的成员
@@ -1189,7 +1189,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
         } else {
             messageBody.setAtUserId(null);
         }
-        mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+        mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), messageBody);
         chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_TEXT_MSG, messageBody));
         ObjectBox.addMessage(messageBody);
@@ -1232,13 +1232,13 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             FileSelectBean fileSelectBean = files.get(i);
                             switch (chatType) {
                                 case 0:
-                                    MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(8, privateContactId,
+                                    MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(8, privateContactId,
                                             privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                                             privateContactBean.getHeadPortrait(), filePaths.get(i));
                                     messageBody.setFileSize(FileCacheUtils.formetFileSize(fileSelectBean.getFileSize()));
                                     messageBody.setFileName(fileSelectBean.getFileName());
                                     messageBody.setLocalCatchPath(fileSelectBean.getFilePath());
-                                    mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(),
+                                    mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(),
                                             AppHttpPath.SEND_MSG);
                                     addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBody.getFromUserId()), messageBody);
                                     chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE, messageBody));
@@ -1246,12 +1246,12 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                     break;
                                 case 1:
                                     // : 2022-01-13 群聊 发送文件信息
-                                    MessageBodyBean groupMessageBody = SendMsgUtil.getGroupMsg(8, groupId,
+                                    MessageBodyBean groupMessageBody = OperateMsgUtil.getGroupMsg(8, groupId,
                                             groupBean.getUserNickname(), filePaths.get(i));
                                     groupMessageBody.setFileSize(FileCacheUtils.formetFileSize(fileSelectBean.getFileSize()));
                                     groupMessageBody.setFileName(fileSelectBean.getFileName());
                                     groupMessageBody.setLocalCatchPath(fileSelectBean.getFilePath());
-                                    mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(groupMessageBody).build(),
+                                    mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(groupMessageBody).build(),
                                             AppHttpPath.SEND_MSG);
                                     addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), groupMessageBody);
                                     chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_FILE,
@@ -1318,14 +1318,14 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             switch (chatType) {
                                 case 0:
                                     // : 2021-12-07 发送名片
-                                    MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(7, privateContactId,
+                                    MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(7, privateContactId,
                                             privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                                             privateContactBean.getHeadPortrait(), "名片");
                                     messageBody.setOtherUserId(cardContactBean.getId());
                                     messageBody.setOtherAccount(cardContactBean.getAccountNumber());
                                     messageBody.setOtherHead(cardContactBean.getHeadPortrait());
                                     messageBody.setOtherNickname(cardContactBean.getNickname());
-                                    mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(),
+                                    mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(),
                                             AppHttpPath.SEND_MSG);
                                     addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBody.getFromUserId()), messageBody);
                                     chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_CARD, messageBody));
@@ -1333,13 +1333,13 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                     break;
                                 case 1:
                                     // : 2022-01-13 群聊 发送名片
-                                    MessageBodyBean fileMsgBody = SendMsgUtil.getGroupMsg(7, groupId,
+                                    MessageBodyBean fileMsgBody = OperateMsgUtil.getGroupMsg(7, groupId,
                                             groupBean.getUserNickname(), "名片");
                                     fileMsgBody.setOtherUserId(cardContactBean.getId());
                                     fileMsgBody.setOtherAccount(cardContactBean.getAccountNumber());
                                     fileMsgBody.setOtherHead(cardContactBean.getHeadPortrait());
                                     fileMsgBody.setOtherNickname(cardContactBean.getNickname());
-                                    mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(fileMsgBody).build(),
+                                    mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(fileMsgBody).build(),
                                             AppHttpPath.SEND_MSG);
                                     addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), fileMsgBody);
                                     chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_CARD, fileMsgBody));
@@ -1386,7 +1386,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     addrDes = data.getStringExtra(LocateSelectionActivity.ADDRDES);
                     switch (chatType) {
                         case 0:
-                            MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateLocateMsg(privateContactId,
+                            MessageBodyBean messageBodyBean = OperateMsgUtil.getPrivateLocateMsg(privateContactId,
                                     privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                                     privateContactBean.getHeadPortrait(),
                                     "", addrName, addrDes, String.valueOf(lat), String.valueOf(lng));
@@ -1402,7 +1402,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             break;
                         case 1:
                             // : 2022-01-13 群聊 地图截图
-                            MessageBodyBean mapMsgBean = SendMsgUtil.getGroupLocateMsg(groupId, "", addrName, addrDes
+                            MessageBodyBean mapMsgBean = OperateMsgUtil.getGroupLocateMsg(groupId, "", addrName, addrDes
                                     , String.valueOf(lat), String.valueOf(lng), groupBean.getUserNickname());
                             addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), mapMsgBean);
                             chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_LOCATE, mapMsgBean));
@@ -1479,7 +1479,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             public void loadSuccess(int width, int height) {
                 switch (chatType) {
                     case 0:
-                        MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(1, privateContactId,
+                        MessageBodyBean messageBodyBean = OperateMsgUtil.getPrivateMsg(1, privateContactId,
                                 privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                                 privateContactBean.getHeadPortrait(), "");
                         messageBodyBean.setRotation(width > height ? "0" : "90");
@@ -1496,7 +1496,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                         break;
                     case 1:
                         // : 2022-01-13 群聊 发送图片文件
-                        MessageBodyBean groupPicMsgBean = SendMsgUtil.getGroupMsg(1, groupId,
+                        MessageBodyBean groupPicMsgBean = OperateMsgUtil.getGroupMsg(1, groupId,
                                 groupBean.getUserNickname(), picPath);
                         groupPicMsgBean.setRotation(width > height ? "0" : "90");
                         addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), groupPicMsgBean);
@@ -1536,7 +1536,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             case 0:
 
                 // TODO: 2022/4/10 先上传一张视频的缩略图
-                MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(2, privateContactId,
+                MessageBodyBean messageBodyBean = OperateMsgUtil.getPrivateMsg(2, privateContactId,
                         privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                         privateContactBean.getHeadPortrait(), "");
                 messageBodyBean.setLocalCatchPath(picPath);
@@ -1559,7 +1559,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                 break;
             case 1:
                 // : 2022-01-13 群聊 发送视频文件
-                MessageBodyBean groupVideoFileBean = SendMsgUtil.getGroupMsg(2, groupId, groupBean.getUserNickname(),
+                MessageBodyBean groupVideoFileBean = OperateMsgUtil.getGroupMsg(2, groupId, groupBean.getUserNickname(),
                         picPath);
                 groupVideoFileBean.setLocalCatchPath(picPath);
                 // TODO: 2022/4/10 先上传一张视频的缩略图
@@ -1629,26 +1629,26 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                     for (String picPath : audioPaths) {
                         switch (chatType) {
                             case 0:
-                                MessageBodyBean messageBodyBean = SendMsgUtil.getPrivateMsg(3, privateContactId,
+                                MessageBodyBean messageBodyBean = OperateMsgUtil.getPrivateMsg(3, privateContactId,
                                         privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                                         privateContactBean.getHeadPortrait(), picPath);
                                 messageBodyBean.setDuration(String.valueOf(mDuration));
                                 addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()), messageBodyBean);
                                 chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_SEND_AUDIO, messageBodyBean));
                                 ObjectBox.addMessage(messageBodyBean);
-                                mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBodyBean).build(),
+                                mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBodyBean).build(),
                                         AppHttpPath.SEND_MSG);
                                 break;
                             case 1:
                                 // : 2022-01-13 群聊 上传音频文件
-                                MessageBodyBean audioMessageBodyBean = SendMsgUtil.getGroupMsg(3, groupId,
+                                MessageBodyBean audioMessageBodyBean = OperateMsgUtil.getGroupMsg(3, groupId,
                                         groupBean.getUserNickname(), picPath);
                                 audioMessageBodyBean.setDuration(String.valueOf(mDuration));
                                 addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), audioMessageBodyBean);
                                 chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_SEND_AUDIO,
                                         audioMessageBodyBean));
                                 ObjectBox.addMessage(audioMessageBodyBean);
-                                mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(audioMessageBodyBean).build(),
+                                mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(audioMessageBodyBean).build(),
                                         AppHttpPath.SEND_MSG);
                                 break;
                             case 2:
@@ -1793,14 +1793,14 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
         if (!TextUtils.isEmpty(getTextViewValue(mContentEt))) {
             switch (chatType) {
                 case 0:
-                    MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(0, privateContactId,
+                    MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(0, privateContactId,
                             privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                             privateContactBean.getHeadPortrait(), getTextViewValue(mContentEt));
                     messageBody.setDraft(true);
                     Hawk.put(HawkProperty.getDraftKey(privateContactId, true), messageBody);
                     break;
                 case 1:
-                    MessageBodyBean groupMsgBean = SendMsgUtil.getGroupMsg(0, groupId, 0, null, getTextViewValue(mContentEt));
+                    MessageBodyBean groupMsgBean = OperateMsgUtil.getGroupMsg(0, groupId, 0, null, getTextViewValue(mContentEt));
                     groupMsgBean.setDraft(true);
                     Hawk.put(HawkProperty.getDraftKey(groupId, false), groupMsgBean);
                     break;
@@ -2340,10 +2340,10 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             if (!TextUtils.isEmpty(messageBodyBean.getContent())) {
                 switch (chatType) {
                     case 0:
-                        mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.SEND_MSG);
+                        mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.SEND_MSG);
                         break;
                     case 1:
-                        mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.SEND_MSG);
+                        mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.SEND_MSG);
                         break;
                     default:
                         break;
