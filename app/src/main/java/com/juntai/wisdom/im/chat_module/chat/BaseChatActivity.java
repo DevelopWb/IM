@@ -1950,7 +1950,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // : 2022-02-08 这个地方添加@对应的逻辑
-                String content = s.toString().trim();
+                String content = s.toString();
                 if (TextUtils.isEmpty(content) || !content.endsWith("\u3000")) {
                     isAt = false;
                 }
