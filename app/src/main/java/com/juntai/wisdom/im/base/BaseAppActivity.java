@@ -134,12 +134,13 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
         void onUploadFinish(UploadFileBean uploadFileBean);
 
     }
+
     /**
      * 第三方分享
      *
      * @return
      */
-    public boolean initThirdShareLogic(Intent intent,Context context,Class cls) {
+    public boolean initThirdShareLogic(Intent intent, Context context, Class cls) {
         if (intent != null) {
             String shareTitle = intent.getStringExtra("title");
             String shareUrl = intent.getStringExtra("shareUrl");
@@ -160,6 +161,7 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
         }
         return false;
     }
+
     protected void registFileDownloadListener() {
 
 
@@ -593,14 +595,16 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
 
     /**
      * 消息详情展示
+     *
      * @param messageBodyBean
      */
-    public  void startToMsgDetail(Context mContext,  MessageBodyBean messageBodyBean) {
+    public void startToMsgDetail(Context mContext, MessageBodyBean messageBodyBean) {
         switch (messageBodyBean.getMsgType()) {
+            case 0:
             case 1:
             case 2:
             case 3:
-                startActivity(new Intent(mContext, ChatDetailDisplayActivity.class).putExtra(BASE_PARCELABLE,messageBodyBean));
+                startActivity(new Intent(mContext, ChatDetailDisplayActivity.class).putExtra(BASE_PARCELABLE, messageBodyBean));
                 break;
             case 6:
                 //位置信息
@@ -612,7 +616,7 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
                         , messageBodyBean));
                 break;
             case 9:
-                startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING, TextUtils.isEmpty(messageBodyBean.getQuoteMsg())?messageBodyBean.getContent():messageBodyBean.getQuoteMsg()));
+                startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING, TextUtils.isEmpty(messageBodyBean.getQuoteMsg()) ? messageBodyBean.getContent() : messageBodyBean.getQuoteMsg()));
                 break;
             case 11:
                 startActivity(new Intent(mContext, BaseWebViewActivity.class).putExtra("url", messageBodyBean.getShareUrl()));
@@ -620,7 +624,6 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
             default:
                 break;
         }
-
 
 
     }

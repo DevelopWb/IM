@@ -9,6 +9,7 @@ import com.juntai.wisdom.im.base.BaseAppActivity;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.chat_module.chat.displayFile.DisplayAudioFileFragment;
 import com.juntai.wisdom.im.chat_module.chat.displayFile.DisplayImageFileFragment;
+import com.juntai.wisdom.im.chat_module.chat.displayFile.DisplayTextFragment;
 import com.juntai.wisdom.im.chat_module.chat.displayFile.DisplayVideoFileFragment;
 
 /**
@@ -41,6 +42,10 @@ public class ChatDetailDisplayActivity extends BaseAppActivity {
         FragmentTransaction transaction
                 = fragmentManager.beginTransaction();
         switch (messageBodyBean.getMsgType()) {
+            case 0:
+                transaction.replace(R.id.display_chat_fl, DisplayTextFragment.getInstance(messageBodyBean.getContent()));
+                transaction.commit();
+                break;
             case 1:
                 transaction.replace(R.id.display_chat_fl, DisplayImageFileFragment.getInstance(messageBodyBean.getContent()));
                 transaction.commit();
