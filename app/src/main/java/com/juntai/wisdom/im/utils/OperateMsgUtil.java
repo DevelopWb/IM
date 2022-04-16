@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.juntai.disabled.basecomponent.base.BaseActivity;
 import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
@@ -336,29 +338,40 @@ public class OperateMsgUtil {
                 }
             case 6:
                 if (2 != messageBodyBean.getChatType()) {
-                    return String.format("%s", "[位置]");
+                    return String.format("%s%s", "[位置]",messageBodyBean.getAddrName());
                 } else {
-                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[位置]");
+                    return String.format("%s:%s%s", messageBodyBean.getFromNickname(), "[位置]",messageBodyBean.getAddrName());
                 }
             case 7:
                 if (2 != messageBodyBean.getChatType()) {
-                    return String.format("%s", "[名片]");
+                    return String.format("%s%s", "[名片]",messageBodyBean.getOtherNickname());
                 } else {
-                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[名片]");
+                    return String.format("%s:%s%s", messageBodyBean.getFromNickname(), "[名片]",messageBodyBean.getOtherNickname());
                 }
 
             case 8:
                 if (2 != messageBodyBean.getChatType()) {
-                    return String.format("%s", "[文件]");
+                    return String.format("%s", messageBodyBean.getFileName());
                 } else {
-                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[文件]");
+                    return String.format("%s:%s", messageBodyBean.getFromNickname(),messageBodyBean.getFileName());
                 }
 
             case 9:
+                String records = messageBodyBean.getQuoteMsg();
+                String recordTitle = "";
+                List<MessageBodyBean> chatRecords = null;
+                if (!TextUtils.isEmpty(records)) {
+                    chatRecords = changeGsonToList(records);
+                    if (!chatRecords.isEmpty()) {
+                        MessageBodyBean chatContentBean = chatRecords.get(0);
+                        recordTitle = chatContentBean.getGroupId() > 0 ? "群聊的聊天记录" : String.format("%s与%s的聊天记录", chatContentBean.getFromNickname(), chatContentBean.getToNickname());
+
+                    }
+                }
                 if (2 != messageBodyBean.getChatType()) {
-                    return String.format("%s", "[聊天记录]");
+                    return String.format("%s%s", "[聊天记录]",recordTitle);
                 } else {
-                    return String.format("%s:%s", messageBodyBean.getFromNickname(), "[聊天记录]");
+                    return String.format("%s:%s%s", messageBodyBean.getFromNickname(), "[聊天记录]",recordTitle);
                 }
 
             case 11:
@@ -372,5 +385,12 @@ public class OperateMsgUtil {
                 break;
         }
         return null;
+    }
+
+    public static List<MessageBodyBean> changeGsonToList(String gsonString) {
+        Gson gson = new Gson();
+        List<MessageBodyBean> list = gson.fromJson(gsonString, new TypeToken<List<MessageBodyBean>>() {
+        }.getType());
+        return list;
     }
 }

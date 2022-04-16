@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintHorizontal_bias="0"
-        android:background="@drawable/sp_filled_white"
+        android:background="@drawable/sp_filled_white_3dp"
         app:layout_constraintLeft_toLeftOf="@+id/receiver_content_tv"
         app:layout_constraintTop_toBottomOf="@+id/receiver_content_tv"
         android:layout_marginLeft="4dp"
@@ -65,7 +65,7 @@
         android:ellipsize="end"
         android:visibility="gone"
         android:maxLines="2"
-        android:padding="5dp"
+        android:padding="6dp"
         android:textSize="12sp"></TextView>
     <ImageView
         android:id="@+id/sender_pic_iv"
@@ -110,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintHorizontal_bias="1"
-        android:background="@drawable/sp_filled_white"
+        android:background="@drawable/sp_filled_white_3dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@+id/sender_content_tv"
         app:layout_constraintTop_toBottomOf="@+id/sender_content_tv"
@@ -120,7 +120,7 @@
         android:ellipsize="end"
         android:visibility="gone"
         android:maxLines="2"
-        android:padding="5dp"
+        android:padding="6dp"
         android:textSize="12sp"></TextView>
     <android.support.constraint.Group
         android:id="@+id/receiver_g"

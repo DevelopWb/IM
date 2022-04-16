@@ -15,9 +15,11 @@ import android.widget.RelativeLayout;
 
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.model.LatLng;
+import com.juntai.disabled.basecomponent.base.BaseWebViewActivity;
 import com.juntai.disabled.basecomponent.mvp.BasePresenter;
 import com.juntai.disabled.basecomponent.utils.MD5;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
+import com.juntai.disabled.bdmap.act.LocateShowActivity;
 import com.juntai.disabled.bdmap.utils.NagivationUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.AppHttpPath;
@@ -27,7 +29,10 @@ import com.juntai.wisdom.im.base.uploadFile.UploadUtil;
 import com.juntai.wisdom.im.base.uploadFile.listener.OnUploadListener;
 import com.juntai.wisdom.im.bean.FinishVideoActivityMsgBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
+import com.juntai.wisdom.im.chat_module.ChatDetailDisplayActivity;
 import com.juntai.wisdom.im.chat_module.chat.PrivateChatActivity;
+import com.juntai.wisdom.im.chat_module.chat.chatRecord.ChatRecordDetailActivity;
+import com.juntai.wisdom.im.chat_module.chat.displayFile.FileDetailActivity;
 import com.juntai.wisdom.im.utils.NotificationTool;
 import com.juntai.wisdom.im.utils.ObjectBox;
 import com.juntai.wisdom.im.utils.StringTools;
@@ -586,6 +591,38 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
         super.onDestroy();
     }
 
+    /**
+     * 消息详情展示
+     * @param messageBodyBean
+     */
+    public  void startToMsgDetail(Context mContext,  MessageBodyBean messageBodyBean) {
+        switch (messageBodyBean.getMsgType()) {
+            case 1:
+            case 2:
+            case 3:
+                startActivity(new Intent(mContext, ChatDetailDisplayActivity.class).putExtra(BASE_PARCELABLE,messageBodyBean));
+                break;
+            case 6:
+                //位置信息
+                LocateShowActivity.startLocateActivity(mContext, Double.parseDouble(messageBodyBean.getLat()), Double.parseDouble(messageBodyBean.getLng()), messageBodyBean.getAddrName(), messageBodyBean.getAddrDes());
 
+                break;
+            case 8:
+                startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE
+                        , messageBodyBean));
+                break;
+            case 9:
+                startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING, TextUtils.isEmpty(messageBodyBean.getQuoteMsg())?messageBodyBean.getContent():messageBodyBean.getQuoteMsg()));
+                break;
+            case 11:
+                startActivity(new Intent(mContext, BaseWebViewActivity.class).putExtra("url", messageBodyBean.getShareUrl()));
+                break;
+            default:
+                break;
+        }
+
+
+
+    }
 
 }

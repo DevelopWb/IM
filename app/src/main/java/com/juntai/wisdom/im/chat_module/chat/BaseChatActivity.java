@@ -754,6 +754,13 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                 //聊天记录
                                 startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING, TextUtils.isEmpty(messageBodyBean.getQuoteMsg())?messageBodyBean.getContent():messageBodyBean.getQuoteMsg()));
                                 break;
+                            case R.id.receiver_quote_content_tv:
+                            case R.id.sender_quote_content_tv:
+                                //引用的内容
+                                MessageBodyBean quoteMsgBean = GsonTools.changeGsonToBean(messageBodyBean.getQuoteMsg(),MessageBodyBean.class);
+                                assert quoteMsgBean != null;
+                                startToMsgDetail(mContext,quoteMsgBean);
+                                break;
 
                             case R.id.audio_bg_rl:
                                 ImageView ivAudio = (ImageView) adapter.getViewByPosition(mRecyclerview, position,
@@ -960,7 +967,10 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
 
                                         mQuoteLl.setVisibility(View.VISIBLE);
                                         //如果被引用的消息有引用的消息 需要置空 要不json数据太大
-                                        operateingMsgBean.setQuoteMsg(null);
+                                        // 注意  合并消息除外  因为合并消息也是通过这个字段存储数据的 唉 都是后台参数不支持的问题
+                                        if (9!=operateingMsgBean.getMsgType()) {
+                                            operateingMsgBean.setQuoteMsg(null);
+                                        }
                                         mQuoteContentTv.setTag(operateingMsgBean);
                                         mQuoteContentTv.setText(OperateMsgUtil.getContent(operateingMsgBean));
                                         mContentEt.requestFocus();

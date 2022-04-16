@@ -287,6 +287,8 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 initSelectedViewStatus(helper, messageBodyBean);
                 helper.addOnLongClickListener(R.id.receiver_content_tv);
                 helper.addOnLongClickListener(R.id.sender_content_tv);
+                helper.addOnClickListener(R.id.sender_quote_content_tv);
+                helper.addOnClickListener(R.id.receiver_quote_content_tv);
                 int fromUserId = messageBodyBean.getFromUserId();
                 EditText sendEt = helper.getView(R.id.sender_content_tv);
                 EditText receiveEt = helper.getView(R.id.receiver_content_tv);
