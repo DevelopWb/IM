@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.juntai.disabled.basecomponent.mvp.IPresenter;
-import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
-import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.disabled.video.CustomStandardNoUiGSYVideoPlayer;
 import com.juntai.wisdom.im.base.BaseAppFragment;
@@ -46,11 +44,6 @@ public class DisplayVideoFileFragment extends BaseAppFragment {
     @Override
     protected void initView() {
        String filePath = getArguments().getString(BASE_STRING);
-        if (!FileCacheUtils.isFileExists(filePath)) {
-                    ToastUtils.toast(mContext,"文件已失效");
-            ((FileDetailActivity)getActivity()).finish();
-            return;
-        }
         mVideoplayCp = (CustomStandardNoUiGSYVideoPlayer)getView(R.id.videoplay_cp);
         PlayerFactory.setPlayManager(Exo2PlayerManager.class);
         mVideoplayCp.setUp(filePath, true, "");

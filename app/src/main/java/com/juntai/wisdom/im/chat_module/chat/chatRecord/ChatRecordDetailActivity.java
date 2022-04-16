@@ -10,13 +10,19 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.juntai.disabled.basecomponent.base.BaseWebViewActivity;
 import com.juntai.disabled.basecomponent.mvp.BasePresenter;
+import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
 import com.juntai.disabled.bdmap.act.LocateShowActivity;
+import com.juntai.disabled.video.img.PicDisplayActivity;
+import com.juntai.disabled.video.player.VideoNetPlayerActivity;
 import com.juntai.wisdom.im.base.BaseRecyclerviewActivity;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
+import com.juntai.wisdom.im.chat_module.ChatDetailDisplayActivity;
 import com.juntai.wisdom.im.chat_module.chat.displayFile.FileDetailActivity;
+import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,33 +54,52 @@ public class ChatRecordDetailActivity extends BaseRecyclerviewActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MultipleItem multipleItem = (MultipleItem) adapter.getData().get(position);
                 MessageBodyBean messageBodyBean = (MessageBodyBean) multipleItem.getObject();
+                switch (multipleItem.getItemType()) {
+                    case MultipleItem.ITEM_RECEIVE_AUDIO:
+                    case MultipleItem.ITEM_SEND_AUDIO:
+                    case MultipleItem.ITEM_CHAT_PIC_VIDEO:
+                        startActivity(new Intent(mContext, ChatDetailDisplayActivity.class).putExtra(BASE_PARCELABLE,messageBodyBean));
 
-                // : 2022/3/18 收藏的文件都已经保存到本地
-                switch (messageBodyBean.getMsgType()) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 8:
-                        startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE, messageBodyBean));
                         break;
-                    case 6:
+                    case MultipleItem.ITEM_CHAT_LOCATE:
+                        //位置信息
                         LocateShowActivity.startLocateActivity(mContext, Double.parseDouble(messageBodyBean.getLat()), Double.parseDouble(messageBodyBean.getLng()), messageBodyBean.getAddrName(), messageBodyBean.getAddrDes());
+
                         break;
-                    case 9:
+                    case MultipleItem.ITEM_CHAT_FILE:
+                        startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE
+                                , messageBodyBean));
+                        break;
+
+                    case MultipleItem.ITEM_CHAT_RECORD:
                         startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING,TextUtils.isEmpty(messageBodyBean.getQuoteMsg())?messageBodyBean.getContent():messageBodyBean.getQuoteMsg()));
                         break;
-                    case 11:
+                    case MultipleItem.ITEM_CHAT_OUTSIDE_SHARE:
                         startActivity(new Intent(mContext, BaseWebViewActivity.class).putExtra("url", messageBodyBean.getShareUrl()));
+
                         break;
                     default:
                         break;
                 }
-
             }
         });
-
     }
 
+    //查看图片
+    private void displayPicVideo(MessageBodyBean messagePicBean) {
+        String content = messagePicBean.getContent();
+        if (1 == FileCacheUtils.getFileType(content)) {
+            ArrayList<String> photos = new ArrayList<>();
+            photos.add(UrlFormatUtil.getImageOriginalUrl(content));
+            startActivity(new Intent(mContext, PicDisplayActivity.class)
+                    .putExtra(PicDisplayActivity.IMAGEPATHS, photos)
+                    .putExtra(PicDisplayActivity.IMAGEITEM, 0));
+        } else if (2 == FileCacheUtils.getFileType(content)) {
+            startActivity(new Intent(mContext, VideoNetPlayerActivity.class).putExtra(
+                    "path", UrlFormatUtil.getImageOriginalUrl(content)));
+        }
+
+    }
     private void initAdapterDataFromMsgTypes(MessageBodyBean messageBean) {
         switch (messageBean.getMsgType()) {
             case 0:

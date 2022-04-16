@@ -1118,6 +1118,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
         super.onDestroy();
         allPicVideoPath.clear();
         ACTIVITY_IS_ON = false;
+        AudioPlayManager.getInstance().stopPlay();
         AudioRecordManager.getInstance(this).setAudioRecordListener(null);
         AudioPlayManager.getInstance().release();
         releaseDialog();

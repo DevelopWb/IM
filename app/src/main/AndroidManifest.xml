@@ -3,6 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.juntai.disabled.federation">
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 9.0 勿扰权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 华为小红点权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE " />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name="com.juntai.wisdom.im.MyApp"
         android:allowBackup="true"
@@ -15,9 +37,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name="com.juntai.wisdom.im.chat_module.ChatDetailDisplayActivity"></activity>
         <activity
             android:name="com.juntai.wisdom.im.chat_module.OutSideShareActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity android:name="com.juntai.wisdom.im.chat_module.chat.displayFile.FileDetailActivity" />
         <activity android:name="com.juntai.wisdom.im.mine.myCollect.CollectionDetailActivity" />
         <activity android:name="com.juntai.wisdom.im.mine.myCollect.SearchCollectActivity" />
@@ -188,7 +211,6 @@
             android:name="com.juntai.wisdom.im.entrance.LoginActivity"
             android:exported="true"
             android:launchMode="singleTop" />
-
         <activity
             android:name="com.juntai.wisdom.im.entrance.SplashActivity"
             android:exported="true"
@@ -199,7 +221,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.juntai.wisdom.im.entrance.main.MainActivity"
             android:exported="true"
@@ -213,7 +234,6 @@
         <meta-data
             android:name="com.alibaba.app.appkey"
             android:value="333625246" />
-
         <meta-data
             android:name="com.alibaba.app.appsecret"
             android:value="e1a57800697b428790fc54ddb637cc49" /> <!-- 适配华为（huawei）刘海屏 -->
@@ -251,7 +271,7 @@
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
             android:label="dexopt"
-            android:process=":dexopt"></service> <!-- vivo appid和appkey    不能在lib中注册 -->
+            android:process=":dexopt" /> <!-- vivo appid和appkey    不能在lib中注册 -->
         <service
             android:name="com.juntai.wisdom.im.utils.aliPush.MyMessageIntentService"
             android:exported="false">
@@ -267,29 +287,5 @@
         </service>
         <service android:name="com.juntai.disabled.bdmap.service.LocateAndUpload" />
     </application>
-
-    <uses-feature android:name="android.hardware.camera" />
-
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 9.0 勿扰权限 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 华为小红点权限 -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE " />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission
-        android:name="android.permission.READ_LOGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-
-    <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest>

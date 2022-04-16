@@ -65,6 +65,7 @@ public class DisplayAudioFileFragment extends BaseAppFragment implements View.On
     @Override
     public void onDestroy() {
         AudioPlayManager.getInstance().stopPlay();
+        AudioPlayManager.getInstance().release();
         super.onDestroy();
     }
 
@@ -75,7 +76,7 @@ public class DisplayAudioFileFragment extends BaseAppFragment implements View.On
                 break;
             case R.id.audio_bg_rl:
                 AudioPlayManager.getInstance().stopPlay();
-                AudioPlayManager.getInstance().startPlay(mContext, Uri.parse(filePath), new IAudioPlayListener() {
+                AudioPlayManager.getInstance().startPlay(mContext.getApplicationContext(), Uri.parse(filePath), new IAudioPlayListener() {
                     @Override
                     public void onStart(Uri var1) {
                         if (mIvAudio != null && mIvAudio.getDrawable() instanceof AnimationDrawable) {

@@ -3,9 +3,7 @@ package com.juntai.wisdom.im.chat_module.chat.displayFile;
 import android.os.Bundle;
 
 import com.juntai.disabled.basecomponent.mvp.IPresenter;
-import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
-import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.disabled.video.img.PhotoView;
 import com.juntai.wisdom.im.base.BaseAppFragment;
@@ -42,11 +40,6 @@ public class DisplayImageFileFragment extends BaseAppFragment {
     @Override
     protected void initView() {
         String picPath = getArguments().getString(BASE_STRING);
-        if (!FileCacheUtils.isFileExists(picPath)) {
-            ToastUtils.toast(mContext,"文件已失效");
-            ((FileDetailActivity)getActivity()).finish();
-            return;
-        }
         mPhotoDisplayPv = (PhotoView) getView(R.id.photo_display_pv);
         mPhotoDisplayPv.enable();
         ImageLoadUtil.loadImageCache(mContext, picPath, mPhotoDisplayPv);
