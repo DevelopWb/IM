@@ -986,8 +986,6 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                                         FileCacheUtils.getAppVideoPath(false));
 
                                                 break;
-                                            case 3:
-                                                break;
                                             case 8:
                                                 mPresenter.collectFile(mContext, operateingMsgBean,
                                                         FileCacheUtils.getAppFilePath(false));
@@ -1121,6 +1119,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
         allPicVideoPath.clear();
         ACTIVITY_IS_ON = false;
         AudioRecordManager.getInstance(this).setAudioRecordListener(null);
+        AudioPlayManager.getInstance().release();
         releaseDialog();
         if (noticePeopleDialog != null) {
             if (noticePeopleDialog.isShowing()) {

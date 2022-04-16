@@ -60,9 +60,19 @@ public class MyCollectActivity extends BaseRecyclerviewActivity<MyCenterPresent>
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MultipleItem multipleItem = (MultipleItem) adapter.getItem(position);
                 MessageBodyBean messageBodyBean = (MessageBodyBean) multipleItem.getObject();
-// TODO: 2022/3/18 收藏的文件都已经保存到本地 
-
-                startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE, messageBodyBean));
+// : 2022/3/18 收藏的文件都已经保存到本地
+                switch (messageBodyBean.getMsgType()) {
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 8:
+                        startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE, messageBodyBean));
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        break;
+                }
 
             }
         });

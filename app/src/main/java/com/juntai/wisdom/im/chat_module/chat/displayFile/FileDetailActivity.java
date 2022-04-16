@@ -125,6 +125,7 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
                 }
                 break;
             case 3:
+                openUnofficeFile("用其他应用打开");
                 break;
             case 8:
                 if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
@@ -290,7 +291,7 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
             case 3:
                 setViewVisibleOrGone(false, mFileBaseInfoLl, mFileDetailProgressLl, mFileDetailButtonLl);
                 mFileFrameLl.setVisibility(View.VISIBLE);
-                transaction.replace(R.id.display_file_fl, DisplayAudioFileFragment.getInstance(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean)));
+                transaction.replace(R.id.display_file_fl, DisplayAudioFileFragment.getInstance(messageBodyBean.getContent()));
                 transaction.commit();
                 break;
             case 8:

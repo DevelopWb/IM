@@ -78,16 +78,16 @@ public class DisplayAudioFileFragment extends BaseAppFragment implements View.On
                 AudioPlayManager.getInstance().startPlay(mContext, Uri.parse(filePath), new IAudioPlayListener() {
                     @Override
                     public void onStart(Uri var1) {
-                        if (mIvAudio != null && mIvAudio.getBackground() instanceof AnimationDrawable) {
-                            AnimationDrawable animation = (AnimationDrawable) mIvAudio.getBackground();
+                        if (mIvAudio != null && mIvAudio.getDrawable() instanceof AnimationDrawable) {
+                            AnimationDrawable animation = (AnimationDrawable) mIvAudio.getDrawable();
                             animation.start();
                         }
                     }
 
                     @Override
                     public void onStop(Uri var1) {
-                        if (mIvAudio != null && mIvAudio.getBackground() instanceof AnimationDrawable) {
-                            AnimationDrawable animation = (AnimationDrawable) mIvAudio.getBackground();
+                        if (mIvAudio != null && mIvAudio.getDrawable() instanceof AnimationDrawable) {
+                            AnimationDrawable animation = (AnimationDrawable) mIvAudio.getDrawable();
                             animation.stop();
                             animation.selectDrawable(0);
                         }
@@ -96,8 +96,8 @@ public class DisplayAudioFileFragment extends BaseAppFragment implements View.On
 
                     @Override
                     public void onComplete(Uri var1) {
-                        if (mIvAudio != null && mIvAudio.getBackground() instanceof AnimationDrawable) {
-                            AnimationDrawable animation = (AnimationDrawable) mIvAudio.getBackground();
+                        if (mIvAudio != null && mIvAudio.getDrawable() instanceof AnimationDrawable) {
+                            AnimationDrawable animation = (AnimationDrawable) mIvAudio.getDrawable();
                             animation.stop();
                             animation.selectDrawable(0);
                         }
