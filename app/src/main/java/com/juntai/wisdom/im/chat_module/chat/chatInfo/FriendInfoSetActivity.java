@@ -33,7 +33,7 @@ import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.mine.myinfo.BaseModifyActivity;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.ObjectBox;
-import com.juntai.wisdom.im.utils.SendMsgUtil;
+import com.juntai.wisdom.im.utils.OperateMsgUtil;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.orhanobut.hawk.Hawk;
 
@@ -152,12 +152,12 @@ public class FriendInfoSetActivity extends BaseRecyclerviewActivity<ChatPresent>
                             sendCardDialog.dismiss();
 
                             // : 2021-12-07 发送名片
-                            MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(7, cardContactBean.getId(), cardContactBean.getUuid(), cardContactBean.getRemarksNickname(), cardContactBean.getHeadPortrait(), "名片");
+                            MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(7, cardContactBean.getId(), cardContactBean.getUuid(), cardContactBean.getRemarksNickname(), cardContactBean.getHeadPortrait(), "名片");
                             messageBody.setOtherUserId(contactBean.getId());
                             messageBody.setOtherAccount(contactBean.getAccountNumber());
                             messageBody.setOtherHead(contactBean.getHeadPortrait());
                             messageBody.setOtherNickname(contactBean.getNickname());
-                            mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+                            mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
                             ObjectBox.addMessage(messageBody);
 
                             if (!TextUtils.isEmpty(getTextViewValue(mToReceiverMsgEt))) {
@@ -181,8 +181,8 @@ public class FriendInfoSetActivity extends BaseRecyclerviewActivity<ChatPresent>
      * 发送普通信息
      */
     private void sendNormalMsg(String content, ContactBean contactBean) {
-        MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(0, contactBean.getId(), contactBean.getUuid(), contactBean.getRemarksNickname(), contactBean.getHeadPortrait(), content);
-        mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+        MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(0, contactBean.getId(), contactBean.getUuid(), contactBean.getRemarksNickname(), contactBean.getHeadPortrait(), content);
+        mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         ObjectBox.addMessage(messageBody);
     }
 

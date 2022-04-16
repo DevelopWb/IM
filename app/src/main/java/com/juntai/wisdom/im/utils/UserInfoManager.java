@@ -65,11 +65,7 @@ public class UserInfoManager {
      * @return
      */
     public static boolean isLogin() {
-        if (getUser() == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return Hawk.contains(HawkProperty.SP_KEY_USER)&&Hawk.contains(HawkProperty.SP_KEY_TOKEN);
     }
 
     /**

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/audio_bg_rl"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@drawable/sp_filled_gray_lighter"
+        android:paddingLeft="15dp">
+
+        <ImageView
+            android:id="@+id/ivAudio"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/audio_animation_left_list" />
+
+    </RelativeLayout>
+
+</LinearLayout>

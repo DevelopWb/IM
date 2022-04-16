@@ -3,17 +3,21 @@ package com.juntai.wisdom.im.mine.myCollect;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.juntai.disabled.basecomponent.base.BaseWebViewActivity;
 import com.juntai.disabled.basecomponent.utils.ToastUtils;
+import com.juntai.disabled.bdmap.act.LocateShowActivity;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.AppHttpPath;
 import com.juntai.wisdom.im.base.BaseRecyclerviewActivity;
 import com.juntai.wisdom.im.bean.CollectMessagesBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
+import com.juntai.wisdom.im.chat_module.chat.chatRecord.ChatRecordDetailActivity;
 import com.juntai.wisdom.im.chat_module.chat.displayFile.FileDetailActivity;
 import com.juntai.wisdom.im.mine.MyCenterContract;
 import com.juntai.wisdom.im.mine.MyCenterPresent;
@@ -60,10 +64,26 @@ public class MyCollectActivity extends BaseRecyclerviewActivity<MyCenterPresent>
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MultipleItem multipleItem = (MultipleItem) adapter.getItem(position);
                 MessageBodyBean messageBodyBean = (MessageBodyBean) multipleItem.getObject();
-// TODO: 2022/3/18 收藏的文件都已经保存到本地 
-
-                startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE, messageBodyBean));
-
+                // : 2022/3/18 收藏的文件都已经保存到本地
+                switch (messageBodyBean.getMsgType()) {
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 8:
+                        startActivity(new Intent(mContext, FileDetailActivity.class).putExtra(BASE_PARCELABLE, messageBodyBean));
+                        break;
+                    case 6:
+                        LocateShowActivity.startLocateActivity(mContext, Double.parseDouble(messageBodyBean.getLat()), Double.parseDouble(messageBodyBean.getLng()), messageBodyBean.getAddrName(), messageBodyBean.getAddrDes());
+                        break;
+                    case 9:
+                        startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING, TextUtils.isEmpty(messageBodyBean.getQuoteMsg()) ? messageBodyBean.getContent() : messageBodyBean.getQuoteMsg()));
+                        break;
+                    case 11:
+                        startActivity(new Intent(mContext, BaseWebViewActivity.class).putExtra("url", messageBodyBean.getShareUrl()));
+                        break;
+                    default:
+                        break;
+                }
             }
         });
         baseQuickAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {

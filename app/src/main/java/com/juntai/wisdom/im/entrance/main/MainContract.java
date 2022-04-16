@@ -29,6 +29,7 @@ public interface MainContract {
     String GROUP_QRCODE = "群二维码";
     String REMOVE_BLOCK_LIST = "移除黑名单";
     String SELECT_MORE = "多选";
+    String QUOTE = "引用";
     String DELETE_MSG = "删除";
     String FORWARD_MSG = "转发";
     String COPY_MSG = "复制";

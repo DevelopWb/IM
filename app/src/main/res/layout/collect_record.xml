@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/collect_msg_content_tv"
+        android:id="@+id/collect_chat_record_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"

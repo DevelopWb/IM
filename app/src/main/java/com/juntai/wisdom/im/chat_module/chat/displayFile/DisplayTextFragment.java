@@ -1,6 +1,7 @@
 package com.juntai.wisdom.im.chat_module.chat.displayFile;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.juntai.disabled.basecomponent.mvp.IPresenter;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
@@ -15,18 +16,18 @@ import com.juntai.wisdom.im.base.BaseAppFragment;
  * @UpdateUser: 更新者
  * @UpdateDate: 2022-03-05 15:16
  */
-public class DisplayImageFileFragment extends BaseAppFragment {
-    private PhotoView mPhotoDisplayPv;
+public class DisplayTextFragment extends BaseAppFragment {
+    private TextView mContentTv;
 
     @Override
     protected IPresenter createPresenter() {
         return null;
     }
 
-    public static DisplayImageFileFragment getInstance(String picPath) {
-        DisplayImageFileFragment fragment = new DisplayImageFileFragment();
+    public static DisplayTextFragment getInstance(String content) {
+        DisplayTextFragment fragment = new DisplayTextFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(BASE_STRING, picPath);
+        bundle.putString(BASE_STRING, content);
         fragment.setArguments(bundle);
         return fragment;
 
@@ -34,15 +35,14 @@ public class DisplayImageFileFragment extends BaseAppFragment {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.display_image_file_fg;
+        return R.layout.display_text_fg;
     }
 
     @Override
     protected void initView() {
-        String picPath = getArguments().getString(BASE_STRING);
-        mPhotoDisplayPv = (PhotoView) getView(R.id.photo_display_pv);
-        mPhotoDisplayPv.enable();
-        ImageLoadUtil.loadImageCache(mContext, picPath, mPhotoDisplayPv);
+        String content = getArguments().getString(BASE_STRING);
+        mContentTv = (TextView) getView(R.id.display_content_tv);
+        mContentTv.setText(content);
 
     }
 
