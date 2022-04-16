@@ -125,6 +125,7 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
                 }
                 break;
             case 3:
+                openUnofficeFile("用其他应用打开");
                 break;
             case 8:
                 if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
@@ -138,13 +139,14 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
                     if (!FileCacheUtils.isFileExists(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean))) {
                         // 文件不存在
                         setViewVisibleOrGone(true, mFileDetailProgressLl);
-                       DownloadFileInfo downloadFileInfo =  FileDownloader.getDownloadFile(messageBodyBean.getContent());
+                        DownloadFileInfo downloadFileInfo = FileDownloader.getDownloadFile(messageBodyBean.getContent());
                         if (downloadFileInfo != null) {
                             FileDownloader.delete(messageBodyBean.getContent(), true, new OnDeleteDownloadFileListener() {
                                 @Override
                                 public void onDeleteDownloadFilePrepared(DownloadFileInfo downloadFileNeedDelete) {
 
                                 }
+
                                 @Override
                                 public void onDeleteDownloadFileSuccess(DownloadFileInfo downloadFileDeleted) {
                                     FileDownloader.start(messageBodyBean.getContent());
@@ -152,10 +154,10 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
 
                                 @Override
                                 public void onDeleteDownloadFileFailed(DownloadFileInfo downloadFileInfo, DeleteDownloadFileFailReason failReason) {
-                                    ToastUtils.toast(mContext,"onDeleteDownloadFileFaileddwe4512341");
+                                    ToastUtils.toast(mContext, "onDeleteDownloadFileFaileddwe4512341");
                                 }
                             });
-                        }else {
+                        } else {
                             FileDownloader.start(messageBodyBean.getContent());
                         }
 
@@ -186,26 +188,35 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
             case 1:
                 setViewVisibleOrGone(false, mFileBaseInfoLl, mFileDetailProgressLl, mFileDetailButtonLl);
                 mFileFrameLl.setVisibility(View.VISIBLE);
+                checkFile(filePath);
                 transaction.replace(R.id.display_file_fl, DisplayImageFileFragment.getInstance(filePath));
                 transaction.commit();
                 break;
             case 2:
                 setViewVisibleOrGone(false, mFileBaseInfoLl, mFileDetailProgressLl, mFileDetailButtonLl);
                 mFileFrameLl.setVisibility(View.VISIBLE);
+                checkFile(filePath);
                 transaction.replace(R.id.display_file_fl, DisplayVideoFileFragment.getInstance(filePath));
                 transaction.commit();
                 break;
             default:
                 if (!addTbsReaderView(filePath)) {
                     if (getSavedFileName(messageBodyBean).contains(".apk")) {
-                        mPresenter.installApk(mContext,filePath);
-                    }else {
+                        mPresenter.installApk(mContext, filePath);
+                    } else {
                         openUnofficeFile("用其他应用打开");
 
                     }
 
                 }
                 break;
+        }
+    }
+
+    private void checkFile(String filePath) {
+        if (!FileCacheUtils.isFileExists(filePath)) {
+            ToastUtils.toast(mContext, "文件已失效");
+            finish();
         }
     }
 
@@ -271,8 +282,10 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
                 setViewVisibleOrGone(false, mFileBaseInfoLl, mFileDetailProgressLl, mFileDetailButtonLl);
                 mFileFrameLl.setVisibility(View.VISIBLE);
                 if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
+                    checkFile(messageBodyBean.getLocalCatchPath());
                     transaction.replace(R.id.display_file_fl, DisplayImageFileFragment.getInstance(messageBodyBean.getLocalCatchPath()));
                 } else {
+                    checkFile(FileCacheUtils.getAppImagePath(false) + getSavedFileName(messageBodyBean));
                     transaction.replace(R.id.display_file_fl, DisplayImageFileFragment.getInstance(FileCacheUtils.getAppImagePath(false) + getSavedFileName(messageBodyBean)));
                 }
                 transaction.commit();
@@ -281,8 +294,10 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
                 setViewVisibleOrGone(false, mFileBaseInfoLl, mFileDetailProgressLl, mFileDetailButtonLl);
                 mFileFrameLl.setVisibility(View.VISIBLE);
                 if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
+                    checkFile(messageBodyBean.getLocalCatchPath());
                     transaction.replace(R.id.display_file_fl, DisplayVideoFileFragment.getInstance(messageBodyBean.getLocalCatchPath()));
                 } else {
+                    checkFile(FileCacheUtils.getAppVideoPath(false) + getSavedFileName(messageBodyBean));
                     transaction.replace(R.id.display_file_fl, DisplayVideoFileFragment.getInstance(FileCacheUtils.getAppVideoPath(false) + getSavedFileName(messageBodyBean)));
                 }
                 transaction.commit();
@@ -290,7 +305,7 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
             case 3:
                 setViewVisibleOrGone(false, mFileBaseInfoLl, mFileDetailProgressLl, mFileDetailButtonLl);
                 mFileFrameLl.setVisibility(View.VISIBLE);
-                transaction.replace(R.id.display_file_fl, DisplayAudioFileFragment.getInstance(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean)));
+                transaction.replace(R.id.display_file_fl, DisplayAudioFileFragment.getInstance(messageBodyBean.getContent()));
                 transaction.commit();
                 break;
             case 8:

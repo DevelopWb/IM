@@ -145,6 +145,9 @@ public class ChatRecordDeatilAdapter extends BaseMultiItemQuickAdapter<MultipleI
                 break;
             case MultipleItem.ITEM_RECEIVE_AUDIO:
             case MultipleItem.ITEM_SEND_AUDIO:
+                view = View.inflate(mContext, R.layout.chat_record_audio, null);
+                frameLayout.addView(view);
+
                 break;
 
             case MultipleItem.ITEM_CHAT_PIC_VIDEO:

@@ -2,6 +2,7 @@ package com.juntai.wisdom.im.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.mcxtzhang.indexlib.IndexBar.bean.BaseIndexPinyinBean;
 
@@ -216,11 +217,11 @@ public class ContactBean extends BaseIndexPinyinBean implements Parcelable {
     }
 
     public String getRemarksNickname() {
-        return remarksNickname == null ? getNickname() : remarksNickname;
+        return TextUtils.isEmpty(remarksNickname) ? getNickname() : remarksNickname;
     }
 
     public void setRemarksNickname(String remarksNickname) {
-        this.remarksNickname = remarksNickname == null ? "" : remarksNickname;
+        this.remarksNickname = TextUtils.isEmpty(remarksNickname) ? getNickname() : remarksNickname;
     }
 
     public String getHeadPortrait() {
@@ -242,7 +243,7 @@ public class ContactBean extends BaseIndexPinyinBean implements Parcelable {
 
     @Override
     public String getTarget() {
-        return remarksNickname;
+        return getRemarksNickname();
     }
 
     @Override

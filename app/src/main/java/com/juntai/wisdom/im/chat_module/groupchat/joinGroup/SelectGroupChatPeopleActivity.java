@@ -19,7 +19,7 @@ import com.juntai.wisdom.im.chat_module.groupchat.GroupChatActivity;
 import com.juntai.wisdom.im.contact.searchContact.SearchContactActivity;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.utils.ObjectBox;
-import com.juntai.wisdom.im.utils.SendMsgUtil;
+import com.juntai.wisdom.im.utils.OperateMsgUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 
 import java.util.ArrayList;
@@ -150,7 +150,7 @@ public class SelectGroupChatPeopleActivity extends BaseAppActivity<ChatPresent> 
                     GroupDetailInfoBean dataBean = groupBean.getData();
                     dataBean.setGroupId(Integer.parseInt(String.valueOf(dataBean.getId())));
                     //本地添加一条群聊消息
-                    MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(10, dataBean.getGroupId(), 0,null, "你已成功创建群聊");
+                    MessageBodyBean messageBody = OperateMsgUtil.getGroupMsg(10, dataBean.getGroupId(), 0,null, "你已成功创建群聊");
                     ObjectBox.addMessage(messageBody);
                     ObjectBox.addGroup(dataBean);
                     //跳转到群聊界面

@@ -189,12 +189,12 @@ public class AudioPlayManager implements SensorEventListener {
                             AudioPlayManager.this.context = null;
                         }
 
-                        AudioPlayManager.this.reset();
+                        AudioPlayManager.this.release();
                     }
                 });
                 this._mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                     public boolean onError(MediaPlayer mp, int what, int extra) {
-                        AudioPlayManager.this.reset();
+                        AudioPlayManager.this.release();
                         return true;
                     }
                 });
@@ -212,7 +212,7 @@ public class AudioPlayManager implements SensorEventListener {
                     this._playListener = null;
                 }
 
-                this.reset();
+                this.release();
             }
 
         } else {
@@ -229,10 +229,10 @@ public class AudioPlayManager implements SensorEventListener {
             this._playListener.onStop(this._playingUri);
         }
 
-        this.reset();
+        this.release();
     }
 
-    private void reset() {
+    public void release() {
         this.resetMediaPlayer();
         this.resetAudioPlayManager();
     }

@@ -26,7 +26,7 @@ import com.juntai.wisdom.im.bean.UserBean;
 import com.juntai.wisdom.im.bean.UserInfoByUUIDBean;
 import com.juntai.wisdom.im.utils.MyFileProvider;
 import com.juntai.wisdom.im.utils.ObjectBox;
-import com.juntai.wisdom.im.utils.SendMsgUtil;
+import com.juntai.wisdom.im.utils.OperateMsgUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 
 import java.io.File;
@@ -139,14 +139,14 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
                 //文件不存在
                 ToastUtils.toast(mContext, "当前选择的音频/图片/视频/文件还没有下载完成,下载完成之后才可收藏");
             } else {
-                collect(SendMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.COLLECT);
+                collect(OperateMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.COLLECT);
             }
         } else {
             if (!FileCacheUtils.isFileExists(appVideoPath + getSavedFileName(messageBodyBean))) {
                 //文件不存在
                 ToastUtils.toast(mContext, "当前选择的音频/图片/视频/文件还没有下载完成,下载完成之后才可收藏");
             } else {
-               collect(SendMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.COLLECT);
+               collect(OperateMsgUtil.getMsgBuilder(messageBodyBean).build(), AppHttpPath.COLLECT);
             }
         }
     }

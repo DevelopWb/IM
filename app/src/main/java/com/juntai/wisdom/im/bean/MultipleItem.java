@@ -87,6 +87,8 @@ public class MultipleItem implements MultiItemEntity {
     public static final int ITEM_COLLECTION_AUDIO = 204;//  语音
     public static final int ITEM_COLLECTION_FILE = 205;//  文件
     public static final int ITEM_COLLECTION_LOCATE = 206;//  位置
+    public static final int ITEM_COLLECTION_CHAT_RECORD = 207;//  聊天记录
+    public static final int ITEM_COLLECTION_OUTSIDE_SHARE = 208;//  外部分享
 
 
 

@@ -29,7 +29,7 @@ import com.juntai.wisdom.im.chat_module.chat.forwardMsg.SelectGroupAndContactFra
 import com.juntai.wisdom.im.entrance.main.MainActivity;
 import com.juntai.wisdom.im.entrance.main.MainContract;
 import com.juntai.wisdom.im.utils.ObjectBox;
-import com.juntai.wisdom.im.utils.SendMsgUtil;
+import com.juntai.wisdom.im.utils.OperateMsgUtil;
 
 import java.util.List;
 
@@ -229,13 +229,13 @@ public class OutSideShareActivity extends BaseAppActivity<ChatPresent> implement
      * //0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息，7分享名片，8文件 9合并消息
      */
     private void sendPrivateMsg(ContactBean toContactBean, boolean isTextMsg, String textContent) {
-        MessageBodyBean messageBody = SendMsgUtil.getPrivateMsg(isTextMsg ? 0 : 11, toContactBean.getId(), toContactBean.getUuid(), toContactBean.getRemarksNickname(), toContactBean.getHeadPortrait(), isTextMsg ? textContent : String.format("[链接]%s", shareTitle));
+        MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(isTextMsg ? 0 : 11, toContactBean.getId(), toContactBean.getUuid(), toContactBean.getRemarksNickname(), toContactBean.getHeadPortrait(), isTextMsg ? textContent : String.format("[链接]%s", shareTitle));
         messageBody.setShareTitle(shareTitle);
         messageBody.setShareContent(shareContent);
         messageBody.setSharePic(sharePic);
         messageBody.setShareUrl(shareUrl);
         messageBody.setShareAppName(shareFromApp);
-        mPresenter.sendPrivateMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+        mPresenter.sendPrivateMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         ObjectBox.addMessage(messageBody);
     }
 
@@ -243,13 +243,13 @@ public class OutSideShareActivity extends BaseAppActivity<ChatPresent> implement
      * 发送群聊普通信息
      */
     private void sendGroupNormalMsg(GroupDetailInfoBean groupBean, boolean isTextMsg, String textContent) {
-        MessageBodyBean messageBody = SendMsgUtil.getGroupMsg(isTextMsg ? 0 : 11, groupBean.getGroupId(), groupBean.getUserNickname(), isTextMsg ? textContent : String.format("[链接]%s", shareTitle));
+        MessageBodyBean messageBody = OperateMsgUtil.getGroupMsg(isTextMsg ? 0 : 11, groupBean.getGroupId(), groupBean.getUserNickname(), isTextMsg ? textContent : String.format("[链接]%s", shareTitle));
         messageBody.setShareTitle(shareTitle);
         messageBody.setShareContent(shareContent);
         messageBody.setSharePic(sharePic);
         messageBody.setShareUrl(shareUrl);
         messageBody.setShareAppName(shareFromApp);
-        mPresenter.sendGroupMessage(SendMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
+        mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         ObjectBox.addMessage(messageBody);
     }
 

@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.juntai.disabled.basecomponent.utils.DisplayUtil;
 import com.juntai.disabled.basecomponent.utils.FileCacheUtils;
+import com.juntai.disabled.basecomponent.utils.GsonTools;
 import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.customview.WaveProgress;
@@ -29,11 +30,13 @@ import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.chat_module.chat.chatRecord.ChatRecordAdapter;
 import com.juntai.wisdom.im.utils.CalendarUtil;
 import com.juntai.wisdom.im.utils.MyFileProvider;
+import com.juntai.wisdom.im.utils.OperateMsgUtil;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
 import com.juntai.wisdom.im.utils.UserInfoManager;
 import com.negier.emojifragment.util.EmojiUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Author: tobato
@@ -108,7 +111,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 RecyclerView receiverRv = null;
                 String title = null;
 
-                String chatRecord = messageBodyBean.getContent();
+                String chatRecord = TextUtils.isEmpty(messageBodyBean.getQuoteMsg())?messageBodyBean.getContent():messageBodyBean.getQuoteMsg();
                 if (!TextUtils.isEmpty(chatRecord)) {
                     chatRecords = changeGsonToList(chatRecord);
                     if (chatRecords.size() > 5) {
@@ -117,17 +120,16 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     MessageBodyBean chatContentBean = chatRecords.get(0);
                     title = chatContentBean.getGroupId() > 0 ? "群聊的聊天记录" : String.format("%s与%s的聊天记录", chatContentBean.getFromNickname(), chatContentBean.getToNickname());
                     manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-                    chatRecordAdapter = new ChatRecordAdapter(R.layout.single_text_layout2,false);
+                    chatRecordAdapter = new ChatRecordAdapter(R.layout.single_text_layout2, false);
                     chatRecordAdapter.setOnItemClickListener(new OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 //                            响应父rv的item的点击事件
                             if (UserInfoManager.getUserId() == messageBodyBean.getFromUserId()) {
                                 helper.getView(R.id.sender_chatrecord_cl).performClick();
-                            }else {
+                            } else {
                                 helper.getView(R.id.receiver_chatrecord_cl).performClick();
                             }
-
 
 
                         }
@@ -137,7 +139,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                         public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
                             if (UserInfoManager.getUserId() == messageBodyBean.getFromUserId()) {
                                 helper.getView(R.id.sender_chatrecord_cl).performLongClick();
-                            }else {
+                            } else {
                                 helper.getView(R.id.receiver_chatrecord_cl).performLongClick();
                             }
                             return true;
@@ -285,23 +287,40 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 initSelectedViewStatus(helper, messageBodyBean);
                 helper.addOnLongClickListener(R.id.receiver_content_tv);
                 helper.addOnLongClickListener(R.id.sender_content_tv);
+                helper.addOnClickListener(R.id.sender_quote_content_tv);
+                helper.addOnClickListener(R.id.receiver_quote_content_tv);
                 int fromUserId = messageBodyBean.getFromUserId();
                 EditText sendEt = helper.getView(R.id.sender_content_tv);
                 EditText receiveEt = helper.getView(R.id.receiver_content_tv);
-                sendEt.setMaxWidth(getWidth(mContext) - dip2px(110));
-                receiveEt.setMaxWidth(getWidth(mContext) - dip2px(110));
-
+                setMaxWidth(mContext,helper.getView(R.id.sender_content_tv),110);
+                setMaxWidth(mContext,helper.getView(R.id.receiver_content_tv),110);
+                setMaxWidth(mContext,helper.getView(R.id.sender_quote_content_tv),115);
+                setMaxWidth(mContext,helper.getView(R.id.receiver_quote_content_tv),115);
+                helper.setGone(R.id.sender_quote_content_tv, false);
+                helper.setGone(R.id.receiver_quote_content_tv, false);
+                String quoteMsg = messageBodyBean.getQuoteMsg();
                 if (UserInfoManager.getUserId() == fromUserId) {
                     //我发送的消息
                     initNickName(helper, messageBodyBean, 0);
                     EmojiUtils.showEmojiTextView(mContext, sendEt, messageBodyBean.getContent(), 22);
                     ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(UserInfoManager.getHeadPic()), helper.getView(R.id.sender_pic_iv));
-
+                    if (TextUtils.isEmpty(quoteMsg)) {
+                        helper.setGone(R.id.sender_quote_content_tv, false);
+                    } else {
+                        helper.setGone(R.id.sender_quote_content_tv, true);
+                        helper.setText(R.id.sender_quote_content_tv, OperateMsgUtil.getContent(Objects.requireNonNull(GsonTools.changeGsonToBean(quoteMsg, MessageBodyBean.class))));
+                    }
                 } else {
                     //对方发送的消息
                     initNickName(helper, messageBodyBean, 1);
                     EmojiUtils.showEmojiTextView(mContext, receiveEt, messageBodyBean.getContent(), 22);
                     ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(messageBodyBean.getFromHead()), helper.getView(R.id.receiver_pic_iv));
+                    if (TextUtils.isEmpty(quoteMsg)) {
+                        helper.setGone(R.id.receiver_quote_content_tv, false);
+                    } else {
+                        helper.setGone(R.id.receiver_quote_content_tv, true);
+                        helper.setText(R.id.receiver_quote_content_tv, OperateMsgUtil.getContent(Objects.requireNonNull(GsonTools.changeGsonToBean(quoteMsg, MessageBodyBean.class))));
+                    }
                 }
                 break;
             case MultipleItem.ITEM_CHAT_VIDEO_CALL:
@@ -633,5 +652,12 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
         return content;
     }
 
-
+    /**
+     * 设置最大宽度
+     * @param mContext
+     * @param textView
+     */
+    private void  setMaxWidth(Context mContext,TextView textView,int spaceSize){
+        textView.setMaxWidth(getWidth(mContext) - dip2px(spaceSize));
+    }
 }

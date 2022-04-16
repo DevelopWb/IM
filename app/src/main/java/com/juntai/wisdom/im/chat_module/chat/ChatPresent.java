@@ -107,6 +107,7 @@ public class ChatPresent extends BaseAppPresent<IModel, MainContract.IBaseView> 
         }
         arrays.add(new HomePageMenuBean(MainContract.DELETE_MSG, R.mipmap.edit_msg_delete_icon));
         arrays.add(new HomePageMenuBean(MainContract.SELECT_MORE, R.mipmap.edit_msg_select_icon));
+        arrays.add(new HomePageMenuBean(MainContract.QUOTE, R.mipmap.edit_msg_quote_icon));
         return arrays;
     }
 
