@@ -522,7 +522,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
 
         super.onDestroy();
         SocketManager.getInstance().unConnect();
-        HawkProperty.releaseGlobleMap();
+        HawkProperty.releaseMap();
 
     }
 
