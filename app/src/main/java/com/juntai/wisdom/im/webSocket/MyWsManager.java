@@ -226,6 +226,10 @@ public class MyWsManager {
     public void showNotification(MessageBodyBean messageBody) {
         Log.d(TAG, "MyWsManager-----onMessage---发送通知");
 
+        if (UserInfoManager.getUserId()==messageBody.getFromUserId()) {
+            return;
+        }
+
         ContactBean contactBean = new ContactBean();
         String content = messageBody.getContent();
         Intent intent = new Intent();
