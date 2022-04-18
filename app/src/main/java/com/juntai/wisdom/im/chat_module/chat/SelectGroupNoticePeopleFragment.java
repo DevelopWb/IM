@@ -164,7 +164,7 @@ public class SelectGroupNoticePeopleFragment extends BaseAppFragment<MainPresent
     public void initContactData(List<ContactBean> mDatas) {
         List<MultipleItem> adapterList = new ArrayList<>();
 
-        if (groupBean.getGroupCreateUserId()== UserInfoManager.getUserId()) {
+        if (UserInfoManager.canAtAllPeople(groupBean)) {
             ContactBean groupChat = (ContactBean) new ContactBean(MainContract.CONTACT_GROUP_ALL_PEOPLE)
                     .setFriendApplyAmount(0).setTopInContact(true).setNickname(MainContract.CONTACT_GROUP_ALL_PEOPLE);
             adapterList.add(new MultipleItem(MultipleItem.ITEM_CONTACT, groupChat));

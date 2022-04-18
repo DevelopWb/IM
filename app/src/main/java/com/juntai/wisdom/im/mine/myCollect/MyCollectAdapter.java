@@ -32,6 +32,7 @@ public class MyCollectAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
      */
     public MyCollectAdapter(List<MultipleItem> data) {
         super(data);
+        // TODO: 2022/4/18   添加新消息类型的时候 这个地方需要更改
         addItemType(MultipleItem.ITEM_COLLECTION_TEXT, R.layout.collect_text);
         addItemType(MultipleItem.ITEM_COLLECTION_PIC, R.layout.collect_pic);
         addItemType(MultipleItem.ITEM_COLLECTION_VIDEO, R.layout.collect_video);

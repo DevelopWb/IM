@@ -68,6 +68,7 @@ public class ChatListAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Bas
                 helper.setText(R.id.item_name_tv, contactChatBean.getRemarksNickname());
                 ImageLoadUtil.loadSquareImage(mContext, UrlFormatUtil.getImageThumUrl(contactChatBean.getHeadPortrait()), helper.getView(R.id.contact_name_iv));
                 MessageBodyBean messageBodyBean = contactChatBean.getMessageBodyBean();
+                // TODO: 2022/4/18 新增消息类型的时候 这个地方需要注意
                 switch (messageBodyBean.getMsgType()) {
                     case 0:
                         if (messageBodyBean.isDraft()) {
@@ -109,12 +110,16 @@ public class ChatListAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Bas
                     case 9:
                         helper.setText(R.id.item_content_tv, "[聊天记录]");
                         break;
+                    case 11:
+                        helper.setText(R.id.item_content_tv, String.format("[链接]%s",messageBodyBean.getShareTitle()));
+                        break;
                     default:
                         helper.setText(R.id.item_content_tv, messageBodyBean.getContent());
                         break;
                 }
 
                 helper.setGone(R.id.amount_tv, !messageBodyBean.isRead());
+                helper.setText(R.id.amount_tv,String.valueOf(messageBodyBean.getUnreadCount()));
                 helper.setText(R.id.msg_time_tv, CalendarUtil.formatDataOfChatList(messageBodyBean.getCreateTime()));
                 break;
             case MultipleItem.ITEM_CHAT_LIST_GROUP:
@@ -124,7 +129,7 @@ public class ChatListAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Bas
                 MessageBodyBean groupMsgBean = groupBean.getLastMessage();
                 String name = UserInfoManager.getContactRemarkName(groupMsgBean);
 
-
+                // TODO: 2022/4/18 新增消息类型的时候 这个地方需要注意
                 switch (groupMsgBean.getMsgType()) {
                     case 0:
                         String groupContent = groupMsgBean.getContent();
@@ -184,12 +189,16 @@ public class ChatListAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Bas
                     case 10:
                         helper.setText(R.id.item_content_tv, groupMsgBean.getContent());
                         break;
+                    case 11:
+                        helper.setText(R.id.item_content_tv, String.format("[链接]%s",groupMsgBean.getShareTitle()));
+                        break;
                     default:
                         helper.setText(R.id.item_content_tv, String.format("%s:%s", name, groupMsgBean.getContent()));
                         break;
                 }
 
                 helper.setGone(R.id.amount_tv, !groupMsgBean.isRead());
+                helper.setText(R.id.amount_tv,String.valueOf(groupMsgBean.getUnreadCount()));
                 helper.setText(R.id.msg_time_tv, CalendarUtil.formatDataOfChatList(groupMsgBean.getCreateTime()));
                 break;
             default:

@@ -34,6 +34,10 @@ public class HawkProperty {
 
     //主要用于缓存联系人对应的备注名
     private static HashMap<Integer, String> remarkNameMap;
+    //主要用于缓存和联系人的未读消息数
+    public static HashMap<Integer, Integer> privateUnreadMsgMap = new HashMap<>();
+    //主要用于缓存和群组的未读消息数
+    public static HashMap<Integer, Integer> groupUnreadMsgMap = new HashMap<>();
 
     public static HashMap<Integer, String> getGlobleMap() {
 
@@ -46,11 +50,16 @@ public class HawkProperty {
         return remarkNameMap;
     }
 
-    public static void releaseGlobleMap() {
+    public static void releaseMap() {
 
         if (remarkNameMap != null) {
             remarkNameMap.clear();
-            remarkNameMap = null;
+        }
+        if (privateUnreadMsgMap != null) {
+            privateUnreadMsgMap.clear();
+        }
+        if (groupUnreadMsgMap != null) {
+            groupUnreadMsgMap.clear();
         }
     }
 

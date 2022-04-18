@@ -18,8 +18,9 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.functions.Consumer;
 
 /**
- * @aouther Ma
- * @date 2019/3/13
+ * @aouther tobato
+ * @description 描述  入口类的名字别乱改 影响华为推送小红点的展示
+ * @date 2022/4/18 15:25
  */
 public class SplashActivity extends BaseAppActivity {
     String[] permissions = new String[]{

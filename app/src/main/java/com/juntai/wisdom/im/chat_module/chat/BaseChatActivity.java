@@ -228,6 +228,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
         chatAdapter.setNewData(null);
         switch (chatType) {
             case 0:
+                HawkProperty.privateUnreadMsgMap.clear();
                 String msgStr = intent.getStringExtra(BASE_STRING);
                 if (!TextUtils.isEmpty(msgStr)) {
                     //离线消息跳转进来
@@ -281,6 +282,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
 
                 break;
             case 1:
+                HawkProperty.groupUnreadMsgMap.clear();
                 // : 2022-01-13 群聊 获取历史数据
                 String groupMsgStr = intent.getStringExtra(BASE_STRING);
                 if (!TextUtils.isEmpty(groupMsgStr)) {
@@ -1734,9 +1736,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                 addDateTag(startBean, endBean);
                             }
                             ObjectBox.addMessage(startBean);
-                            initAdapterDataFromMsgTypes(startBean);
                         }
-                        scrollRecyclerview();
+                       initAdapterData(getIntent());
                     }
                 }
 
@@ -1950,7 +1951,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // : 2022-02-08 这个地方添加@对应的逻辑
-                String content = s.toString().trim();
+                String content = s.toString();
                 if (TextUtils.isEmpty(content) || !content.endsWith("\u3000")) {
                     isAt = false;
                 }

@@ -401,11 +401,14 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
 
                 }
                 RelativeLayout audioRl = helper.getView(R.id.audio_bg_rl);
+                if (!TextUtils.isEmpty(messageBodyBean.getDuration())) {
+                    int increment = (getWidth(mContext) - dip2px(165)) * (int) Integer.parseInt(messageBodyBean.getDuration()) / 60;
+                    ViewGroup.LayoutParams params = audioRl.getLayoutParams();
+                    params.width = increment + dip2px(65);
+                    audioRl.setLayoutParams(params);
+                }
                 helper.setText(R.id.duration_tv, messageBodyBean.getDuration() + "''");
-                int increment = (getWidth(mContext) - dip2px(165)) * (int) Integer.parseInt(messageBodyBean.getDuration()) / 60;
-                ViewGroup.LayoutParams params = audioRl.getLayoutParams();
-                params.width = increment + dip2px(65);
-                audioRl.setLayoutParams(params);
+
                 break;
 
             case MultipleItem.ITEM_CHAT_PIC_VIDEO:
@@ -455,7 +458,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     }
 
                     if (1 == messageBodyBean.getMsgType()) {
-                        if (TextUtils.isEmpty(messageBodyBean.getLocalCatchPath())) {
+                        if (!FileCacheUtils.isFileExists(messageBodyBean.getLocalCatchPath())) {
                             //有可能是转发的网络图片 或者本地文件删除了
                             if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getContent()))) {
                                 //本地缓存存在图片
@@ -556,10 +559,10 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
      */
     private void initNickName(BaseViewHolder helper, MessageBodyBean messageBodyBean, int nickNameType) {
         String nickname = UserInfoManager.getContactRemarkName(messageBodyBean);
-
+        helper.setGone(R.id.receiver_g, false);
+        helper.setGone(R.id.sender_g, false);
         switch (nickNameType) {
             case 0:
-                helper.setGone(R.id.receiver_g, false);
                 helper.setGone(R.id.sender_g, true);
                 if (2 == messageBodyBean.getChatType()) {
                     helper.setGone(R.id.sender_nick_name_tv, false);
@@ -569,7 +572,6 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 break;
             case 1:
                 helper.setGone(R.id.receiver_g, true);
-                helper.setGone(R.id.sender_g, false);
                 if (2 == messageBodyBean.getChatType()) {
                     helper.setGone(R.id.sender_nick_name_tv, false);
                     helper.setGone(R.id.receiver_nick_name_tv, true);
