@@ -1,5 +1,6 @@
 package com.juntai.wisdom.im.utils;
 
+import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.UserBean;
 import com.juntai.wisdom.im.utils.aliPush.AliPushManager;
@@ -37,6 +38,7 @@ public class UserInfoManager {
         }
         return status;
     }
+
     /**
      * 退出登录清理缓存配置
      */
@@ -49,6 +51,7 @@ public class UserInfoManager {
         AliPushManager.getInstance().unbindAccount(UserInfoManager.getUserUUID());
 
     }
+
     /**
      * 获取用户信息
      *
@@ -65,7 +68,7 @@ public class UserInfoManager {
      * @return
      */
     public static boolean isLogin() {
-        return Hawk.contains(HawkProperty.SP_KEY_USER)&&Hawk.contains(HawkProperty.SP_KEY_TOKEN);
+        return Hawk.contains(HawkProperty.SP_KEY_USER) && Hawk.contains(HawkProperty.SP_KEY_TOKEN);
     }
 
     /**
@@ -80,18 +83,22 @@ public class UserInfoManager {
 
     /**
      * 获取用户的备注信息
+     *
      * @return
      */
     public static String getContactRemarkName(MessageBodyBean messageBodyBean) {
-        return  HawkProperty.getGlobleMap().containsKey(messageBodyBean.getFromUserId()) ? HawkProperty.getGlobleMap().get(messageBodyBean.getFromUserId()) : messageBodyBean.getFromNickname();
+        return HawkProperty.getGlobleMap().containsKey(messageBodyBean.getFromUserId()) ? HawkProperty.getGlobleMap().get(messageBodyBean.getFromUserId()) : messageBodyBean.getFromNickname();
     }
+
     /**
      * 获取用户的备注信息
+     *
      * @return
      */
-    public static String getContactRemarkName(int userId,String remarkName) {
-        return  HawkProperty.getGlobleMap().containsKey(userId) ? HawkProperty.getGlobleMap().get(userId) : remarkName;
+    public static String getContactRemarkName(int userId, String remarkName) {
+        return HawkProperty.getGlobleMap().containsKey(userId) ? HawkProperty.getGlobleMap().get(userId) : remarkName;
     }
+
     /**
      * 获取用户信息
      *
@@ -100,6 +107,7 @@ public class UserInfoManager {
     public static String getAddr() {
         return getUser() != null && getUser().getData() != null ? getUser().getData().getAddress() : "";
     }
+
     public static String getHeadPic() {
         return getUser() != null && getUser().getData() != null ? getUser().getData().getHeadPortrait() : "";
     }
@@ -112,9 +120,11 @@ public class UserInfoManager {
     public static String getUserNickName() {
         return getUser() != null && getUser().getData() != null ? getUser().getData().getNickname() : "";
     }
+
     public static String getQRCode() {
         return getUser() != null && getUser().getData() != null ? getUser().getData().getQrCode() : "";
     }
+
     /**
      * 获取usertoken
      *
@@ -132,9 +142,11 @@ public class UserInfoManager {
     public static int getUserId() {
         return getUser() != null && getUser().getData() != null ? getUser().getData().getId() : -1;
     }
+
     public static boolean getUserVerifyFriend() {
         return getUser() == null || getUser().getData() == null || getUser().getData().isAddFriendVerification();
     }
+
     /**
      * 获取getUserId
      *
@@ -152,6 +164,7 @@ public class UserInfoManager {
     public static String getUserAccount() {
         return getUser() != null && getUser().getData() != null ? getUser().getData().getAccountNumber() : "unregistered";
     }
+
     /**
      * 获取getUserId
      *
@@ -159,6 +172,20 @@ public class UserInfoManager {
      */
     public static String getUserUUID() {
         return getUser() != null && getUser().getData() != null ? getUser().getData().getUuid() : "unregistered";
+    }
+
+    /**
+     * 可以@所有人
+     *
+     * @param groupDetailInfoBean
+     * @return
+     */
+
+    // TODO: 2022/4/16  给自己的号一个权限 哈哈
+    public static boolean canAtAllPeople(GroupDetailInfoBean groupDetailInfoBean) {
+        return groupDetailInfoBean.getGroupCreateUserId() == UserInfoManager.getUserId() || "17568086930".equals(UserInfoManager.getPhoneNumber())
+                || "15905391897".equals(UserInfoManager.getPhoneNumber())
+                || "15311810032".equals(UserInfoManager.getPhoneNumber());
     }
 
 

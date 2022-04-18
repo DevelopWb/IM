@@ -560,6 +560,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
     public void onPause() {
         super.onPause();
         NotificationTool.SHOW_NOTIFICATION = true;
+//        MyWsManager.getInstance().disconnect();
     }
 
     /**

@@ -163,8 +163,8 @@ public class SelectGroupNoticePeopleFragment extends BaseAppFragment<MainPresent
      */
     public void initContactData(List<ContactBean> mDatas) {
         List<MultipleItem> adapterList = new ArrayList<>();
-// TODO: 2022/4/16  给153的号一个权限 哈哈
-        if (groupBean.getGroupCreateUserId()== UserInfoManager.getUserId()||"17568086930".equals(UserInfoManager.getPhoneNumber())||"15311810032".equals(UserInfoManager.getPhoneNumber())) {
+
+        if (UserInfoManager.canAtAllPeople(groupBean)) {
             ContactBean groupChat = (ContactBean) new ContactBean(MainContract.CONTACT_GROUP_ALL_PEOPLE)
                     .setFriendApplyAmount(0).setTopInContact(true).setNickname(MainContract.CONTACT_GROUP_ALL_PEOPLE);
             adapterList.add(new MultipleItem(MultipleItem.ITEM_CONTACT, groupChat));
