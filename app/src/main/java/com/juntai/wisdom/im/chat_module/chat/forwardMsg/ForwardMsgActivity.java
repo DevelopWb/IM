@@ -103,6 +103,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                 if (0 == forwardType) {
                     String content = null;
                     switch (operatingMsgBean.getMsgType()) {
+                        // TODO: 2022/4/18 新增消息类型的时候 这个地方需要注意
                         case 1:
                         case 2:
                             ImageView msgIv = (ImageView) view.findViewById(R.id.msg_iv);
@@ -316,10 +317,14 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
     }
 
     /**
+     *
      * 发送普通信息
      * //0：text；1：image；2：video；3：语音；4视频通话；5音频通话，6位置消息，7分享名片，8文件 9合并消息
      */
+
+
     private void sendPrivateMsg(ContactBean toContactBean, MessageBodyBean olderMessageBodyBean) {
+        // TODO: 2022/4/18   添加新消息类型的时候 这个地方需要更改
         MessageBodyBean messageBody = OperateMsgUtil.getPrivateMsg(olderMessageBodyBean.getMsgType(), toContactBean.getId(), toContactBean.getUuid(), toContactBean.getRemarksNickname(), toContactBean.getHeadPortrait(), olderMessageBodyBean.getContent());
         switch (olderMessageBodyBean.getMsgType()) {
             case 1:
@@ -327,6 +332,9 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                 break;
             case 2:
                 messageBody.setRotation(olderMessageBodyBean.getRotation());
+                messageBody.setDuration(olderMessageBodyBean.getDuration());
+                break;
+            case 3:
                 messageBody.setDuration(olderMessageBodyBean.getDuration());
                 break;
             case 6:
@@ -344,6 +352,13 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
             case 8:
                 messageBody.setFileSize(olderMessageBodyBean.getFileSize());
                 messageBody.setFileName(olderMessageBodyBean.getFileName());
+                break;
+            case 11:
+                messageBody.setShareUrl(olderMessageBodyBean.getShareUrl());
+                messageBody.setSharePic(olderMessageBodyBean.getSharePic());
+                messageBody.setShareContent(olderMessageBodyBean.getShareContent());
+                messageBody.setShareTitle(olderMessageBodyBean.getShareTitle());
+                messageBody.setShareAppName(olderMessageBodyBean.getShareAppName());
                 break;
             default:
                 break;
@@ -357,6 +372,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
      * 发送群聊普通信息
      */
     private void sendGroupNormalMsg(GroupDetailInfoBean groupBean, MessageBodyBean olderMessageBodyBean) {
+        // TODO: 2022/4/18   添加新消息类型的时候 这个地方需要更改
         MessageBodyBean messageBody = OperateMsgUtil.getGroupMsg(olderMessageBodyBean.getMsgType(), groupBean.getGroupId(), groupBean.getUserNickname(), olderMessageBodyBean.getContent());
         switch (olderMessageBodyBean.getMsgType()) {
             case 1:
@@ -364,6 +380,9 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                 break;
             case 2:
                 messageBody.setRotation(olderMessageBodyBean.getRotation());
+                messageBody.setDuration(olderMessageBodyBean.getDuration());
+                break;
+            case 3:
                 messageBody.setDuration(olderMessageBodyBean.getDuration());
                 break;
             case 6:
@@ -381,6 +400,13 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
             case 8:
                 messageBody.setFileSize(olderMessageBodyBean.getFileSize());
                 messageBody.setFileName(olderMessageBodyBean.getFileName());
+                break;
+            case 11:
+                messageBody.setShareUrl(olderMessageBodyBean.getShareUrl());
+                messageBody.setSharePic(olderMessageBodyBean.getSharePic());
+                messageBody.setShareContent(olderMessageBodyBean.getShareContent());
+                messageBody.setShareTitle(olderMessageBodyBean.getShareTitle());
+                messageBody.setShareAppName(olderMessageBodyBean.getShareAppName());
                 break;
             default:
                 break;

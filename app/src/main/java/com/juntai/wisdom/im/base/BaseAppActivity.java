@@ -595,7 +595,7 @@ public abstract class BaseAppActivity<P extends BasePresenter> extends BaseSelec
 
     /**
      * 消息详情展示
-     *
+     *  // TODO: 2022/4/18 新增消息类型的时候 这个地方需要注意
      * @param messageBodyBean
      */
     public void startToMsgDetail(Context mContext, MessageBodyBean messageBodyBean) {

@@ -64,6 +64,7 @@ public class MyCollectActivity extends BaseRecyclerviewActivity<MyCenterPresent>
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MultipleItem multipleItem = (MultipleItem) adapter.getItem(position);
                 MessageBodyBean messageBodyBean = (MessageBodyBean) multipleItem.getObject();
+                // TODO: 2022/4/18 新增消息类型的时候 这个地方需要注意
                 // : 2022/3/18 收藏的文件都已经保存到本地
                 switch (messageBodyBean.getMsgType()) {
                     case 1:

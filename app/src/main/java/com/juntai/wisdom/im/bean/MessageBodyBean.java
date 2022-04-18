@@ -55,6 +55,10 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
     private  boolean  isDraft;
 
     private int otherUserId;
+    /**
+     * 未读数
+     */
+    private int unreadCount;
     private String otherAccount;
     private String otherNickname;
     private String collectionCreateTime;
@@ -86,7 +90,6 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
     //是否被选中
     private boolean isSelected;
     private String duration;//发送音频的总时长
-    private int unreadCount;//
 
     //文件大小
     private String fileSize;
@@ -123,6 +126,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
     public void setHwPushIntentUrl(String hwPushIntentUrl) {
         this.hwPushIntentUrl = hwPushIntentUrl == null ? "" : hwPushIntentUrl;
     }
+
 
     //位置信息相关
     private String addrName;//
@@ -600,6 +604,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         dest.writeByte(this.canDelete ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isDraft ? (byte) 1 : (byte) 0);
         dest.writeInt(this.otherUserId);
+        dest.writeInt(this.unreadCount);
         dest.writeString(this.otherAccount);
         dest.writeString(this.otherNickname);
         dest.writeString(this.collectionCreateTime);
@@ -658,6 +663,7 @@ public class MessageBodyBean extends BaseWsMessageBean implements Parcelable {
         this.canDelete = in.readByte() != 0;
         this.isDraft = in.readByte() != 0;
         this.otherUserId = in.readInt();
+        this.unreadCount = in.readInt();
         this.otherAccount = in.readString();
         this.otherNickname = in.readString();
         this.collectionCreateTime = in.readString();

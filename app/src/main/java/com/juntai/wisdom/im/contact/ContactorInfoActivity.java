@@ -12,8 +12,6 @@ import com.juntai.disabled.basecomponent.utils.ImageLoadUtil;
 import com.juntai.disabled.basecomponent.widght.BaseBottomDialog;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.AppHttpPath;
-import com.juntai.wisdom.im.entrance.main.MainContract;
-import com.juntai.wisdom.im.entrance.main.MainPresent;
 import com.juntai.wisdom.im.base.BaseRecyclerviewActivity;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean;
@@ -23,6 +21,8 @@ import com.juntai.wisdom.im.bean.UserBean;
 import com.juntai.wisdom.im.chat_module.chat.PrivateChatActivity;
 import com.juntai.wisdom.im.chat_module.chat.chatInfo.FriendInfoSetActivity;
 import com.juntai.wisdom.im.chat_module.chat.videocall.VideoRequestActivity;
+import com.juntai.wisdom.im.entrance.main.MainContract;
+import com.juntai.wisdom.im.entrance.main.MainPresent;
 import com.juntai.wisdom.im.mine.MyMenuAdapter;
 import com.juntai.wisdom.im.mine.myinfo.BaseModifyActivity;
 import com.juntai.wisdom.im.utils.OperateMsgUtil;
@@ -48,7 +48,7 @@ public class ContactorInfoActivity extends BaseRecyclerviewActivity<MainPresent>
     /**
      * 账号：
      */
-    private TextView mContactorAccountTv,mContactorNickNameTv,mContactorAddrTv;
+    private TextView mContactorAccountTv, mContactorNickNameTv, mContactorAddrTv;
     private int contactId;
     private ImageView mSexTagIv;
     public static final int CONTACT_INFO_RESULT = 10090;
@@ -66,17 +66,20 @@ public class ContactorInfoActivity extends BaseRecyclerviewActivity<MainPresent>
         super.initView();
         setTitleName("");
         if (getIntent() != null) {
-            contactId = getIntent().getIntExtra(BASE_ID,0);
+            contactId = getIntent().getIntExtra(BASE_ID, 0);
             mPresenter.getUserInfo(getBaseBuilder().add("toUserId", String.valueOf(contactId)).build(), AppHttpPath.GET_USER_INFO);
         }
-        setRightTvDrawable(R.mipmap.item_more);
-        getTitleRightTv().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // : 2021-12-11 跳转到好友设置界面  资料设置
-                startActivityForResult(new Intent(mContext, FriendInfoSetActivity.class).putExtra(BASE_PARCELABLE, contactBean), BASE_REQUEST_RESULT);
-            }
-        });
+        if (UserInfoManager.getUserId()!=contactId) {
+            setRightTvDrawable(R.mipmap.item_more);
+            getTitleRightTv().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // : 2021-12-11 跳转到好友设置界面  资料设置
+                    startActivityForResult(new Intent(mContext, FriendInfoSetActivity.class).putExtra(BASE_PARCELABLE, contactBean), BASE_REQUEST_RESULT);
+                }
+            });
+
+        }
 
         baseQuickAdapter.setHeaderView(getHeadView());
 
@@ -90,6 +93,9 @@ public class ContactorInfoActivity extends BaseRecyclerviewActivity<MainPresent>
 
     public List<MultipleItem> getMenuBeans(ContactBean contactBean) {
         List<MultipleItem> menuBeans = new ArrayList<>();
+        if (UserInfoManager.getUserId() == contactBean.getId()) {
+            return menuBeans;
+        }
         menuBeans.add(new MultipleItem(MultipleItem.ITEM_DIVIDER, ""));
         menuBeans.add(new MultipleItem(MultipleItem.ITEM_MYCENTER_MENUS, new MyMenuBean(MultipleItem.SET_REMARK, 0, 0, true)));
 
@@ -98,7 +104,7 @@ public class ContactorInfoActivity extends BaseRecyclerviewActivity<MainPresent>
             menuBeans.add(new MultipleItem(MultipleItem.ITEM_DIVIDER, ""));
             menuBeans.add(new MultipleItem(MultipleItem.ITEM_PIC_TEXT_MENUS, new MyMenuBean(MultipleItem.ADD_TO_CONTRACT, 0, false)));
 
-        }else {
+        } else {
             if (contactId != UserInfoManager.getUserId()) {
                 menuBeans.add(new MultipleItem(MultipleItem.ITEM_DIVIDER, ""));
                 menuBeans.add(new MultipleItem(MultipleItem.ITEM_PIC_TEXT_MENUS, new MyMenuBean(MultipleItem.SEND_MSG, R.mipmap.send_msg_icon, true)));
@@ -217,6 +223,7 @@ public class ContactorInfoActivity extends BaseRecyclerviewActivity<MainPresent>
         });
 
     }
+
     /**
      * 释放dialog
      */
@@ -257,11 +264,11 @@ public class ContactorInfoActivity extends BaseRecyclerviewActivity<MainPresent>
                     } else {
                         mSexTagIv.setVisibility(View.GONE);
                     }
-                    ImageLoadUtil.loadHeadPic(mContext, UrlFormatUtil.getImageThumUrl(contactBean.getHeadPortrait()), mHeardPic,true);
+                    ImageLoadUtil.loadHeadPic(mContext, UrlFormatUtil.getImageThumUrl(contactBean.getHeadPortrait()), mHeardPic, true);
                     mContactorNameTv.setText(contactBean.getRemarksNickname());
-                    mContactorAccountTv.setText("超视距号:"+contactBean.getAccountNumber());
-                    mContactorNickNameTv.setText("昵称:"+contactBean.getNickname());
-                    mContactorAddrTv.setText("地区:"+contactBean.getAddress());
+                    mContactorAccountTv.setText("超视距号:" + contactBean.getAccountNumber());
+                    mContactorNickNameTv.setText("昵称:" + contactBean.getNickname());
+                    mContactorAddrTv.setText("地区:" + contactBean.getAddress());
 
                     baseQuickAdapter.setNewData(getMenuBeans(contactBean));
                 }

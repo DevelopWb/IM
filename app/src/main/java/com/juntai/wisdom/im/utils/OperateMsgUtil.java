@@ -78,17 +78,17 @@ public class OperateMsgUtil {
 // Scheme协议（例如：pushscheme://com.huawei.codelabpush/deeplink?）需要您自定义
         ComponentName componentName = null;
         if (messageBodyBean.getGroupId() > 0) {
-            //群组消息
-            componentName = new ComponentName("com.juntai.wisdom.im", "com.juntai.wisdom.im.chatlist.groupchat.GroupChatActivity");
+            //群组消息com.juntai.wisdom.im.chat_module.groupchat
+            componentName = new ComponentName("com.juntai.wisdom.im", "com.juntai.wisdom.im.chat_module.groupchat.GroupChatActivity");
         } else {
             if (messageBodyBean.getMsgType() == 4 || messageBodyBean.getMsgType() == 5) {
                 if (VideoRequestActivity.EVENT_CAMERA_REQUEST.equals(messageBodyBean.getEvent())) {
-                    componentName = new ComponentName("com.juntai.wisdom.im", "com.juntai.wisdom.im.chatlist.chat.videocall.VideoRequestActivity");
+                    componentName = new ComponentName("com.juntai.wisdom.im", "com.juntai.wisdom.im.chat_module.chat.videocall.VideoRequestActivity");
                 } else {
-                    componentName = new ComponentName("com.juntai.wisdom.im", "com.juntai.wisdom.im.chatlist.chat.PrivateChatActivity");
+                    componentName = new ComponentName("com.juntai.wisdom.im", "com.juntai.wisdom.im.chat_module.chat.PrivateChatActivity");
                 }
             } else {
-                componentName = new ComponentName("com.juntai.wisdom.im", "com.juntai.wisdom.im.chatlist.chat.PrivateChatActivity");
+                componentName = new ComponentName("com.juntai.wisdom.im", "com.juntai.wisdom.im.chat_module.chat.PrivateChatActivity");
             }
         }
 

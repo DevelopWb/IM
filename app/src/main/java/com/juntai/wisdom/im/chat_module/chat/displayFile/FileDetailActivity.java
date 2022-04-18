@@ -131,39 +131,12 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
                 if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
                     if (TextUtils.isEmpty(messageBodyBean.getLocalCatchPath())) {
                         //文件不存在
-                        ToastUtils.toast(mContext, "当前文件已经失效");
+                        localFileFailed();
                     } else {
                         openFile(messageBodyBean.getLocalCatchPath());
                     }
                 } else {
-                    if (!FileCacheUtils.isFileExists(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean))) {
-                        // 文件不存在
-                        setViewVisibleOrGone(true, mFileDetailProgressLl);
-                        DownloadFileInfo downloadFileInfo = FileDownloader.getDownloadFile(messageBodyBean.getContent());
-                        if (downloadFileInfo != null) {
-                            FileDownloader.delete(messageBodyBean.getContent(), true, new OnDeleteDownloadFileListener() {
-                                @Override
-                                public void onDeleteDownloadFilePrepared(DownloadFileInfo downloadFileNeedDelete) {
-
-                                }
-
-                                @Override
-                                public void onDeleteDownloadFileSuccess(DownloadFileInfo downloadFileDeleted) {
-                                    FileDownloader.start(messageBodyBean.getContent());
-                                }
-
-                                @Override
-                                public void onDeleteDownloadFileFailed(DownloadFileInfo downloadFileInfo, DeleteDownloadFileFailReason failReason) {
-                                    ToastUtils.toast(mContext, "onDeleteDownloadFileFaileddwe4512341");
-                                }
-                            });
-                        } else {
-                            FileDownloader.start(messageBodyBean.getContent());
-                        }
-
-                    } else {
-                        openFile(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean));
-                    }
+                    localFileFailed();
                 }
 
 
@@ -173,6 +146,40 @@ public class FileDetailActivity extends BaseAppActivity<ChatPresent> implements 
         }
 
 
+    }
+
+    /**
+     * 本地文件失效
+     */
+    private void localFileFailed() {
+        if (!FileCacheUtils.isFileExists(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean))) {
+            // 文件不存在
+            setViewVisibleOrGone(true, mFileDetailProgressLl);
+            DownloadFileInfo downloadFileInfo = FileDownloader.getDownloadFile(messageBodyBean.getContent());
+            if (downloadFileInfo != null) {
+                FileDownloader.delete(messageBodyBean.getContent(), true, new OnDeleteDownloadFileListener() {
+                    @Override
+                    public void onDeleteDownloadFilePrepared(DownloadFileInfo downloadFileNeedDelete) {
+
+                    }
+
+                    @Override
+                    public void onDeleteDownloadFileSuccess(DownloadFileInfo downloadFileDeleted) {
+                        FileDownloader.start(messageBodyBean.getContent());
+                    }
+
+                    @Override
+                    public void onDeleteDownloadFileFailed(DownloadFileInfo downloadFileInfo, DeleteDownloadFileFailReason failReason) {
+                        ToastUtils.toast(mContext, "onDeleteDownloadFileFaileddwe4512341");
+                    }
+                });
+            } else {
+                FileDownloader.start(messageBodyBean.getContent());
+            }
+
+        } else {
+            openFile(FileCacheUtils.getAppFilePath(false) + getSavedFileName(messageBodyBean));
+        }
     }
 
     /**
