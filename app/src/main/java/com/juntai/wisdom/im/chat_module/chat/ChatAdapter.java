@@ -458,7 +458,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     }
 
                     if (1 == messageBodyBean.getMsgType()) {
-                        if (TextUtils.isEmpty(messageBodyBean.getLocalCatchPath())) {
+                        if (!FileCacheUtils.isFileExists(messageBodyBean.getLocalCatchPath())) {
                             //有可能是转发的网络图片 或者本地文件删除了
                             if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getContent()))) {
                                 //本地缓存存在图片
