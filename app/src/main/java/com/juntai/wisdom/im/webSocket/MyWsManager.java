@@ -225,8 +225,8 @@ public class MyWsManager {
 
     public void showNotification(MessageBodyBean messageBody) {
         Log.d(TAG, "MyWsManager-----onMessage---发送通知");
-
-        if (UserInfoManager.getUserId()==messageBody.getFromUserId()) {
+//有时候会收到后台转发的自己发送的消息。。
+        if (UserInfoManager.getUserId() == messageBody.getFromUserId()) {
             return;
         }
 
@@ -269,7 +269,7 @@ public class MyWsManager {
         }
 
         // : 2021-12-08   这个地方需要获取到发送方在本地的备注名
-        NotificationTool.sendNotifMessage(messageBody.getChatType(),messageBody.getFromNickname(),messageBody.getMsgType(), mContext, messageBody.getFromUserId(), title, content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
+        NotificationTool.sendNotifMessage(messageBody.getChatType(), messageBody.getFromNickname(), messageBody.getMsgType(), mContext, messageBody.getFromUserId(), title, content, R.mipmap.app_icon, false, intent, messageBody.getOtherNickname());
     }
 
     //发送ws数据

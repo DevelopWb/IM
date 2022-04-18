@@ -206,6 +206,7 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                 //未读
                 messageBody.setRead(false);
                 messageBody.setCanDelete(true);
+                HawkProperty.privateUnreadMsgMap.put(messageBody.getFromUserId(),messageBody.getUnreadCount());
                 Log.d(TAG, messageBody.getContent());
                 ObjectBox.addMessage(messageBody);
                 if (VideoRequestActivity.EVENT_CAMERA_REQUEST.equals(messageBody.getEvent())) {
@@ -228,6 +229,7 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                 groupMsgBean.setId(0);
                 groupMsgBean.setRead(false);
                 groupMsgBean.setCanDelete(true);
+                HawkProperty.groupUnreadMsgMap.put(groupMsgBean.getGroupId(),groupMsgBean.getUnreadCount());
                 Log.d(TAG, groupMsgBean.getContent());
                 ObjectBox.addMessage(groupMsgBean);
             }
@@ -279,6 +281,7 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
                         }
                     }
                     if (messageBodyBean != null) {
+                        messageBodyBean.setUnreadCount(mPresenter.getPrivateChatUnreadMessageAmount(datum.getId()));
                         ArrayMap<String, MultipleItem> hashMap = new ArrayMap<>();
                         //如果包含最后一次聊天信息  首页展示
                         datum.setMessageBodyBean(messageBodyBean);
@@ -329,6 +332,7 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
 
 
                     if (messageBodyBean != null) {
+                        messageBodyBean.setUnreadCount(mPresenter.getGroupChatRecordUnreadMessageAmount(group.getGroupId()));
                         group.setLastMessage(messageBodyBean);
                         hashMap.put(messageBodyBean.getCreateTime(), new MultipleItem(MultipleItem.ITEM_CHAT_LIST_GROUP, group));
                         if (1 == group.getIsTop()) {

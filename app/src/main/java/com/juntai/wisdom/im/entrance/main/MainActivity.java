@@ -524,7 +524,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
 
         super.onDestroy();
         MyWsManager.getInstance().disconnect();
-        HawkProperty.releaseGlobleMap();
+        HawkProperty.releaseMap();
 
     }
 

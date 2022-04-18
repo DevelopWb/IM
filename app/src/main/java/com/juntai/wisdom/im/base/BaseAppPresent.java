@@ -24,6 +24,7 @@ import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MessageBodyBean_;
 import com.juntai.wisdom.im.bean.UserBean;
 import com.juntai.wisdom.im.bean.UserInfoByUUIDBean;
+import com.juntai.wisdom.im.utils.HawkProperty;
 import com.juntai.wisdom.im.utils.MyFileProvider;
 import com.juntai.wisdom.im.utils.ObjectBox;
 import com.juntai.wisdom.im.utils.OperateMsgUtil;
@@ -183,7 +184,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
                                 .and(MessageBodyBean_.toUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
                                 .and(MessageBodyBean_.fromUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
                         ));
-        return builder
+        return builder.order(MessageBodyBean_.createTime)
                 .build()
                 .find();
     }
@@ -218,7 +219,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
                                 .and(MessageBodyBean_.toUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
                                 .and(MessageBodyBean_.fromUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
                         )).orderDesc(MessageBodyBean_.createTime);
-        return builder
+        return builder.order(MessageBodyBean_.createTime)
                 .build()
                 .find();
     }
@@ -252,13 +253,36 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
                         .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
                                 .and(MessageBodyBean_.toUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
                                 .and(MessageBodyBean_.fromUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
-                        )).build().find();
+                        )).order(MessageBodyBean_.createTime).build().find();
 
         if (arrays == null || arrays.size() == 0) {
             return null;
         }
 
         return arrays.get(arrays.size() - 1);
+    }
+    /**
+     * 查找和联系人的聊天记录中最后一条记录
+     *
+     * @param contactId
+     * @return
+     */
+    public int getPrivateChatUnreadMessageAmount(int contactId) {
+        int amount = 0;
+        if (HawkProperty.privateUnreadMsgMap.containsKey(contactId)) {
+            amount = HawkProperty.privateUnreadMsgMap.get(contactId);
+        }
+        List<MessageBodyBean> arrays = ObjectBox.get().boxFor(MessageBodyBean.class).query(
+                MessageBodyBean_.groupId.equal(0)
+                        .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
+                                .and(MessageBodyBean_.isRead.equal(false))
+                                .and(MessageBodyBean_.canDelete.equal(false))
+                                .and(MessageBodyBean_.toUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
+                                .and(MessageBodyBean_.fromUserId.oneOf(new int[]{contactId, UserInfoManager.getUserId()}))
+                        )).build().find();
+
+
+        return arrays.size()+amount;
     }
 
     /**
@@ -271,11 +295,30 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
         List<MessageBodyBean> arrays = ObjectBox.get().boxFor(MessageBodyBean.class).query(
                 MessageBodyBean_.groupId.equal(groupId)
                         .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
-                        )).build().find();
+                        )).order(MessageBodyBean_.createTime).build().find();
         if (arrays == null || arrays.size() == 0) {
             return null;
         }
         return arrays.get(arrays.size() - 1);
+    }
+    /**
+     * 查找群的聊天记录中最后一条记录
+     *
+     * @param groupId
+     * @return
+     */
+    public int getGroupChatRecordUnreadMessageAmount(int groupId) {
+        int amount = 0;
+        if (HawkProperty.groupUnreadMsgMap.containsKey(groupId)) {
+            amount = HawkProperty.groupUnreadMsgMap.get(groupId);
+        }
+        List<MessageBodyBean> arrays = ObjectBox.get().boxFor(MessageBodyBean.class).query(
+                MessageBodyBean_.groupId.equal(groupId)
+                        .and(MessageBodyBean_.isRead.equal(false))
+                        .and(MessageBodyBean_.canDelete.equal(false))
+                        .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
+                        )).build().find();
+        return arrays.size()+amount;
     }
     /**
      * 查找群的未读消息中是否有@信息
@@ -335,7 +378,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
                 MessageBodyBean_.groupId.equal(groupId)
                         .and(MessageBodyBean_.owner.equal(UserInfoManager.getUserUUID())
                                 .and(MessageBodyBean_.canDelete.equal(false))
-                        )).build().find();
+                        )).order(MessageBodyBean_.createTime).build().find();
     }
 
     /**

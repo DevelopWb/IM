@@ -73,6 +73,7 @@ public class ChatRecordDetailActivity extends BaseRecyclerviewActivity {
 
     }
     private void initAdapterDataFromMsgTypes(MessageBodyBean messageBean) {
+        // TODO: 2022/4/18 新增消息类型的时候 这个地方需要注意
         switch (messageBean.getMsgType()) {
             case 0:
                 baseQuickAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_TEXT_MSG, messageBean));

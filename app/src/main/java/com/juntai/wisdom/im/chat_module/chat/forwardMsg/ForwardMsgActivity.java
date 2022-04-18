@@ -103,6 +103,7 @@ public class ForwardMsgActivity extends BaseAppActivity<ChatPresent> implements 
                 if (0 == forwardType) {
                     String content = null;
                     switch (operatingMsgBean.getMsgType()) {
+                        // TODO: 2022/4/18 新增消息类型的时候 这个地方需要注意
                         case 1:
                         case 2:
                             ImageView msgIv = (ImageView) view.findViewById(R.id.msg_iv);
