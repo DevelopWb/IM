@@ -176,6 +176,9 @@ public class MyWsManager {
          */
         private boolean checkLocalContact(MessageBodyBean messageBodyBean) {
             List<ContactBean> contactBeans = Hawk.get(HawkProperty.getContactListKey());
+            if (contactBeans == null) {
+                return false;
+            }
             List<Integer> contactIds = new ArrayList<>();
             for (ContactBean contactBean : contactBeans) {
                 contactIds.add(contactBean.getId());
