@@ -1241,10 +1241,17 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             messageBody.setQuoteMsg(GsonTools.createGsonString(quoteMsgBean));
         }
         if (!atUsers.isEmpty()) {
+            StringBuilder sb = new StringBuilder(atUsers.size());
             //有@的成员
-            messageBody.setAtUserId(atUsers.toString().substring(1, atUsers.toString().length() - 1));
-        } else {
-            messageBody.setAtUserId(null);
+            for (int i = 0; i < atUsers.size(); i++) {
+                int id = atUsers.get(i);
+                if(i==atUsers.size()-1){
+                sb.append(String.valueOf(id));
+                }else {
+                    sb.append(String.valueOf(id)+",");
+                }
+            }
+            messageBody.setAtUserId(sb.toString().trim());
         }
         mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), messageBody);
@@ -1983,6 +1990,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                             atUsers.clear();
                                             //如果是所有人  就传 -1
                                             atUsers.add(-1);
+                                        }else {
+                                            atUsers.add(contactBean.getId());
                                         }
                                         mContentEt.append(contactBean.getNickname() + "\u3000");
                                     }
