@@ -22,6 +22,13 @@ public class ImageUtil {
     public static String  getImageCatchPic(MessageBodyBean messageBodyBean){
         return FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean);
     }
+    /**
+     * 获取图片的缩略图的本地缓存路径
+     * @return
+     */
+    public static String  getImageThumCatchPic(MessageBodyBean messageBodyBean){
+        return FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean)+UrlFormatUtil.IMAGE_THUM;
+    }
 
     /**
      * 获取图片的本地缓存路径

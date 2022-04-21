@@ -136,7 +136,7 @@ public abstract class BaseAppPresent<M extends IModel, V extends IView> extends 
      */
     public void collectFile(Context mContext, MessageBodyBean messageBodyBean, String appVideoPath) {
         if (messageBodyBean.getFromUserId() == UserInfoManager.getUserId()) {
-            if (TextUtils.isEmpty(messageBodyBean.getLocalCatchPath())) {
+            if (FileCacheUtils.isFileExists(messageBodyBean.getLocalCatchPath())) {
                 //文件不存在
                 ToastUtils.toast(mContext, "当前选择的音频/图片/视频/文件还没有下载完成,下载完成之后才可收藏");
             } else {

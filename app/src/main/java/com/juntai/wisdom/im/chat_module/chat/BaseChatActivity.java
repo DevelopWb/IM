@@ -1538,6 +1538,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
     private void uploadPicFile(String picPath) {
         hideBottomAndKeyboard();
         //发送图片文件
+
+
+
         ImageLoadUtil.getExifOrientation(mContext, picPath, new ImageLoadUtil.OnImageLoadSuccess() {
             @Override
             public void loadSuccess(int width, int height) {
@@ -1547,15 +1550,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                 privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                                 privateContactBean.getHeadPortrait(), "");
                         messageBodyBean.setRotation(width > height ? "0" : "90");
-                        addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()),
-                                messageBodyBean);
-                        chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, messageBodyBean));
-                        scrollRecyclerview();
                         messageBodyBean.setLocalCatchPath(picPath);
                         messageBodyBean.setAdapterPosition(chatAdapter.getData().size() - 1);
                         mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(picPath, messageBodyBean));
-                        ObjectBox.addMessage(messageBodyBean);
-                        allPicVideoPath.add(messageBodyBean);
 
                         break;
                     case 1:
@@ -1563,14 +1560,10 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                         MessageBodyBean groupPicMsgBean = OperateMsgUtil.getGroupMsg(1, groupId,
                                 groupBean.getUserNickname(), picPath);
                         groupPicMsgBean.setRotation(width > height ? "0" : "90");
-                        addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), groupPicMsgBean);
-                        chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, groupPicMsgBean));
-                        scrollRecyclerview();
+
                         groupPicMsgBean.setLocalCatchPath(picPath);
                         groupPicMsgBean.setAdapterPosition(chatAdapter.getData().size() - 1);
                         mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(picPath, groupPicMsgBean));
-                        ObjectBox.addMessage(groupPicMsgBean);
-                        allPicVideoPath.add(groupPicMsgBean);
 
                         break;
                     case 2:
@@ -2365,10 +2358,17 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
 
             switch (messageBodyBean.getMsgType()) {
                 case 1:
-                    //图片文件  将图片文件复制到缓存中
-                    String picFileName = getSavedFileName(filePaths.get(0));
-                    FileCacheUtils.copyFile((BaseChatActivity)mContext, messageBodyBean.getLocalCatchPath(), FileCacheUtils.getAppImagePath(true) +picFileName, false);
-
+                    //图片文件
+                    /**
+                     * 图片上传成功之后加载图片
+                     */
+                    messageBodyBean.setContent(filePaths.get(0));
+                    addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()),
+                            messageBodyBean);
+                    chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, messageBodyBean));
+                    scrollRecyclerview();
+                    ObjectBox.addMessage(messageBodyBean);
+                    allPicVideoPath.add(messageBodyBean);
                     break;
                 case 2:
                     //视频文件

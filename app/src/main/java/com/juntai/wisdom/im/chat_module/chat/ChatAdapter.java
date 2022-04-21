@@ -413,6 +413,11 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 break;
 
             case MultipleItem.ITEM_CHAT_PIC_VIDEO:
+                /**
+                 * 逻辑梳理：
+                 * 1.自己发的图片 上传成功之后 展示消息，加载的时候 先查看本地缓存缩略图片是否存在 存在即展示 不存在就加载网络缩略图片 加载完之后保存到本地缓存一份
+                 * 2.对方发的图片  加载的时候 先查看本地缓存缩略图片是否存在 存在即展示 不存在就加载网络缩略图片 加载完之后保存到本地缓存一份
+                 */
                 ImageView sendIv = helper.getView(R.id.sender_pic_video_iv);
                 ImageView receiveIv = helper.getView(R.id.receiver_pic_video_iv);
                 helper.addOnClickListener(R.id.sender_pic_video_iv);
@@ -459,22 +464,14 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     }
 
                     if (1 == messageBodyBean.getMsgType()) {
-                        if (!FileCacheUtils.isFileExists(messageBodyBean.getLocalCatchPath())) {
-                            //有可能是转发的网络图片 或者本地文件删除了
-                            if (FileCacheUtils.isFileExists(ImageUtil.getImageCatchPic(messageBodyBean))) {
-                                //本地缓存存在图片
-                                ImageLoadUtil.loadImage(mContext, ImageUtil.getImageCatchPic(messageBodyBean),
-                                        helper.getView(R.id.sender_pic_video_iv));
-                            } else {
-                                //加载网络图片
-                                ImageLoadUtil.loadImage(mContext, messageBodyBean.getContent(),
-                                        helper.getView(R.id.sender_pic_video_iv));
-                                ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, messageBodyBean.getContent(), true);
-
-                            }
+                        if (!FileCacheUtils.isFileExists(ImageUtil.getImageThumCatchPic(messageBodyBean))) {
+                            //加载网络图片
+                            ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageThumUrl(messageBodyBean.getContent()),
+                                    helper.getView(R.id.sender_pic_video_iv));
+                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, UrlFormatUtil.getImageThumUrl(messageBodyBean.getContent()), true);
 
                         } else {
-                            ImageLoadUtil.loadImage(mContext, messageBodyBean.getLocalCatchPath(), helper.getView(R.id.sender_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, ImageUtil.getImageThumCatchPic(messageBodyBean), helper.getView(R.id.sender_pic_video_iv));
                         }
                     } else {
                         //自己发的视频文件
@@ -500,11 +497,11 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                         /**
                          * 对方发的图片  优先展示缓存到本地的图片  如果没有缓存到本地 就加载线上缩略图
                          */
-                        if (FileCacheUtils.isFileExists(ImageUtil.getImageCatchPic(messageBodyBean))) {
-                            ImageLoadUtil.loadImage(mContext, ImageUtil.getImageCatchPic(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
+                        if (FileCacheUtils.isFileExists(ImageUtil.getImageThumCatchPic(messageBodyBean))) {
+                            ImageLoadUtil.loadImage(mContext, ImageUtil.getImageThumCatchPic(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
                         } else {
-                            ImageLoadUtil.loadImage(mContext, picVideoContent, helper.getView(R.id.receiver_pic_video_iv));
-                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, picVideoContent, true);
+                            ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageThumUrl(picVideoContent), helper.getView(R.id.receiver_pic_video_iv));
+                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, UrlFormatUtil.getImageThumUrl(picVideoContent), true);
 
                         }
                     } else {
