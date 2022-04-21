@@ -464,14 +464,14 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     }
 
                     if (1 == messageBodyBean.getMsgType()) {
-                        if (!FileCacheUtils.isFileExists(ImageUtil.getImageThumCatchPic(messageBodyBean))) {
+                        if (!FileCacheUtils.isFileExists(ImageUtil.getImageCatchPic(messageBodyBean))) {
                             //加载网络图片
-                            ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageThumUrl(messageBodyBean.getContent()),
+                            ImageLoadUtil.loadImage(mContext, messageBodyBean.getContent(),
                                     helper.getView(R.id.sender_pic_video_iv));
-                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, UrlFormatUtil.getImageThumUrl(messageBodyBean.getContent()), true);
+                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, messageBodyBean.getContent(), true);
 
                         } else {
-                            ImageLoadUtil.loadImage(mContext, ImageUtil.getImageThumCatchPic(messageBodyBean), helper.getView(R.id.sender_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, ImageUtil.getImageCatchPic(messageBodyBean), helper.getView(R.id.sender_pic_video_iv));
                         }
                     } else {
                         //自己发的视频文件
@@ -497,11 +497,11 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                         /**
                          * 对方发的图片  优先展示缓存到本地的图片  如果没有缓存到本地 就加载线上缩略图
                          */
-                        if (FileCacheUtils.isFileExists(ImageUtil.getImageThumCatchPic(messageBodyBean))) {
-                            ImageLoadUtil.loadImage(mContext, ImageUtil.getImageThumCatchPic(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
+                        if (FileCacheUtils.isFileExists(ImageUtil.getImageCatchPic(messageBodyBean))) {
+                            ImageLoadUtil.loadImage(mContext, ImageUtil.getImageCatchPic(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
                         } else {
-                            ImageLoadUtil.loadImage(mContext, UrlFormatUtil.getImageThumUrl(picVideoContent), helper.getView(R.id.receiver_pic_video_iv));
-                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, UrlFormatUtil.getImageThumUrl(picVideoContent), true);
+                            ImageLoadUtil.loadImage(mContext, picVideoContent, helper.getView(R.id.receiver_pic_video_iv));
+                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, picVideoContent, true);
 
                         }
                     } else {
