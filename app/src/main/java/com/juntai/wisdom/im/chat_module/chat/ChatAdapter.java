@@ -29,6 +29,7 @@ import com.juntai.wisdom.im.bean.MessageBodyBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
 import com.juntai.wisdom.im.chat_module.chat.chatRecord.ChatRecordAdapter;
 import com.juntai.wisdom.im.utils.CalendarUtil;
+import com.juntai.wisdom.im.utils.ImageUtil;
 import com.juntai.wisdom.im.utils.MyFileProvider;
 import com.juntai.wisdom.im.utils.OperateMsgUtil;
 import com.juntai.wisdom.im.utils.UrlFormatUtil;
@@ -412,6 +413,11 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                 break;
 
             case MultipleItem.ITEM_CHAT_PIC_VIDEO:
+                /**
+                 * 逻辑梳理：
+                 * 1.自己发的图片 上传成功之后 展示消息，加载的时候 先查看本地缓存缩略图片是否存在 存在即展示 不存在就加载网络缩略图片 加载完之后保存到本地缓存一份
+                 * 2.对方发的图片  加载的时候 先查看本地缓存缩略图片是否存在 存在即展示 不存在就加载网络缩略图片 加载完之后保存到本地缓存一份
+                 */
                 ImageView sendIv = helper.getView(R.id.sender_pic_video_iv);
                 ImageView receiveIv = helper.getView(R.id.receiver_pic_video_iv);
                 helper.addOnClickListener(R.id.sender_pic_video_iv);
@@ -458,31 +464,23 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                     }
 
                     if (1 == messageBodyBean.getMsgType()) {
-                        if (!FileCacheUtils.isFileExists(messageBodyBean.getLocalCatchPath())) {
-                            //有可能是转发的网络图片 或者本地文件删除了
-                            if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getContent()))) {
-                                //本地缓存存在图片
-                                ImageLoadUtil.loadImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getContent()),
-                                        helper.getView(R.id.sender_pic_video_iv));
-                            } else {
-                                //加载网络图片
-                                ImageLoadUtil.loadImage(mContext, messageBodyBean.getContent(),
-                                        helper.getView(R.id.sender_pic_video_iv));
-                                ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, messageBodyBean.getContent(), true);
-
-                            }
+                        if (!FileCacheUtils.isFileExists(ImageUtil.getImageCatchPic(messageBodyBean))) {
+                            //加载网络图片
+                            ImageLoadUtil.loadImage(mContext, messageBodyBean.getContent(),
+                                    helper.getView(R.id.sender_pic_video_iv));
+                            ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, messageBodyBean.getContent(), true);
 
                         } else {
-                            ImageLoadUtil.loadImage(mContext, messageBodyBean.getLocalCatchPath(), helper.getView(R.id.sender_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, ImageUtil.getImageCatchPic(messageBodyBean), helper.getView(R.id.sender_pic_video_iv));
                         }
                     } else {
                         //自己发的视频文件
                         helper.setGone(R.id.sender_play_iv, true);
                         helper.setGone(R.id.sender_video_duration_tv, true);
                         helper.setText(R.id.sender_video_duration_tv, messageBodyBean.getDuration());
-                        if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getVideoCover()))) {
+                        if (FileCacheUtils.isFileExists(ImageUtil.getVideoImageCatchPic(messageBodyBean))) {
                             //本地缩略图存在
-                            ImageLoadUtil.loadImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getVideoCover()), helper.getView(R.id.sender_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, ImageUtil.getVideoImageCatchPic(messageBodyBean), helper.getView(R.id.sender_pic_video_iv));
                         } else {
                             ImageLoadUtil.loadImage(mContext, messageBodyBean.getVideoCover(), helper.getView(R.id.sender_pic_video_iv));
                             ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, messageBodyBean.getVideoCover(), true);
@@ -499,8 +497,8 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                         /**
                          * 对方发的图片  优先展示缓存到本地的图片  如果没有缓存到本地 就加载线上缩略图
                          */
-                        if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean))) {
-                            ImageLoadUtil.loadImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
+                        if (FileCacheUtils.isFileExists(ImageUtil.getImageCatchPic(messageBodyBean))) {
+                            ImageLoadUtil.loadImage(mContext, ImageUtil.getImageCatchPic(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
                         } else {
                             ImageLoadUtil.loadImage(mContext, picVideoContent, helper.getView(R.id.receiver_pic_video_iv));
                             ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, picVideoContent, true);
@@ -513,9 +511,9 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
                         helper.setGone(R.id.receiver_play_iv, true);
                         helper.setGone(R.id.receiver_video_duration_tv, true);
                         helper.setText(R.id.receiver_video_duration_tv, messageBodyBean.getDuration());
-                        if (FileCacheUtils.isFileExists(FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getVideoCover()))) {
+                        if (FileCacheUtils.isFileExists(ImageUtil.getVideoImageCatchPic(messageBodyBean))) {
                             //本地缩略图存在
-                            ImageLoadUtil.loadImage(mContext, FileCacheUtils.getAppImagePath(true) + getSavedFileName(messageBodyBean.getVideoCover()), helper.getView(R.id.receiver_pic_video_iv));
+                            ImageLoadUtil.loadImage(mContext, ImageUtil.getVideoImageCatchPic(messageBodyBean), helper.getView(R.id.receiver_pic_video_iv));
                         } else {
                             ImageLoadUtil.loadImage(mContext, messageBodyBean.getVideoCover(), helper.getView(R.id.receiver_pic_video_iv));
                             ImageLoadUtil.setGlideDownloadFileToLocal(null, mContext, messageBodyBean.getVideoCover(), true);
@@ -620,39 +618,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseVie
         textView.setCompoundDrawables(drawable, null, null, null);//放左边
     }
 
-    /**
-     * 获取文件名称
-     *
-     * @param messageBodyBean
-     * @return
-     */
-    public String getSavedFileName(MessageBodyBean messageBodyBean) {
-        String content = messageBodyBean.getContent();
-        if (TextUtils.isEmpty(content)) {
-            return null;
-        }
 
-        if (content.contains("/")) {
-            content = content.substring(content.lastIndexOf("/") + 1, content.length());
-        }
-        return content;
-    }
-
-    /**
-     * 获取文件名称
-     *
-     * @return
-     */
-    public String getSavedFileName(String content) {
-        if (TextUtils.isEmpty(content)) {
-            return null;
-        }
-
-        if (content.contains("/")) {
-            content = content.substring(content.lastIndexOf("/") + 1, content.length());
-        }
-        return content;
-    }
 
     /**
      * 设置最大宽度

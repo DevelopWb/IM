@@ -8,6 +8,8 @@ package com.juntai.wisdom.im.utils;
  */
 public class UrlFormatUtil {
 
+    public static String  IMAGE_THUM = "_-400.jpg";
+
 
     public static String getImageOriginalUrl(String path) {
         return path;
@@ -20,7 +22,7 @@ public class UrlFormatUtil {
      * @return
      */
     public static String getImageThumUrl(String path) {
-        return path+"_-400.jpg";
+        return path+IMAGE_THUM;
     }
 
 

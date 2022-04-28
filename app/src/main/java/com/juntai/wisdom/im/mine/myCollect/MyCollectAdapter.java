@@ -68,7 +68,6 @@ public class MyCollectAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
             case MultipleItem.ITEM_COLLECTION_PIC:
                 if (messageBodyBean.getFromUserId()== UserInfoManager.getUserId()) {
                     ImageLoadUtil.loadSquareImage(mContext,messageBodyBean.getLocalCatchPath(),helper.getView(R.id.collect_pic_iv));
-
                 }else {
                     //  图片收藏的前提是保存到本地
                     ImageLoadUtil.loadSquareImage(mContext, FileCacheUtils.getAppImagePath(false)+getSavedFileName(messageBodyBean),helper.getView(R.id.collect_pic_iv));

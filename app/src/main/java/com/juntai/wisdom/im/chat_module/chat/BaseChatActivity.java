@@ -754,14 +754,14 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             case R.id.receiver_chatrecord_cl:
                             case R.id.sender_chatrecord_cl:
                                 //聊天记录
-                                startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING, TextUtils.isEmpty(messageBodyBean.getQuoteMsg())?messageBodyBean.getContent():messageBodyBean.getQuoteMsg()));
+                                startActivity(new Intent(mContext, ChatRecordDetailActivity.class).putExtra(BASE_STRING, TextUtils.isEmpty(messageBodyBean.getQuoteMsg()) ? messageBodyBean.getContent() : messageBodyBean.getQuoteMsg()));
                                 break;
                             case R.id.receiver_quote_content_tv:
                             case R.id.sender_quote_content_tv:
                                 //引用的内容
-                                MessageBodyBean quoteMsgBean = GsonTools.changeGsonToBean(messageBodyBean.getQuoteMsg(),MessageBodyBean.class);
+                                MessageBodyBean quoteMsgBean = GsonTools.changeGsonToBean(messageBodyBean.getQuoteMsg(), MessageBodyBean.class);
                                 assert quoteMsgBean != null;
-                                startToMsgDetail(mContext,quoteMsgBean);
+                                startToMsgDetail(mContext, quoteMsgBean);
                                 break;
 
                             case R.id.audio_bg_rl:
@@ -970,7 +970,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                         mQuoteLl.setVisibility(View.VISIBLE);
                                         //如果被引用的消息有引用的消息 需要置空 要不json数据太大
                                         // 注意  合并消息除外  因为合并消息也是通过这个字段存储数据的 唉 都是后台参数不支持的问题
-                                        if (9!=operateingMsgBean.getMsgType()) {
+                                        if (9 != operateingMsgBean.getMsgType()) {
                                             operateingMsgBean.setQuoteMsg(null);
                                         }
                                         mQuoteContentTv.setTag(operateingMsgBean);
@@ -1241,10 +1241,17 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             messageBody.setQuoteMsg(GsonTools.createGsonString(quoteMsgBean));
         }
         if (!atUsers.isEmpty()) {
+            StringBuilder sb = new StringBuilder(atUsers.size());
             //有@的成员
-            messageBody.setAtUserId(atUsers.toString().substring(1, atUsers.toString().length() - 1));
-        } else {
-            messageBody.setAtUserId(null);
+            for (int i = 0; i < atUsers.size(); i++) {
+                int id = atUsers.get(i);
+                if(i==atUsers.size()-1){
+                sb.append(String.valueOf(id));
+                }else {
+                    sb.append(String.valueOf(id)+",");
+                }
+            }
+            messageBody.setAtUserId(sb.toString().trim());
         }
         mPresenter.sendGroupMessage(OperateMsgUtil.getMsgBuilder(messageBody).build(), AppHttpPath.SEND_MSG);
         addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), messageBody);
@@ -1531,6 +1538,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
     private void uploadPicFile(String picPath) {
         hideBottomAndKeyboard();
         //发送图片文件
+
+
+
         ImageLoadUtil.getExifOrientation(mContext, picPath, new ImageLoadUtil.OnImageLoadSuccess() {
             @Override
             public void loadSuccess(int width, int height) {
@@ -1540,15 +1550,9 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                 privateContactBean.getUuid(), privateContactBean.getRemarksNickname(),
                                 privateContactBean.getHeadPortrait(), "");
                         messageBodyBean.setRotation(width > height ? "0" : "90");
-                        addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()),
-                                messageBodyBean);
-                        chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, messageBodyBean));
-                        scrollRecyclerview();
                         messageBodyBean.setLocalCatchPath(picPath);
                         messageBodyBean.setAdapterPosition(chatAdapter.getData().size() - 1);
                         mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(picPath, messageBodyBean));
-                        ObjectBox.addMessage(messageBodyBean);
-                        allPicVideoPath.add(messageBodyBean);
 
                         break;
                     case 1:
@@ -1556,14 +1560,10 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                         MessageBodyBean groupPicMsgBean = OperateMsgUtil.getGroupMsg(1, groupId,
                                 groupBean.getUserNickname(), picPath);
                         groupPicMsgBean.setRotation(width > height ? "0" : "90");
-                        addDateTag(mPresenter.findGroupChatRecordLastMessage(groupId), groupPicMsgBean);
-                        chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, groupPicMsgBean));
-                        scrollRecyclerview();
+
                         groupPicMsgBean.setLocalCatchPath(picPath);
                         groupPicMsgBean.setAdapterPosition(chatAdapter.getData().size() - 1);
                         mUploadUtil.submit(BaseChatActivity.this, new UploadFileBean(picPath, groupPicMsgBean));
-                        ObjectBox.addMessage(groupPicMsgBean);
-                        allPicVideoPath.add(groupPicMsgBean);
 
                         break;
                     case 2:
@@ -1737,7 +1737,7 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                             }
                             ObjectBox.addMessage(startBean);
                         }
-                       initAdapterData(getIntent());
+                        initAdapterData(getIntent());
                     }
                 }
 
@@ -1983,6 +1983,8 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
                                             atUsers.clear();
                                             //如果是所有人  就传 -1
                                             atUsers.add(-1);
+                                        }else {
+                                            atUsers.add(contactBean.getId());
                                         }
                                         mContentEt.append(contactBean.getNickname() + "\u3000");
                                     }
@@ -2355,6 +2357,19 @@ public abstract class BaseChatActivity extends BaseAppActivity<ChatPresent> impl
             // TODO: 2022/4/10 获取返回文件的文件名
 
             switch (messageBodyBean.getMsgType()) {
+                case 1:
+                    //图片文件
+                    /**
+                     * 图片上传成功之后加载图片
+                     */
+                    messageBodyBean.setContent(filePaths.get(0));
+                    addDateTag(mPresenter.findPrivateChatRecordLastMessage(messageBodyBean.getFromUserId()),
+                            messageBodyBean);
+                    chatAdapter.addData(new MultipleItem(MultipleItem.ITEM_CHAT_PIC_VIDEO, messageBodyBean));
+                    scrollRecyclerview();
+                    ObjectBox.addMessage(messageBodyBean);
+                    allPicVideoPath.add(messageBodyBean);
+                    break;
                 case 2:
                     //视频文件
                     String fileName = getSavedFileName(filePaths.get(0));

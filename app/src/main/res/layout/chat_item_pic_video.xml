@@ -165,7 +165,7 @@
         android:id="@+id/receiver_g"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:visibility="gone"
         app:constraint_referenced_ids="receiver_pic_iv,receiver_pic_video_iv"></android.support.constraint.Group>
 
     <android.support.constraint.Group
