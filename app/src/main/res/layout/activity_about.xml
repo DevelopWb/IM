@@ -48,7 +48,7 @@
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:padding="10dp"
-        android:text="©2020 君泰科技"
+        android:text="©2022 君泰科技"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
