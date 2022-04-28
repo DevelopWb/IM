@@ -24,6 +24,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
@@ -64,7 +65,8 @@ public abstract class BaseApplication extends MultiDexApplication {
 
         }
         registerActivityLifecycleCallbacks(mCallbacks);
-
+        //是本人的QQ号申请的
+        CrashReport.initCrashReport(getApplicationContext(), "e3bc48dff7", false);
     }
 
 

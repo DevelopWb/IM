@@ -159,6 +159,9 @@ public class MyApp extends BaseApplication {
 
         initDownload();
         initTPS();
+
+
+
     }
 
     private void initTPS() {
