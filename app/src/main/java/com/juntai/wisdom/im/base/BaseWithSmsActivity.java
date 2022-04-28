@@ -118,15 +118,15 @@ public abstract class BaseWithSmsActivity extends SmsCheckCodeActivity implement
 
                 // 调用注册的接口  成功后跳转到登录界面
                 if (!RuleTools.isMobileNO(getTextViewValue(mRegistPhoneEt))) {
-                    ToastUtils.error(mContext, "手机号码格式不正确");
+                    ToastUtils.warning(mContext, "手机号码格式不正确");
                     return;
                 }
                 if (TextUtils.isEmpty(getTextViewValue(mRegistCheckCodeEt))) {
-                    ToastUtils.error(mContext, "请输入验证码");
+                    ToastUtils.warning(mContext, "请输入验证码");
                     return;
                 }
                 if (TextUtils.isEmpty(getTextViewValue(mPasswordEt))) {
-                    ToastUtils.error(mContext, "请输入密码");
+                    ToastUtils.warning(mContext, "请输入密码");
                     return;
                 }
                 builder = new FormBody.Builder();
@@ -142,7 +142,7 @@ public abstract class BaseWithSmsActivity extends SmsCheckCodeActivity implement
             case R.id.regist_send_check_code_tv:
                 // 注册界面发送验证码
                 if (!RuleTools.isMobileNO(getTextViewValue(mRegistPhoneEt))) {
-                    ToastUtils.error(mContext, "手机号码格式不正确");
+                    ToastUtils.warning(mContext, "手机号码格式不正确");
                     return;
                 }
                 sendCheckCode(getTextViewValue(mRegistPhoneEt));

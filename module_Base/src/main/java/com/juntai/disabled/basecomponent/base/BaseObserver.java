@@ -121,7 +121,7 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
                 onError("网络连接超时");
                 break;
             case BAD_NETWORK:
-                onError("当前网络连接不可用，请检查网络是否正常");
+//                onError("当前网络连接不可用，请检查网络是否正常");
                 break;
             case PARSE_ERROR:
                 onError("解析数据失败");

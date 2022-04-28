@@ -246,10 +246,6 @@ public class MyCenterFragment extends BaseAppFragment<MyCenterPresent> implement
         ImageLoadUtil.loadHeadPic(mContext,headUrl,mHeadImage,true);
     }
 
-    @Override
-    public void onError(String tag, Object o) {
-        ToastUtils.error(mContext, String.valueOf(o));
-    }
 
 
     @Override

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
 import com.juntai.wisdom.im.base.BaseAppFragment;
 import com.juntai.wisdom.im.bean.ContactBean;
@@ -206,10 +205,6 @@ public class SelectGroupNoticePeopleFragment extends BaseAppFragment<MainPresent
 
     }
 
-    @Override
-    public void onError(String tag, Object o) {
-        ToastUtils.error(mContext, String.valueOf(o));
-    }
 
 
     @Override

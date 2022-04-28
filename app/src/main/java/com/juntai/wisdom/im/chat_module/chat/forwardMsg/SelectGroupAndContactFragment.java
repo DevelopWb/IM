@@ -280,11 +280,6 @@ public class SelectGroupAndContactFragment extends BaseAppFragment<MainPresent> 
     }
 
 
-    @Override
-    public void onError(String tag, Object o) {
-        ToastUtils.error(mContext, String.valueOf(o));
-    }
-
 
     @Override
     public void onClick(View v) {

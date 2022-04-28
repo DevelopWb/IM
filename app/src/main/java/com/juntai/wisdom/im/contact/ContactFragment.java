@@ -9,17 +9,15 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.disabled.basecomponent.base.BaseActivity;
-import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.disabled.federation.R;
-import com.juntai.wisdom.im.AppHttpPath;
-import com.juntai.wisdom.im.contact.group.GroupListActivity;
-import com.juntai.wisdom.im.entrance.main.MainActivity;
-import com.juntai.wisdom.im.entrance.main.MainContract;
-import com.juntai.wisdom.im.entrance.main.MainPresent;
 import com.juntai.wisdom.im.base.BaseAppFragment;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.MultipleItem;
+import com.juntai.wisdom.im.contact.group.GroupListActivity;
 import com.juntai.wisdom.im.contact.newfriends.NewFriendsApplyActivity;
+import com.juntai.wisdom.im.entrance.main.MainActivity;
+import com.juntai.wisdom.im.entrance.main.MainContract;
+import com.juntai.wisdom.im.entrance.main.MainPresent;
 import com.juntai.wisdom.im.utils.HawkProperty;
 import com.mcxtzhang.indexlib.IndexBar.widget.IndexBar;
 import com.orhanobut.hawk.Hawk;
@@ -212,10 +210,6 @@ public class ContactFragment extends BaseAppFragment<MainPresent> implements Mai
     }
 
 
-    @Override
-    public void onError(String tag, Object o) {
-        ToastUtils.error(mContext, String.valueOf(o));
-    }
 
 
     @Override

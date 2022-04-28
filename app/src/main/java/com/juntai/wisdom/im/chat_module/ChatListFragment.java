@@ -10,7 +10,6 @@ import android.widget.PopupWindow;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juntai.disabled.basecomponent.base.BaseActivity;
-import com.juntai.disabled.basecomponent.utils.ToastUtils;
 import com.juntai.wisdom.im.base.BaseRecyclerviewFragment;
 import com.juntai.wisdom.im.bean.ContactBean;
 import com.juntai.wisdom.im.bean.GroupDetailInfoBean;
@@ -380,10 +379,6 @@ public class ChatListFragment extends BaseRecyclerviewFragment<MainPresent> impl
     public void onSuccess(String tag, Object o) {
     }
 
-    @Override
-    public void onError(String tag, Object o) {
-        ToastUtils.error(mContext, String.valueOf(o));
-    }
 
 
     @Override

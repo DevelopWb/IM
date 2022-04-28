@@ -331,10 +331,6 @@ public class SelectGroupPeoplesFragment extends BaseAppFragment<MainPresent> imp
     }
 
 
-    @Override
-    public void onError(String tag, Object o) {
-        ToastUtils.error(mContext, String.valueOf(o));
-    }
 
 
     @Override

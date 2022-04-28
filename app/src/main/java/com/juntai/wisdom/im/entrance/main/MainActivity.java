@@ -576,7 +576,7 @@ public class MainActivity extends BaseAppActivity<MainPresent> implements ViewPa
             if ("1".equals(type)) {
                 //好友
                 if (UserInfoManager.getUserUUID().equals(uuid)) {
-                    ToastUtils.error(mContext, "不能添加自己为好友");
+                    ToastUtils.warning(mContext, "不能添加自己为好友");
                     return;
                 }
 

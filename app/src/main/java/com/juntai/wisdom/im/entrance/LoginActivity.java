@@ -133,11 +133,11 @@ public class LoginActivity extends BaseAppActivity<EntrancePresent> implements E
                         }
                         onBackPressed();
                     } else {
-                        ToastUtils.error(mContext, loginBean.msg == null ? PubUtil.ERROR_NOTICE :
+                        ToastUtils.warning(mContext, loginBean.msg == null ? PubUtil.ERROR_NOTICE :
                                 loginBean.msg);
                     }
                 } else {
-                    ToastUtils.error(mContext, PubUtil.ERROR_NOTICE);
+                    ToastUtils.warning(mContext, PubUtil.ERROR_NOTICE);
                 }
                 break;
             case EntranceContract.OTHER_REGIST:
@@ -158,15 +158,15 @@ public class LoginActivity extends BaseAppActivity<EntrancePresent> implements E
                 account = mPhoneEt.getText().toString();
                 password = mPassword.getText().toString();
                 if (account.isEmpty()) {
-                    ToastUtils.error(mContext, "账号不可为空");
+                    ToastUtils.warning(mContext, "账号不可为空");
                     return;
                 }
                 if (!SendCodeModel.isMobileNO(account)) {
-                    ToastUtils.error(mContext, "手机号码格式不正确");
+                    ToastUtils.warning(mContext, "手机号码格式不正确");
                     return;
                 }
                 if (password.isEmpty()) {
-                    ToastUtils.error(mContext, "登录密码不能为空");
+                    ToastUtils.warning(mContext, "登录密码不能为空");
                     return;
                 }
 

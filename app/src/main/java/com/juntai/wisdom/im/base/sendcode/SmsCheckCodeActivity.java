@@ -67,7 +67,7 @@ public abstract class SmsCheckCodeActivity extends BaseAppActivity<SendCodePrese
     public void onError(String tag, Object o) {
         String msg = (String) o;
         if ("短信验证码错误".equals(msg)) {
-            ToastUtils.error(this, "验证码输入有误");
+            ToastUtils.warning(this, "验证码输入有误");
             initGetTestCodeButtonStatusStop();
 
         }
