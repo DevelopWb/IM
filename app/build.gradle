@@ -73,7 +73,7 @@ android {
     packagingOptions {//解决so文件重复问题，使用第一个
         pickFirst "**/libsqlite.so"
     }
-
+    resourcePrefix "chat_"   //前缀的名字
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

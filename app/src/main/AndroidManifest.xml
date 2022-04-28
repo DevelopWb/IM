@@ -146,7 +146,7 @@
             android:launchMode="singleTop" />
         <activity
             android:name="com.juntai.wisdom.im.mine.myinfo.selectAddr.SetAddrActivity"
-            android:launchMode="singleTop" />
+             />
         <activity
             android:name="com.juntai.wisdom.im.mine.myinfo.SetSexActivity"
             android:launchMode="singleTop" />
